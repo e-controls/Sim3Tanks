@@ -1,7 +1,14 @@
-function [] = set_k(t)
+function [] = set_k(k)
+% SET_K(k) sets the number of the sample k.
+%
+% This function does not have output arguments.
+%
+% See also GET_K.
 
-global k;
+% Written by Arllem Farias, 2018.
 
-k = t;
+global sample_k;
+
+sample_k = k;
 
 end
