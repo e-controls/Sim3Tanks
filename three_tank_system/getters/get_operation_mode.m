@@ -1,28 +1,33 @@
-function [dvalve] = get_operation_mode(K)
+function [OPMODE] = get_operation_mode(K)
+% OPMODE=GET_OPERATION_MODE(K) returns the operation mode of the valves.
+%
+% See also SET_OPERATION_MODE.
 
-global d_valve;
+% Written by Arllem Farias, 2018.
+
+global opmode;
 
 if (nargin()==0)
-    dvalve = d_valve;
+    OPMODE = opmode;
 else
     switch lower(K)
         case 'kp1'
-            dvalve = d_valve(1);
+            OPMODE = opmode(1);
         case 'kp2'
-            dvalve = d_valve(2);
+            OPMODE = opmode(2);
         case 'ka'
-            dvalve = d_valve(3);
+            OPMODE = opmode(3);
         case 'kb'
-            dvalve = d_valve(4);
+            OPMODE = opmode(4);
         case 'k13'
-            dvalve = d_valve(5);
+            OPMODE = opmode(5);
         case 'k23'
-            dvalve = d_valve(6);
+            OPMODE = opmode(6);
         case 'k1'
-            dvalve = d_valve(7);
+            OPMODE = opmode(7);
         case 'k2'
-            dvalve = d_valve(8);
+            OPMODE = opmode(8);
         case 'k3'
-            dvalve = d_valve(9);
+            OPMODE = opmode(9);
     end
 end

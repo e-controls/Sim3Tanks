@@ -1,5 +1,5 @@
 function [fsignal] = check_fault_signal(F)
-% CHECK_FAULT_SIGNAL(F): receives a vector F, but only returns F if it
+% CHECK_FAULT_SIGNAL(F) receives a vector F, but only returns F if it
 % satisfies the following properties:
 %   1) is a column vector;
 %   2) has the same number of samples as time vector;

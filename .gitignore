@@ -1,32 +1,28 @@
-# Prerequisites
-*.d
+# Windows default autosave extension
+*.asv
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# OSX / *nix default autosave extension
+*.m~
 
-# Precompiled Headers
-*.gch
-*.pch
+# Compiled MEX binaries (all platforms)
+*.mex*
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Packaged app and toolbox files
+*.mlappinstall
+*.mltbx
 
-# Fortran module files
-*.mod
-*.smod
+# Generated helpsearch folders
+helpsearch*/
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# Simulink code generation folders
+slprj/
+sccprj/
 
-# Executables
-*.exe
-*.out
-*.app
+# Matlab code generation folders
+codegen/
+
+# Simulink autosave extension
+*.autosave
+
+# Octave session info
+octave-workspace

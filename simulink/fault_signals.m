@@ -34,8 +34,8 @@ end
 % The fault signals must satisfy the following properties:
 %    1) be a column vector;
 %    2) have the same number of samples as time vector;
-%    3) does not have NaN in its samples;
-%    4) does not have Inf in its samples;
+%    3) do not have NaN in its samples;
+%    4) do not have Inf in its samples;
 %    5) all values of its samples must be between [0,1].
 % Use the function "check_fault_signal(fsignal)" to check these properties,
 % for more info, type "help check_fault_signal" in the command window.
