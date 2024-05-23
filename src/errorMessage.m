@@ -3,7 +3,7 @@ function [varargout] = errorMessage(varargin)
 % associated with an error code.
 
 % Written by Arllem Farias, January/2024.
-% Last update February/2024 by Arllem Farias.
+% Last update May/2024 by Arllem Farias.
 
 %==========================================================================
 
@@ -67,6 +67,8 @@ switch codeError
         msg = 'The field <PumpMinFlow> must be greater than or equal to 0.';
     case 20
         msg = 'The field <PumpMaxFlow> must be greater than or equal to <PumpMinFlow>.';
+    case 21
+        msg = 'Invalid number of input arguments (must be even).';
     otherwise
         msg = 'Error code not found!';
 end

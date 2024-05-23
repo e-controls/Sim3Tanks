@@ -1,8 +1,15 @@
 clc; clear; close all;
 
 
-addpath(genpath('source'));
+addpath(genpath('src'));
 
+% Configuring time vector.
+tstart = 0;   % Start time
+tstop  = 500; % Stop time
+Ts     = 0.1; % Sample time
+time = tstart : Ts : tstop;
+
+N = numel(time); % Number of samples
 
 % Creating a Sim3Tanks object and setting it to the default model.
 objSim3Tanks = createSim3Tanks();
@@ -16,12 +23,6 @@ objSim3Tanks.setDefaultModel();
 % objSim3Tanks.Model.PhysicalParam.GravityConstant=981;
 % objSim3Tanks.Model.PhysicalParam.PumpMinFlow=0;
 % objSim3Tanks.Model.PhysicalParam.PumpMaxFlow=120;
-
-% Configuring time vector.
-tstart = 0;   % Start time
-tstop  = 500; % Stop time
-Ts     = 0.1; % Sample time
-time = tstart : Ts : tstop;
 
 % To enable control of the valves Kp1 and Kp2 set this flags to true.
 objSim3Tanks.Model.ValveSettings.Kp1.EnableControl = false;
@@ -52,8 +53,9 @@ f1 = 1./(1+exp(-(1/200)*(-2500:2500))); % sigmoid
 objSim3Tanks.Model.FaultSettings.f2.EnableSignal = false;
 f2 = 1./(1+exp(-(1/50)*(-500:4500))); % sigmoid
 
-fprintf('#Sim3Tanks. Running simulation...\n');
-for k = 2 : numel(time) % k=1 conrresponds to initial condition
+for k = 2 : N % k=1 conrresponds to initial condition
+
+    fprintf('#Sim3Tanks. Running simulation (%d/%d)\n',k,N);
 
     % Simulating a control signal for the valves Kp1 and Kp2.
     u = rand(2,1);
@@ -79,12 +81,12 @@ for k = 2 : numel(time) % k=1 conrresponds to initial condition
 
     % Measurement noise.
     objSim3Tanks.Model.MeasurementNoise.EnableSignal = true;
-    yx = random('norm',0,0.2,[1 03]); % Sensor levels
-    yq = random('norm',0,0.6,[1 10]); % Sensor flows
+    yx = random('norm',0,0.2,[1 03]); % Level sensors
+    yq = random('norm',0,0.6,[1 10]); % Flow sensors
     objSim3Tanks.Model.MeasurementNoise.Magnitude = [yx,yq];
 
     % Simulating the system.
-    [y,x,q] = objSim3Tanks.simulateModel(Qp1(k),Qp2(k),Qp3(k),Ts);
+    [y,x,q] = objSim3Tanks.simulateModel('Qp1',Qp1(k),'Qp2',Qp2(k),'Qp3',Qp3(k),'Tspan',Ts);
 
 end
 fprintf('#Sim3Tanks. The simulation is done!\n');

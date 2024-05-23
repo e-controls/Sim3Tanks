@@ -1,10 +1,11 @@
 function [varargout] = checkOperationMode(varargin)
 % checkOperationMode is a Sim3Tanks function. This function checks the
 % operation mode of a Sim3TanksClass object and returns an array with 0 and
-% 1, where 0 corresponds to Closed and 1 corresponds to Open.
+% 1, where 0 corresponds to Closed and 1 corresponds to Open. A second
+% array with the IDs of the valves is also returned.
 
 % Written by Arllem Farias, January/2024.
-% Last update January/2024 by Arllem Farias.
+% Last update May/2024 by Arllem Farias.
 
 %==========================================================================
 
@@ -32,6 +33,7 @@ end
 %==========================================================================
 
 opMode = zeros(size(LIST_OF_VALVES));
+valveID = cell(size(LIST_OF_VALVES));
 
 for i = 1 : numel(LIST_OF_VALVES)
     valve = objSim3Tanks.(ClassPropers{2}).(LIST_OF_VALVES{i}).OperationMode;
@@ -42,8 +44,10 @@ for i = 1 : numel(LIST_OF_VALVES)
     else
         error(errorMessage(10));
     end
+    valveID{i} = LIST_OF_VALVES{i};
 end
 
 varargout{1} = opMode;
+varargout{2} = valveID;
 
 end

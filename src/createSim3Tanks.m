@@ -3,7 +3,7 @@ function [varargout] = createSim3Tanks(varargin)
 % necessary basic structure of Sim3Tanks object.
 
 % Written by Arllem Farias, December/2023.
-% Last update January/2024 by Arllem Farias.
+% Last update May/2024 by Arllem Farias.
 
 %==========================================================================
 
@@ -16,8 +16,8 @@ end
 objSim3Tanks.Model = Sim3TanksClass();
 objSim3Tanks.Model.prepareModel();
 
-objSim3Tanks.simulateModel = @(Qp1,Qp2,Qp3,Ts)feval(@(obj,Qp1,Qp2,Qp3,Ts)...
-    simulateModel(obj,Qp1,Qp2,Qp3,Ts),objSim3Tanks.Model,Qp1,Qp2,Qp3,Ts);
+objSim3Tanks.simulateModel = @(varargin)feval(@(obj,varargin)...
+    simulateModel(obj,varargin{:}),objSim3Tanks.Model,varargin{:}); %#ok<*FVAL>
 
 objSim3Tanks.resetModel = @()feval(@(obj)...
     resetModel(obj),objSim3Tanks.Model);
