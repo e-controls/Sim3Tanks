@@ -9,6 +9,69 @@ Sim3Tanks simulates the dynamic behavior of the following plant:
 <img src="/assets/images/three_tank_system.jpg">
 
 ## Sim3Tanks Object
+A Sim3Tanks object is created using the `createSim3Tanks()` function.
+
+```sh
+objSim3Tanks = createSim3Tanks();
+```
+
+This function does not have an input argument and returns an object with the following fields:
+
+- **Model**           : a Sim3TanksClass that works as an attribute.
+- **simulateModel**   : a function handle that works as a method.
+- **resetModel**      : a function handle that works as a method.
+- **resetVariables**  : a function handle that works as a method.
+- **setDefaultModel** : a function handle that works as a method.
+- **getStates**       : a function handle that works as a method.
+- **getFlows**        : a function handle that works as a method.
+- **getMeasurements** : a function handle that works as a method.
+- **getValves**       : a function handle that works as a method.
+- **getFaults**       : a function handle that works as a method.
+
+### Model attribute
+This attribute is used to define the system configurations. It is divided into the following subfields:
+
+- **PhysicalParam**: used to define the system's physical structure.
+  - **TankRadius**: must be real and greater than 0.
+    - `objSim3Tanks.Model.PhysicalParam.TankRadius = 5;`
+  - **TankHeight**: must be real and greater than 0.
+  - **PipeRadius**: must be real, greater than 0, and less than TankRadius.
+  - **TransPipeHeight**: must be real, greater than 0, and less than TankHeight.
+  - **CorrectionTerm**: must be real and greater than 0.
+  - **GravityConstant**: must be real and greater than 0.
+  - **PumpMinFlow**: must be real and greater than or equal to 0.
+  - **PumpMaxFlow**: must be real and greater than PumpMinFlow.
+
+- **ValveSettings**: used to define the system valve settings. It is divided into ten subfields, one per valve (Kp1, Kp2, Kp3, Ka, Kb, K13, K23, K1, K2, K3), and each one has the following settings:
+  - **OperationMode**: must be set to ‘Open’ or ‘Closed’.
+  - **EnableControl**: must be set to a logical value (true or false).
+  - **OpeningRate**: must be real and belong to the range [0,1].
+
+- **FaultSettings**: used to define the system fault settings. It is divided into twenty-three subfields, one per fault (f1, f2, …, f23), and each one has the following settings:
+  - **EnableSignal**: must be set to a logical value (true or false).
+  - **Magnitude**: must be real and belong to the range [0,1].
+
+- **ProcessNoise**: used to set the system process noise.
+  - **EnableSignal**: must be set to a logical value (true or false).
+  - **Magnitude**: must be a row or a column vector with three real and finite elements (w = [h1 h2 h3]).  
+
+- **MeasurementNoise**: used to set the system process noise.
+  - **EnableSignal**: must be set to a logical value (true or false).
+  - **Magnitude**: must be a row or a column vector with thirteen real and finite elements (v = [h1, h2, h3, Q1in, Q2in, Q3in, Qa, Qb, Q13, Q23, Q1, Q2, Q3]).  
+
+- **InitialCondition**: used to define the system's initial condition and must be filled with a row vector of three elements (x0 = [h1 h2 h3]).
+
+### simulateModel method
+This method … 
+
+
+
+
+
+
+# Old description -----
+
+## Sim3Tanks Object
 To create a Sim3Tanks object it is necessary to use the function **createSim3Tanks()** as shown below:
 
 - `objSim3Tanks = createSim3Tanks();`
