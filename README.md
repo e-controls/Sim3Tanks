@@ -120,7 +120,59 @@ This method simulates the dynamic behavior of the three-tank system.
 [y,x,q] = objSim3Tanks.simulateModel('Qp1',VALUE1,'Qp2',VALUE2,'Qp3',VALUE3,'Tspan',VALUE4);
 ```
 > [!NOTE]
-> It is highly recommended that the simulation time increment be used as Tspan.
+> Sim3Tanks uses the ode45 solver to solve the system differential equations numerically, and it is highly recommended that the simulation time increment be used as the Tspan.
+
+### resetModel method
+This method does not have an input argument. It clears all variables and restores an object's settings.
+```
+objSim3Tanks.resetModel();
+```
+
+### resetVariables method
+This method does not have an input argument. It clears all state variables, valve, fault, flow signals, and sensor measurement data.
+```
+objSim3Tanks.resetVariables();
+```
+
+### setDefaultModel method
+This method does not have an input argument. It configures a Sim3Tanks object to the default model.
+```
+objSim3Tanks.setDefaultModel();
+```
+<img src="/assets/images/default_scenario.jpg">
+
+### getStates method
+This method does not have an input argument. It returns a data table with the values of the state variables. 
+```
+objSim3Tanks.getStates();
+```
+
+### getFlows method
+This method does not have an input argument. It returns a data table with the values of the flow variables.
+```
+objSim3Tanks.getFlows();
+```
+
+### getMeasurements method
+This method does not have an input argument. It returns a data table with the values of the measured variables.
+```
+objSim3Tanks.getMeasurements();
+```
+
+### getValves method
+This method does not have an input argument. It returns a data table with the values of the valve signals.
+```
+objSim3Tanks.getValves();
+```
+
+### getFaults method
+This method does not have an input argument. It returns a data table with the values of the fault signals.
+```
+objSim3Tanks.getFaults();
+```
+
+
+
 
 
 
