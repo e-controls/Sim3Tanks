@@ -13,6 +13,14 @@ Sim3Tanks simulates the dynamic behavior of the following plant:
 
 <img src="/assets/images/three_tank_system.jpg">
 
+> The plant consists of three cylindrical tanks interconnected by four pipes, allowing fluid exchange between the lateral tanks (T1 and T2) and the central tank (T3) in both directions. The dashed arrows indicate the reference direction of each flow. Negative values indicate that the flow is opposite to this reference.
+
+> The upper pipes and valves that connect the lateral tanks to the central tank are located at the same height h<sub>0</sub> and are called transmission pipes and valves. The lower pipes and valves are aligned with the base of the tanks and are called connection pipes and valves. At the bottom of each tank are the output pipes and valves.
+
+> The pumps P1, P2, and P3 share the same minimum and maximum flow rate constraints, but they work independently and can provide different flow rates Q<sub>P1</sub>, Q<sub>P2</sub>, and Q<sub>P3</sub> to the tanks T1, T2, and T3, respectively.
+
+> The tanks are identical and have the same radius and maximum height. Similarly, all pipes are also identical and have the same radius value. The system has three level sensors (one per tank) and ten flow sensors (one per valve), and any valve can be configured as an actuator.
+
 ## Sim3Tanks Object
 A Sim3Tanks object is created using the `createSim3Tanks()` function.
 
@@ -124,7 +132,7 @@ This method simulates the dynamic behavior of the three-tank system.
 ```
 [y,x,q] = objSim3Tanks.simulateModel('Qp1',VALUE1,'Qp2',VALUE2,'Qp3',VALUE3,'Tspan',VALUE4);
 ```
-> [!NOTE]
+> [!IMPORTANT]
 > Sim3Tanks uses the ode45 solver to solve the system differential equations numerically, and it is highly recommended that the simulation time increment be used as the Tspan.
 
 ### resetModel method
