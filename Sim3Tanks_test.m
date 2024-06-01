@@ -1,8 +1,9 @@
 clc; clear; close all;
 
+% Add internal dependency paths
 addpath(genpath('src'));
 
-% Configuring time vector.
+% Set time vector.
 tstart = 0;   % Start time
 tstop  = 300; % Stop time
 Ts     = 0.1; % Sample time
@@ -10,10 +11,10 @@ time = tstart : Ts : tstop;
 
 N = numel(time); % Number of samples
 
-% Creating a Sim3Tanks object.
+% Create a Sim3Tanks object.
 objSim3Tanks = createSim3Tanks();
 
-% Setting the object to the default model.
+% Set the object to the default model.
 objSim3Tanks.setDefaultModel();
 
 % Or, to change any Model parameter, just access its respective field and
@@ -40,12 +41,12 @@ objSim3Tanks.Model.ValveSettings.Kp2.EnableControl = false;
 objSim3Tanks.Model.ValveSettings.Kp3.OperationMode = 'Closed';
 objSim3Tanks.Model.ValveSettings.Kp3.EnableControl = false;
 
-% To simulate a disturbance signal.
+% Generate a disturbance signal.
 v = floor(N/3):2*floor(N/3);
 d = zeros(size(time));
 d(v) = 0.5+random('norm',0,0.1,size(v));
 
-% Generating the pump flow
+% Generate the pump flow.
 Qp1 = 80*ones(size(time));
 Qp2 = 80*ones(size(time));
 Qp3 = 80*ones(size(time));
@@ -82,11 +83,11 @@ for k = 2 : N % k=1 conrresponds to initial condition
     objSim3Tanks.Model.FaultSettings.f2.Magnitude = f2(k);
 
     % Process noise.
-    objSim3Tanks.Model.ProcessNoise.EnableSignal = false; % it is not enable
+    objSim3Tanks.Model.ProcessNoise.EnableSignal = false; % It is not enable
     objSim3Tanks.Model.ProcessNoise.Magnitude = random('norm',0,0.1,[1 3]);
 
     % Measurement noise.
-    objSim3Tanks.Model.MeasurementNoise.EnableSignal = true; % it is enable
+    objSim3Tanks.Model.MeasurementNoise.EnableSignal = true; % It is enable
     yx = random('norm',0,0.2,[1 03]); % Level sensors
     yq = random('norm',0,0.6,[1 10]); % Flow sensors
     objSim3Tanks.Model.MeasurementNoise.Magnitude = [yx,yq];
