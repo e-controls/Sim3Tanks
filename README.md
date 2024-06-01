@@ -11,7 +11,11 @@ The original paper that publishes the simulator can be accessed at <http://dx.do
 ## Sim3Tanks Plant
 Sim3Tanks simulates the dynamic behavior of the following plant:
 
-<img src="/assets/images/three_tank_system.jpg">
+<p align="center">
+	<img src="/assets/images/three_tank_system.jpg"/> 
+	<br>
+	<strong>Figure 1:</strong> Sim3Tanks plant.
+</p>
 
 > The plant consists of three cylindrical tanks interconnected by four pipes, allowing fluid exchange between the lateral tanks (T1 and T2) and the central tank (T3) in both directions. The dashed arrows indicate the reference direction of each flow. Negative values indicate that the flow is opposite to this reference.
 
