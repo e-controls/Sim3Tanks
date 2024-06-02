@@ -1,4 +1,4 @@
-![Sim3Tanks](https://img.shields.io/badge/Sim3Tanks-blue)
+![Sim3Tanks](https://img.shields.io/badge/Updating...-blue)
 ![maintained - yes](https://img.shields.io/badge/Maintained%3F-_yes-green)
 ![License - Apache](https://img.shields.io/badge/License-_Apache_2.0-green)
 ![Language - Matlab](https://img.shields.io/badge/Language-_MATLAB-green)
@@ -36,6 +36,7 @@ This function does not have an input argument and returns an object with the fol
 
 - **Model**           : a Sim3TanksClass that works as an attribute.
 - **simulateModel**   : a function handle that works as a method.
+- **displayFields**   : a function handle that works as a method.
 - **resetModel**      : a function handle that works as a method.
 - **resetVariables**  : a function handle that works as a method.
 - **setDefaultModel** : a function handle that works as a method.
@@ -138,6 +139,12 @@ This method simulates the dynamic behavior of the three-tank system.
 ```
 > [!IMPORTANT]
 > Sim3Tanks uses the ode45 solver to solve the system differential equations numerically, and it is highly recommended that the simulation time increment be used as the Tspan.
+
+### displayFields method
+This method does not have an input argument. It displays all fields and subfields of an object on the command line.
+```
+objSim3Tanks.displayFields();
+```
 
 ### resetModel method
 This method does not have an input argument. It clears all variables and restores an object's settings.
