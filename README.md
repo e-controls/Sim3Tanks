@@ -1,7 +1,9 @@
-![Sim3Tanks](https://img.shields.io/badge/Updating...-blue)
-![maintained - yes](https://img.shields.io/badge/Maintained%3F-_yes-green)
-![License - Apache](https://img.shields.io/badge/License-_Apache_2.0-green)
-![Language - Matlab](https://img.shields.io/badge/Language-_MATLAB-green)
+![Status](https://img.shields.io/badge/Updating...-blue)
+![maintained](https://img.shields.io/badge/Maintained%3F-_yes-green)
+![License](https://img.shields.io/badge/License-_Apache_2.0-green)
+![Language](https://img.shields.io/badge/Language-_MATLAB-green)
+> [!NOTE]
+> This README is being updated...
 
 # Sim3Tanks: A Benchmark Model Simulator for Process Control and Monitoring
 Sim3Tanks is suitable for studying and developing process control, fault detection and diagnosis, and fault-tolerant control strategies for nonlinear multivariable systems. This new release was developed in the MATLAB environment, version 9.11.0 (2021b), and can be used via command-line script <`file.m`>. Future releases will include versions for using the simulator via Simulink block diagram <`file.slx`> and graphical user interface <`file.fig`>.
@@ -17,13 +19,13 @@ Sim3Tanks simulates the dynamic behavior of the following plant:
 	<strong>Figure 1:</strong> Sim3Tanks plant.
 </p>
 
-> The plant consists of three cylindrical tanks interconnected by four pipes, allowing fluid exchange between the lateral tanks (T1 and T2) and the central tank (T3) in both directions. The dashed arrows indicate the reference direction of each flow. Negative values indicate that the flow is opposite to this reference.
+- The plant consists of three cylindrical tanks interconnected by four pipes, allowing fluid exchange between the lateral tanks (T1 and T2) and the central tank (T3) in both directions. The dashed arrows indicate the reference direction of each flow. Negative values indicate that the flow is opposite to this reference.
 
-> The upper pipes and valves that connect the lateral tanks to the central tank are located at the same height h<sub>0</sub> and are called transmission pipes and valves. The lower pipes and valves are aligned with the base of the tanks and are called connection pipes and valves. At the bottom of each tank are the output pipes and valves.
+- The upper pipes and valves that connect the lateral tanks to the central tank are located at the same height h<sub>0</sub> and are called transmission pipes and valves. The lower pipes and valves are aligned with the base of the tanks and are called connection pipes and valves. At the bottom of each tank are the output pipes and valves.
 
-> The pumps P1, P2, and P3 share the same minimum and maximum flow rate constraints, but they work independently and can provide different flow rates Q<sub>P1</sub>, Q<sub>P2</sub>, and Q<sub>P3</sub> to the tanks T1, T2, and T3, respectively.
+- The pumps P1, P2, and P3 share the same minimum and maximum flow rate constraints, but they work independently and can provide different flow rates Q<sub>P1</sub>, Q<sub>P2</sub>, and Q<sub>P3</sub> to the tanks T1, T2, and T3, respectively.
 
-> The tanks are identical and have the same radius and maximum height. Similarly, all pipes are also identical and have the same radius value. The system has three level sensors (one per tank) and ten flow sensors (one per valve), and any valve can be configured as an actuator.
+- The tanks are identical and have the same radius and maximum height. Similarly, all pipes are also identical and have the same radius value. The system has three level sensors (one per tank) and ten flow sensors (one per valve), and any valve can be configured as an actuator.
 
 ## Sim3Tanks Object
 A Sim3Tanks object is created using the `createSim3Tanks()` function.
