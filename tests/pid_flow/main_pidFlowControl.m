@@ -151,7 +151,7 @@ Y = tts.getMeasurements();
 K = tts.getValves();
 F = tts.getFaults();
 
-% Plots
+%% Plots
 
 fprintf('#Plotting Graphs...\n');
 MarkIdx = 1:round(N/20):N;
