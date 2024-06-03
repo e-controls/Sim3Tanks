@@ -35,16 +35,16 @@ end
 
 %==========================================================================
 
-param = checkPhysicalParam(objSim3Tanks);
+[Param,ID] = checkPhysicalParam(objSim3Tanks);
 
-Rtank = param(1);
-Hmax  = param(2);
-Rpipe = param(3);
-h0    = param(4);
-mu    = param(5);
-g     = param(6);
-Qmin  = param(7);
-Qmax  = param(8);
+Rtank = Param.(ID{1});
+Hmax  = Param.(ID{2});
+Rpipe = Param.(ID{3});
+h0    = Param.(ID{4});
+mu    = Param.(ID{5});
+g     = Param.(ID{6});
+Qmin  = Param.(ID{7});
+Qmax  = Param.(ID{8});
 
 Sc = pi()*(Rtank^2); % Cross-sectional area of the tanks (cm^2)
 S  = pi()*(Rpipe^2); % Cross-sectional area of the pipes (cm^2)
@@ -52,10 +52,15 @@ Beta = mu*S*sqrt(2*g); % Constant value
 
 %==========================================================================
 
-options = struct('Qp1',Qmax,'Qp2',Qmax,'Qp3',Qmax,'Tspan',0.1);
+% Default options
+options.QP1 = Qmax;
+options.QP2 = Qmax;
+options.QP3 = Qmax;
+options.TSPAN = 0.1;
 
+% Check input options
 for i = 2 : 2 : nargin()
-    name = varargin{i};
+    name = upper(varargin{i});
     if(isfield(options,name))
         options.(name) = varargin{i+1};
     else
@@ -63,10 +68,11 @@ for i = 2 : 2 : nargin()
     end
 end
 
-Qp1 = options.Qp1;
-Qp2 = options.Qp2;
-Qp3 = options.Qp3;
-Tspan = options.Tspan;
+% New options
+Qp1 = options.QP1;
+Qp2 = options.QP2;
+Qp3 = options.QP3;
+Tspan = options.TSPAN;
 
 %==========================================================================
 

@@ -69,6 +69,8 @@ switch codeError
         msg = 'The field <PumpMaxFlow> must be greater than or equal to <PumpMinFlow>.';
     case 21
         msg = 'Invalid number of input arguments (must be even).';
+    case 22
+        msg = 'Invalid number of input arguments (must be odd).';
     otherwise
         msg = 'Error code not found!';
 end
