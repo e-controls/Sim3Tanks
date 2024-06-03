@@ -1,5 +1,4 @@
 ![Status](https://img.shields.io/badge/README-Updating...-blue)
-![maintained](https://img.shields.io/badge/Maintained%3F-_yes-green)
 ![License](https://img.shields.io/badge/License-_MIT-green)
 ![Language](https://img.shields.io/badge/Language-_MATLAB-green)
 > [!NOTE]
@@ -9,6 +8,15 @@
 Sim3Tanks is suitable for studying and developing process control, fault detection and diagnosis, and fault-tolerant control strategies for nonlinear multivariable systems. This new release was developed in the MATLAB environment, version 9.11.0 (2021b), and can be used via command-line script <`file.m`>. Future releases will include versions for using the simulator via Simulink block diagram <`file.slx`> and graphical user interface <`file.fig`>.
 
 The original paper that publishes the simulator can be accessed at <http://dx.doi.org/10.1109/ACCESS.2018.2874752> and its repository at <https://github.com/e-controls/Sim3Tanks_old>
+
+## Table of Contents
+
+- [Sim3Tanks Plant](#sim3tanks-plant)
+- [Sim3Tanks Object](#sim3tanks-object)
+- [Fault Symbols](#fault-symbols)
+- [Contributions](#contributions)
+- [License](#license)
+
 
 ## Sim3Tanks Plant
 Sim3Tanks simulates the dynamic behavior of the following plant:
@@ -36,17 +44,17 @@ objSim3Tanks = createSim3Tanks();
 
 This function does not have an input argument and returns an object with the following fields:
 
-- **Model**           : a Sim3TanksClass that works as an attribute.
-- **simulateModel**   : a function handle that works as a method.
-- **displayFields**   : a function handle that works as a method.
-- **resetModel**      : a function handle that works as a method.
-- **resetVariables**  : a function handle that works as a method.
-- **setDefaultModel** : a function handle that works as a method.
-- **getStates**       : a function handle that works as a method.
-- **getFlows**        : a function handle that works as a method.
-- **getMeasurements** : a function handle that works as a method.
-- **getValves**       : a function handle that works as a method.
-- **getFaults**       : a function handle that works as a method.
+- [**Model**](#model-attribute)                  : a Sim3TanksClass that works as an attribute.
+- [**simulateModel**](#simulatemodel-method)     : a function handle that works as a method.
+- [**displayFields**](#displayfields-method)     : a function handle that works as a method.
+- [**resetModel**](#resetmodel-method)           : a function handle that works as a method.
+- [**resetVariables**](#resetvariables-method)   : a function handle that works as a method.
+- [**setDefaultModel**](#setdefaultmodel-method) : a function handle that works as a method.
+- [**getStates**](#getstates-method)             : a function handle that works as a method.
+- [**getFlows**](#getflows-method)               : a function handle that works as a method.
+- [**getMeasurements**](#getmeasurements-method) : a function handle that works as a method.
+- [**getValves**](#getvalves-method)             : a function handle that works as a method.
+- [**getFaults**](#getfaults-method)             : a function handle that works as a method.
 
 ### Model attribute
 This attribute is used to define the system configurations. It is divided into the following subfields:
@@ -235,3 +243,25 @@ The following table describes the faults modeled in Sim3Tanks.
 | `f21` | Flow sensor fault `Q1`. |
 | `f22` | Flow sensor fault `Q2`. |
 | `f23` | Flow sensor fault `Q3`. |
+
+
+## Contributions
+Contributions are welcome! Please follow these steps:
+
+1. Fork this repository.
+2. Create a branch with your feature:
+```
+git checkout -b my-feature
+```
+3. Commit your changes:
+```
+git commit -m 'feat: add my feature to do something'
+```
+4. Push to the branch:
+```
+git push origin my-feature
+```
+5. Open a Pull Request.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
