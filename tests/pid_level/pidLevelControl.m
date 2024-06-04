@@ -1,5 +1,6 @@
 function [uk] = pidLevelControl(ek_past,uk_past,Ts)
 
+% Error signals at k, k-1, and k-2
 e1_k   = ek_past(1,3);
 e1_k_1 = ek_past(1,2);
 e1_k_2 = ek_past(1,1);
@@ -8,6 +9,7 @@ e2_k   = ek_past(2,3);
 e2_k_1 = ek_past(2,2);
 e2_k_2 = ek_past(2,1);
 
+% Past control signals at k-2
 u1_k_2 = uk_past(1,1);
 u2_k_2 = uk_past(2,1);
 
