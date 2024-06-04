@@ -18,20 +18,13 @@ elseif(~isa(varargin{1},'Sim3TanksClass'))
     error(errorMessage(07));
 elseif(mod(nargin(),2) ~= 0)
     error(errorMessage(22));
+else
+    objSim3Tanks = varargin{1};
 end
 
 %==========================================================================
 
-objSim3Tanks = varargin{1};
-x1op = varargin{2};
-
-if(~(isnumeric(x1op) && isfinite(x1op) && isscalar(x1op) && x1op>0))
-    error(errorMessage(03));
-end
-
-%==========================================================================
-
-[Param,ID] = checkPhysicalParam(objSim3Tanks); %#ok<*NASGU>
+[Param,ID] = checkPhysicalParam(objSim3Tanks);
 
 Rtank = Param.(ID{1});
 Hmax  = Param.(ID{2});
@@ -45,6 +38,16 @@ Qmax  = Param.(ID{8});
 Sc = pi()*(Rtank^2); % Cross-sectional area of the tanks (cm^2)
 S  = pi()*(Rpipe^2); % Cross-sectional area of the pipes (cm^2)
 Beta = mu*S*sqrt(2*g); % Constant value
+
+%==========================================================================
+
+x1op = varargin{2};
+
+if(~(isnumeric(x1op) && isfinite(x1op) && isscalar(x1op) && x1op>0 && x1op<Hmax))
+    error(errorMessage(03));
+end
+
+%==========================================================================
 
 % Operating point
 x2op = x1op;
@@ -78,9 +81,9 @@ D  = zeros(size(C,1),size(B,2));
 % Continuous model
 SYS.Model = ss(A,B,C,D);
 
-SYS.OpPoint.x_op = x_op;
-SYS.OpPoint.u_op = u_op;
-SYS.OpPoint.y_op = y_op;
+SYS.OpPoint.x = x_op;
+SYS.OpPoint.u = u_op;
+SYS.OpPoint.y = y_op;
 
 % Discrete model
 if(nargin()==4)
