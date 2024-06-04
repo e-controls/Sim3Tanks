@@ -50,6 +50,7 @@ This function does not have an input argument and returns an object with the fol
 - [**resetModel**](#resetmodel-method)           : a function handle that works as a method.
 - [**resetVariables**](#resetvariables-method)   : a function handle that works as a method.
 - [**setDefaultModel**](#setdefaultmodel-method) : a function handle that works as a method.
+- [**getLinearModel**](#getlinearmodel-method)   : a function handle that works as a method.
 - [**getStates**](#getstates-method)             : a function handle that works as a method.
 - [**getFlows**](#getflows-method)               : a function handle that works as a method.
 - [**getMeasurements**](#getmeasurements-method) : a function handle that works as a method.
@@ -174,6 +175,47 @@ This method does not have an input argument. It configures a Sim3Tanks object to
 objSim3Tanks.setDefaultModel();
 ```
 <img src="/assets/images/default_scenario.jpg">
+
+### getLinearModel method
+This method returns a linear model of the default scenario.
+```
+SYS = objSim3Tanks.getLinearModel(x1op,METHOD,TSPAN);
+```
+
+Input arguments: 
+- `x1op>0` (mandatory): define the operating point of T1. The remaining variables are found as follows:
+> x2op = x1op;
+> 
+> x3op = (4/5)*x1op;
+>
+> u1op = (Beta/Qp)*sqrt(x1op/5);
+> 
+> u2op = u1op;
+> 
+> Q13op = Beta*sign(x1op - x3op)*sqrt(abs(x1op - x3op));
+> 
+> Q23op = Beta*sign(x2op - x3op)*sqrt(abs(x2op - x3op));
+>
+> Q3op  = Beta*sqrt(x3op);
+>
+> x_op = [x1op; x2op; x3op];
+> 
+> u_op = [u1op; u2op];
+> 
+> y_op = [x1op; x2op; Q13op; Q23op; Q3op];
+
+- `METHOD`(optional): define the discretization method. The following options are valid:
+  - 'zoh';
+  - 'foh';
+  - 'impulse';
+  - 'tustin';
+  - 'matched';
+  - 'euler';
+    
+- `TSPAN`(optional): define the sampling time of the discretization method. If `METHOD` is passed as input, then `TSPAN` becomes mandatory.
+
+> [!NOTE]
+> A continuous model is returned if `METHOD` and `TSPAN` are omitted.
 
 ### getStates method
 This method does not have an input argument. It returns a data table with the values of the state variables. 
