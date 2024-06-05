@@ -1,4 +1,4 @@
-![Status](https://img.shields.io/badge/README-Updating...-blue)
+![Status](https://img.shields.io/badge/STATUS-Updating...-blue)
 ![License](https://img.shields.io/badge/License-_MIT-green)
 ![Language](https://img.shields.io/badge/Language-_MATLAB-green)
 > [!NOTE]
