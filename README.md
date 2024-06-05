@@ -9,16 +9,16 @@ Sim3Tanks is suitable for studying and developing process control, fault detecti
 
 The original paper that publishes the simulator can be accessed at <http://dx.doi.org/10.1109/ACCESS.2018.2874752> and its repository at <https://github.com/e-controls/Sim3Tanks_old>
 
-## Table of Contents
+## 1. Table of Contents
 
-- [Sim3Tanks Plant](#sim3tanks-plant)
-- [Sim3Tanks Object](#sim3tanks-object)
-- [Fault Symbols](#fault-symbols)
-- [Contributions](#contributions)
-- [License](#license)
+- [Sim3Tanks Plant Description](#2-sim3tanks-plant-description)
+- [Fault Description and Symbols](#3-fault-description-and-symbols)
+- [How to Create and Configure a Sim3Tanks Object](#4-how-to-create-and-configure-a-sim3tanks-object)
+- [Contributions](#5-contributions)
+- [License](#6-license)
 
 
-## Sim3Tanks Plant
+## 2. Sim3Tanks Plant Description
 Sim3Tanks simulates the dynamic behavior of the following plant:
 
 <p align="center">
@@ -35,7 +35,46 @@ Sim3Tanks simulates the dynamic behavior of the following plant:
 
 - The tanks are identical and have the same radius and maximum height. Similarly, all pipes are also identical and have the same radius value. The system has three level sensors (one per tank) and ten flow sensors (one per valve), and any valve can be configured as an actuator.
 
-## Sim3Tanks Object
+## 3. Fault Description and Symbols
+The following table briefly describes the faults modeled in Sim3Tanks.
+
+| Symbol | Description |
+| --- | --- |
+| `f1`   | Blocking/Clogging in pump 1, if `ValveSettings.Kp1.OperationMode = 'Open'`. |
+|         | Disturbance in tank 1, if `ValveSettings.Kp1.OperationMode = 'Closed'`. |
+| `f2`   | Blocking/Clogging in pump 2, if `ValveSettings.Kp2.OperationMode = 'Open'`. |
+|         | Disturbance in tank 2, if `ValveSettings.Kp2.OperationMode = 'Closed'`. |
+| `f3`   | Blocking/Clogging in pump 3, if `ValveSettings.Kp3.OperationMode = 'Open'`. |
+|         | Disturbance in tank 3, if `ValveSettings.Kp3.OperationMode = 'Closed'`. |
+| `f4`   | Clogging in the transmission pipe from tank 1 to tank 3, if `ValveSettings.Ka.OperationMode = 'Open'`. |
+|         | Leakage through the transmission pipe from tank 1 to tank 3, if `ValveSettings.Ka.OperationMode = 'Closed'`. |
+| `f5`   | Clogging in the transmission pipe from tank 2 to tank 3, if `ValveSettings.Kb.OperationMode = 'Open'`.  |
+|         | Leakage through the transmission pipe from tank 2 to tank 3, if `ValveSettings.Kb.OperationMode = 'Closed'`. |
+| `f6`   | Clogging in the connection pipe from tank 1 to tank 3, if `ValveSettings.K13.OperationMode = 'Open'`. |
+|         | Leakage through the connection pipe from tank 1 to tank 3, if `ValveSettings.K13.OperationMode = 'Closed'`. |
+| `f7`   | Clogging in the connection pipe from tank 2 to tank 3, if `ValveSettings.K23.OperationMode = 'Open'`. |
+|         | Leakage through the connection pipe from tank 2 to tank 3, if `ValveSettings.K23.OperationMode = 'Closed'`. |
+| `f8`   | Clogging in output pipe of the tank 1, if `ValveSettings.K1.OperationMode = 'Open'`. |
+|         | Leakage in tank 1, if `ValveSettings.K1.OperationMode = 'Closed'`. |
+| `f9`   | Clogging in output pipe of the tank 2, if `ValveSettings.K2.OperationMode = 'Open'`. |
+|         | Leakage in tank 2, if `ValveSettings.K2.OperationMode = 'Closed'`. |
+| `f10` | Clogging in output pipe of the tank 3, if `ValveSettings.K3.OperationMode = 'Open'`. |
+|         | Leakage in tank 3, if `ValveSettings.K3.OperationMode = 'Closed'`. |
+| `f11` | Level sensor fault `h1`. |
+| `f12` | Level sensor fault `h2`. |
+| `f13` | Level sensor fault `h3`. |
+| `f14` | Flow sensor fault `Q1in`. |
+| `f15` | Flow sensor fault `Q2in`. |
+| `f16` | Flow sensor fault `Q2in`. |
+| `f17` | Flow sensor fault `Qa`. |
+| `f18` | Flow sensor fault `Qb`. |
+| `f19` | Flow sensor fault `Q13`. |
+| `f20` | Flow sensor fault `Q23`. |
+| `f21` | Flow sensor fault `Q1`. |
+| `f22` | Flow sensor fault `Q2`. |
+| `f23` | Flow sensor fault `Q3`. |
+
+## 4. How to Create and Configure a Sim3Tanks Object
 A Sim3Tanks object is created using the `createSim3Tanks()` function.
 
 ```sh
@@ -44,20 +83,21 @@ objSim3Tanks = createSim3Tanks();
 
 This function does not have an input argument and returns an object with the following fields:
 
-- [**Model**](#model-attribute)                  : a Sim3TanksClass that works as an attribute.
-- [**simulateModel**](#simulatemodel-method)     : a function handle that works as a method.
-- [**displayFields**](#displayfields-method)     : a function handle that works as a method.
-- [**resetModel**](#resetmodel-method)           : a function handle that works as a method.
-- [**resetVariables**](#resetvariables-method)   : a function handle that works as a method.
-- [**setDefaultModel**](#setdefaultmodel-method) : a function handle that works as a method.
-- [**getLinearModel**](#getlinearmodel-method)   : a function handle that works as a method.
-- [**getStates**](#getstates-method)             : a function handle that works as a method.
-- [**getFlows**](#getflows-method)               : a function handle that works as a method.
-- [**getMeasurements**](#getmeasurements-method) : a function handle that works as a method.
-- [**getValves**](#getvalves-method)             : a function handle that works as a method.
-- [**getFaults**](#getfaults-method)             : a function handle that works as a method.
+- [**Model**](#41-model-attribute)                  : a Sim3TanksClass that works as an attribute.
+- [**simulateModel**](#42-simulatemodel-method)     : a function handle that works as a method.
+- [**displayFields**](#43-displayfields-method)     : a function handle that works as a method.
+- [**resetModel**](#44-resetmodel-method)           : a function handle that works as a method.
+- [**resetVariables**](#45-resetvariables-method)   : a function handle that works as a method.
+- [**setDefaultModel**](#46-setdefaultmodel-method) : a function handle that works as a method.
+- [**getLinearModel**](#47-getlinearmodel-method)   : a function handle that works as a method.
+- [**getStates**](#48-getstates-method)             : a function handle that works as a method.
+- [**getFlows**](#49-getflows-method)               : a function handle that works as a method.
+- [**getMeasurements**](#410-getmeasurements-method) : a function handle that works as a method.
+- [**getValves**](#411-getvalves-method)             : a function handle that works as a method.
+- [**getFaults**](#412-getfaults-method)             : a function handle that works as a method.
 
-### Model attribute
+---
+### 4.1. Model attribute
 This attribute is used to define the system configurations. It is divided into the following subfields:
 
 - **PhysicalParam**: used to define the system's physical structure.
@@ -142,8 +182,8 @@ This attribute is used to define the system configurations. It is divided into t
     ```
     objSim3Tanks.Model.InitialCondition = [40 25 20];
     ```
-
-### simulateModel method
+---
+### 4.2. simulateModel method
 This method simulates the dynamic behavior of the three-tank system.
 ```
 [y,x,q] = objSim3Tanks.simulateModel('Qp1',VALUE1,'Qp2',VALUE2,'Qp3',VALUE3,'Tspan',VALUE4);
@@ -151,32 +191,37 @@ This method simulates the dynamic behavior of the three-tank system.
 > [!IMPORTANT]
 > Sim3Tanks uses the ode45 solver to solve the system differential equations numerically, and it is highly recommended that the simulation time increment be used as the Tspan.
 
-### displayFields method
+---
+### 4.3. displayFields method
 This method does not have an input argument. It displays all fields and subfields of an object on the command line.
 ```
 objSim3Tanks.displayFields();
 ```
 
-### resetModel method
+---
+### 4.4. resetModel method
 This method does not have an input argument. It clears all variables and restores an object's settings.
 ```
 objSim3Tanks.resetModel();
 ```
 
-### resetVariables method
+---
+### 4.5. resetVariables method
 This method does not have an input argument. It clears all state variables, valve, fault, flow signals, and sensor measurement data.
 ```
 objSim3Tanks.resetVariables();
 ```
 
-### setDefaultModel method
+---
+### 4.6. setDefaultModel method
 This method does not have an input argument. It configures a Sim3Tanks object to the default model.
 ```
 objSim3Tanks.setDefaultModel();
 ```
 <img src="/assets/images/default_scenario.jpg">
 
-### getLinearModel method
+---
+### 4.7. getLinearModel method
 This method returns a linear model of the default scenario.
 ```
 [SYS,OP] = objSim3Tanks.getLinearModel(x1op,METHOD,TSPAN);
@@ -217,77 +262,42 @@ Input arguments:
 > [!NOTE]
 > A continuous model is returned if `METHOD` and `TSPAN` are omitted.
 
-### getStates method
+---
+### 4.8. getStates method
 This method does not have an input argument. It returns a data table with the values of the state variables. 
 ```
 objSim3Tanks.getStates();
 ```
 
-### getFlows method
+---
+### 4.9. getFlows method
 This method does not have an input argument. It returns a data table with the values of the flow variables.
 ```
 objSim3Tanks.getFlows();
 ```
 
-### getMeasurements method
+---
+### 4.10. getMeasurements method
 This method does not have an input argument. It returns a data table with the values of the measured variables.
 ```
 objSim3Tanks.getMeasurements();
 ```
 
-### getValves method
+---
+### 4.11. getValves method
 This method does not have an input argument. It returns a data table with the values of the valve signals.
 ```
 objSim3Tanks.getValves();
 ```
 
-### getFaults method
+---
+### 4.12. getFaults method
 This method does not have an input argument. It returns a data table with the values of the fault signals.
 ```
 objSim3Tanks.getFaults();
 ```
 
-## Fault Symbols
-The following table describes the faults modeled in Sim3Tanks.
-
-| Symbol | Description |
-| --- | --- |
-| `f1`   | Blocking/Clogging in pump 1, if `ValveSettings.Kp1.OperationMode = 'Open'`. |
-|         | Disturbance in tank 1, if `ValveSettings.Kp1.OperationMode = 'Closed'`. |
-| `f2`   | Blocking/Clogging in pump 2, if `ValveSettings.Kp2.OperationMode = 'Open'`. |
-|         | Disturbance in tank 2, if `ValveSettings.Kp2.OperationMode = 'Closed'`. |
-| `f3`   | Blocking/Clogging in pump 3, if `ValveSettings.Kp3.OperationMode = 'Open'`. |
-|         | Disturbance in tank 3, if `ValveSettings.Kp3.OperationMode = 'Closed'`. |
-| `f4`   | Clogging in the transmission pipe from tank 1 to tank 3, if `ValveSettings.Ka.OperationMode = 'Open'`. |
-|         | Leakage through the transmission pipe from tank 1 to tank 3, if `ValveSettings.Ka.OperationMode = 'Closed'`. |
-| `f5`   | Clogging in the transmission pipe from tank 2 to tank 3, if `ValveSettings.Kb.OperationMode = 'Open'`.  |
-|         | Leakage through the transmission pipe from tank 2 to tank 3, if `ValveSettings.Kb.OperationMode = 'Closed'`. |
-| `f6`   | Clogging in the connection pipe from tank 1 to tank 3, if `ValveSettings.K13.OperationMode = 'Open'`. |
-|         | Leakage through the connection pipe from tank 1 to tank 3, if `ValveSettings.K13.OperationMode = 'Closed'`. |
-| `f7`   | Clogging in the connection pipe from tank 2 to tank 3, if `ValveSettings.K23.OperationMode = 'Open'`. |
-|         | Leakage through the connection pipe from tank 2 to tank 3, if `ValveSettings.K23.OperationMode = 'Closed'`. |
-| `f8`   | Clogging in output pipe of the tank 1, if `ValveSettings.K1.OperationMode = 'Open'`. |
-|         | Leakage in tank 1, if `ValveSettings.K1.OperationMode = 'Closed'`. |
-| `f9`   | Clogging in output pipe of the tank 2, if `ValveSettings.K2.OperationMode = 'Open'`. |
-|         | Leakage in tank 2, if `ValveSettings.K2.OperationMode = 'Closed'`. |
-| `f10` | Clogging in output pipe of the tank 3, if `ValveSettings.K3.OperationMode = 'Open'`. |
-|         | Leakage in tank 3, if `ValveSettings.K3.OperationMode = 'Closed'`. |
-| `f11` | Level sensor fault `h1`. |
-| `f12` | Level sensor fault `h2`. |
-| `f13` | Level sensor fault `h3`. |
-| `f14` | Flow sensor fault `Q1in`. |
-| `f15` | Flow sensor fault `Q2in`. |
-| `f16` | Flow sensor fault `Q2in`. |
-| `f17` | Flow sensor fault `Qa`. |
-| `f18` | Flow sensor fault `Qb`. |
-| `f19` | Flow sensor fault `Q13`. |
-| `f20` | Flow sensor fault `Q23`. |
-| `f21` | Flow sensor fault `Q1`. |
-| `f22` | Flow sensor fault `Q2`. |
-| `f23` | Flow sensor fault `Q3`. |
-
-
-## Contributions
+## 5. Contributions
 Contributions are welcome! Please follow these steps:
 
 1. Fork this repository.
@@ -305,5 +315,5 @@ git push origin my-feature
 ```
 5. Open a Pull Request.
 
-## License
+## 6. License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
