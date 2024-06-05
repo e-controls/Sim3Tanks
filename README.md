@@ -179,7 +179,7 @@ objSim3Tanks.setDefaultModel();
 ### getLinearModel method
 This method returns a linear model of the default scenario.
 ```
-SYS = objSim3Tanks.getLinearModel(x1op,METHOD,TSPAN);
+[SYS,OP] = objSim3Tanks.getLinearModel(x1op,METHOD,TSPAN);
 ```
 
 Input arguments: 
