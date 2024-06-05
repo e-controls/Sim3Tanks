@@ -129,7 +129,7 @@ for k = 2 : N % k=1 conrresponds to initial condition
 
 
     % +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    % #BEGIN: Digital PID control for flow Q3 +++++++++++++++++++++++++++++
+    % #BEGIN: Digital PID control for levels h1 and h2 ++++++++++++++++++++
     % +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     if(k>2)
         ek_past = sp(:,k-2:k) - yk(1:2,k-2:k); % [e(k-2) e(k-1) e(k)]
@@ -139,7 +139,7 @@ for k = 2 : N % k=1 conrresponds to initial condition
         uk(:,k) = zeros(2,1);
     end
     % ---------------------------------------------------------------------
-    % #END: Digital PID control for flow Q3 -------------------------------
+    % #END: Digital PID control for levels h1 and h2 ----------------------
     % ---------------------------------------------------------------------
 
 end
