@@ -3,7 +3,7 @@ function [varargout] = getLinearModel(varargin)
 % model of the default scenario.
 %
 % Example:
-%   SYS = getLinearModel(objSim3Tanks,x1op,METHOD,TSPAN)
+%   [SYS,OP] = getLinearModel(objSim3Tanks,x1op,METHOD,TSPAN)
 
 % Written by Arllem Farias, Jun/2024.
 % Last update Jun/2024 by Arllem Farias.
@@ -79,11 +79,11 @@ C  = [Cx;Cq];
 D  = zeros(size(C,1),size(B,2));
 
 % Continuous model
-SYS.Model = ss(A,B,C,D);
+SYS = ss(A,B,C,D);
 
-SYS.OpPoint.x = x_op;
-SYS.OpPoint.u = u_op;
-SYS.OpPoint.y = y_op;
+OP.x = x_op;
+OP.u = u_op;
+OP.y = y_op;
 
 % Discrete model
 if(nargin()==4)
@@ -109,14 +109,15 @@ if(nargin()==4)
 
     if(strcmpi(METHOD,options.euler))
         nx = size(A,2); % x = [h1 h2 h3]'
-        SYS.Model = ss(eye(nx)+TS*A,TS*B,C,D,TS);
+        SYS = ss(eye(nx)+TS*A,TS*B,C,D,TS);
 
     else
         % Use c2d function from MATLAB
-        SYS.Model = c2d(SYS.Model,TS,METHOD);
+        SYS = c2d(SYS,TS,METHOD);
     end
 end
 
 varargout{1} = SYS;
+varargout{2} = OP;
 
 end
