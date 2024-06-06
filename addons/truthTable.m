@@ -3,6 +3,12 @@ function [T] = truthTable(N)
 
 % Written by Arllem Farias, 2024.
 
+if(nargin() ~= 1)
+    error('This function must have just one input argument.');
+elseif(N~=floor(N) || N<=0)
+    error('The input argument must be a positive integer.');
+end
+
 T = zeros(2^N,N);
 
 cont = 0;
@@ -18,5 +24,7 @@ for j = 1 : N
         end
     end
 end
+
+T = logical(T);
 
 end
