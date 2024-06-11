@@ -34,13 +34,13 @@ switch codeError
     case 03
         msg = 'Invalid input parameter.';
     case 04
-        msg = 'The Sim3Tanks global variables have not been declared.';
+        msg = 'The lists with field names cannot be empty (check Sim3TanksModel.m file).';
     case 05
         msg = 'The state variabels must be finite.';
     case 06
         msg = 'The dimensions are not consistent.';
     case 07
-        msg = 'The input argument must be a Sim3TanksClass object.';
+        msg = 'The input argument must be a Sim3TanksModel object.';
     case 08
         msg = 'The input argument must be a row vector.';
     case 09
