@@ -11,14 +11,13 @@ if(nargin()>1)
     error(errorMessage(02));
 else
     objSim3Tanks = varargin{1};
-    Model = properties(objSim3Tanks);
 end
 
 %==========================================================================
 
-LIST_OF_STATES = objSim3Tanks.(Model{1}).LIST_OF_STATES;
+LIST_OF_STATES = Sim3TanksModel.LIST_OF_STATES;
 
-x = objSim3Tanks.(Model{1}).getStateVariables();
+x = objSim3Tanks.getInternalStateVariables();
 
 if(~isempty(x))
     x = array2table(x,'VariableNames',LIST_OF_STATES);
