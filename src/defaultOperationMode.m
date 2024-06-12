@@ -14,11 +14,12 @@ function [varargout] = defaultOperationMode(varargin)
 %       v = 'K1'
 %       v = 'K2'
 %       v = 'K3'
+%
 % If the input argument is omitted, all valve states are grouped and
-% returned into a single structure.
+% returned into a single struct.
 
 % Written by Arllem Farias, January/2024.
-% Last update January/2024 by Arllem Farias.
+% Last update June/2024 by Arllem Farias.
 
 %==========================================================================
 
@@ -26,14 +27,6 @@ if(nargin()>1)
     error(errorMessage(02));
 end
 
-%==========================================================================
-global SIM3TANKS_LISTS; %#ok<*GVMIS>
-
-if(isempty(SIM3TANKS_LISTS))
-    error(errorMessage(04));
-else
-    LIST_OF_VALVES = SIM3TANKS_LISTS.LIST_OF_VALVES;
-end
 %==========================================================================
 
 valve{1}  = 'Open';   % Default state of the valve Kp1
@@ -46,6 +39,8 @@ valve{7}  = 'Open';   % Default state of the valve K23
 valve{8}  = 'Closed'; % Default state of the valve K1
 valve{9}  = 'Closed'; % Default state of the valve K2
 valve{10} = 'Open';   % Default state of the valve K3
+
+LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
 
 if(numel(valve) ~= numel(LIST_OF_VALVES))
     error(errorMessage(06));
@@ -76,6 +71,4 @@ elseif(nargin()==1)
 
 else
     error(errorMessage(00));
-end
-
 end

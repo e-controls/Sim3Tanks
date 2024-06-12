@@ -11,14 +11,13 @@ if(nargin()>1)
     error(errorMessage(02));
 else
     objSim3Tanks = varargin{1};
-    Model = properties(objSim3Tanks);
 end
 
 %==========================================================================
 
-LIST_OF_FAULTS = objSim3Tanks.(Model{1}).LIST_OF_FAULTS;
+LIST_OF_FAULTS = Sim3TanksModel.LIST_OF_FAULTS;
 
-f = objSim3Tanks.(Model{1}).getFaultSignals();
+f = objSim3Tanks.getInternalFaultSignals();
 
 if(~isempty(f))
     f = array2table(f,'VariableNames',LIST_OF_FAULTS);

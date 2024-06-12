@@ -27,8 +27,6 @@ function [y,x,q] = simulateModel(varargin)
 
 if(mod(nargin(),2) == 0)
     error(errorMessage(21));
-elseif(~isa(varargin{1},'Sim3TanksClass'))
-    error(errorMessage(07));
 else
     objSim3Tanks = varargin{1};
 end

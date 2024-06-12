@@ -34,8 +34,7 @@ classdef Sim3TanksModel < handle
 
     %======================================================================
 
-    methods (Access = public, Hidden = true)
-
+    methods % Class Constructor
         function obj = Sim3TanksModel(varargin)
 
             % Check input arguments
@@ -46,6 +45,9 @@ classdef Sim3TanksModel < handle
             obj.prepareModel();
 
         end
+    end
+
+    methods (Access = private, Hidden = true)
 
         function prepareModel(this)
 
@@ -58,27 +60,27 @@ classdef Sim3TanksModel < handle
             for i = 1 : numel(this.LIST_OF_VALVES)
                 this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).OperationMode = 'Closed';
                 this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).EnableControl = false;
-                this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).OpeningRate = 0;
+                this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).OpeningRate = []; %0;
             end
 
             % FaultSettings
             for i = 1 : numel(this.LIST_OF_FAULTS)
                 this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).EnableSignal = false;
-                this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Magnitude = 0;
+                this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Magnitude = []; %0;
             end
 
             % ProcessNoise
-            Nx = numel(this.LIST_OF_STATES);
+            %Nx = numel(this.LIST_OF_STATES);
             this.Model.(this.LIST_OF_FIELDS{4}).EnableSignal = false;
-            this.Model.(this.LIST_OF_FIELDS{4}).Magnitude = zeros(1,Nx);
+            this.Model.(this.LIST_OF_FIELDS{4}).Magnitude = []; %zeros(1,Nx);
 
             % MeasurementNoise
-            Nq = numel(this.LIST_OF_FLOWS);
+            %Nq = numel(this.LIST_OF_FLOWS);
             this.Model.(this.LIST_OF_FIELDS{5}).EnableSignal = false;
-            this.Model.(this.LIST_OF_FIELDS{5}).Magnitude = zeros(1,Nx+Nq);
+            this.Model.(this.LIST_OF_FIELDS{5}).Magnitude = []; %zeros(1,Nx+Nq);
 
             % InitialCondition
-            this.Model.(this.LIST_OF_FIELDS{6}) = zeros(1,Nx);
+            this.Model.(this.LIST_OF_FIELDS{6}) = []; %zeros(1,Nx);
 
         end
 
@@ -96,7 +98,7 @@ classdef Sim3TanksModel < handle
 
     %======================================================================
 
-    methods (Access = public, Hidden = true) % Setter methods
+    methods (Access = private, Hidden = true) % Setter methods
 
         function setInternalStateVariables(this,x)
             N = numel(this.LIST_OF_STATES);
@@ -229,7 +231,7 @@ classdef Sim3TanksModel < handle
 
     %======================================================================
 
-    methods (Access = protected, Hidden = true) % Getter methods
+    methods (Access = private, Hidden = true) % Getter methods
 
         function x = getInternalStateVariables(varargin)
             this = varargin{1};

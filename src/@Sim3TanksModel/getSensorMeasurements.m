@@ -11,15 +11,14 @@ if(nargin()>1)
     error(errorMessage(02));
 else
     objSim3Tanks = varargin{1};
-    Model = properties(objSim3Tanks);
 end
 
 %==========================================================================
 
-LIST_OF_STATES = objSim3Tanks.(Model{1}).LIST_OF_STATES;
-LIST_OF_FLOWS  = objSim3Tanks.(Model{1}).LIST_OF_FLOWS;
+LIST_OF_STATES = Sim3TanksModel.LIST_OF_STATES;
+LIST_OF_FLOWS  = Sim3TanksModel.LIST_OF_FLOWS;
 
-y = objSim3Tanks.(Model{1}).getSensorMeasurements();
+y = objSim3Tanks.getInternalSensorMeasurements();
 
 if(~isempty(y))
     y = array2table(y,'VariableNames',[LIST_OF_STATES;LIST_OF_FLOWS]);

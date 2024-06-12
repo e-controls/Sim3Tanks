@@ -1,21 +1,17 @@
-function [varargout] = getLinearModel(varargin)
-% getLinearModel is a Sim3Tanks function. This function returns a linear
+function [varargout] = getDefaultLinearModel(varargin)
+% getDefaultLinearModel is a Sim3Tanks method. This method returns a linear
 % model of the default scenario.
 %
 % Example:
-%   [SYS,OP] = getLinearModel(objSim3Tanks,x1op,METHOD,TSPAN)
+%   [SYS,OP] = getDefaultLinearModel(objSim3Tanks,x1op,METHOD,TSPAN)
 
 % Written by Arllem Farias, Jun/2024.
 % Last update Jun/2024 by Arllem Farias.
 
 %==========================================================================
 
-if(nargin()==0)
-    error(errorMessage(01));
-elseif(nargin()>4)
+if(nargin()>4)
     error(errorMessage(02));
-elseif(~isa(varargin{1},'Sim3TanksClass'))
-    error(errorMessage(07));
 elseif(mod(nargin(),2) ~= 0)
     error(errorMessage(22));
 else
@@ -112,7 +108,7 @@ if(nargin()==4)
         SYS = ss(eye(nx)+TS*A,TS*B,C,D,TS);
 
     else
-        % Use c2d function from MATLAB
+        % c2d function from MATLAB
         SYS = c2d(SYS,TS,METHOD);
     end
 end

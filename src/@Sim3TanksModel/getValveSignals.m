@@ -11,14 +11,13 @@ if(nargin()>1)
     error(errorMessage(02));
 else
     objSim3Tanks = varargin{1};
-    Model = properties(objSim3Tanks);
 end
 
 %==========================================================================
 
-LIST_OF_VALVES = objSim3Tanks.(Model{1}).LIST_OF_VALVES;
+LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
 
-v = objSim3Tanks.(Model{1}).getValveSignals();
+v = objSim3Tanks.getInternalValveSignals();
 
 if(~isempty(v))
     v = array2table(v,'VariableNames',LIST_OF_VALVES);
