@@ -83,18 +83,18 @@ objSim3Tanks = createSim3Tanks();
 
 This function does not have an input argument and returns an object with the following fields:
 
-- [**Model**](#41-model-attribute)                  : a Sim3TanksClass that works as an attribute.
-- [**simulateModel**](#42-simulatemodel-method)     : a function handle that works as a method.
-- [**displayFields**](#43-displayfields-method)     : a function handle that works as a method.
-- [**resetModel**](#44-resetmodel-method)           : a function handle that works as a method.
-- [**resetVariables**](#45-resetvariables-method)   : a function handle that works as a method.
-- [**setDefaultModel**](#46-setdefaultmodel-method) : a function handle that works as a method.
-- [**getLinearModel**](#47-getlinearmodel-method)   : a function handle that works as a method.
-- [**getStates**](#48-getstates-method)             : a function handle that works as a method.
-- [**getFlows**](#49-getflows-method)               : a function handle that works as a method.
-- [**getMeasurements**](#410-getmeasurements-method) : a function handle that works as a method.
-- [**getValves**](#411-getvalves-method)             : a function handle that works as a method.
-- [**getFaults**](#412-getfaults-method)             : a function handle that works as a method.
+- [**Model**](#41-model-attribute)                               : a Sim3TanksClass that works as an attribute.
+- [**simulateModel**](#42-simulatemodel-method)                  : a function handle that works as a method.
+- [**displayFields**](#43-displayfields-method)                  : a function handle that works as a method.
+- [**clearModel**](#44-clearmodel-method)                        : a function handle that works as a method.
+- [**clearVariables**](#45-clearvariables-method)                : a function handle that works as a method.
+- [**setDefaultModel**](#46-setdefaultmodel-method)              : a function handle that works as a method.
+- [**getDefaultLinearModel**](#47-getdefaultlinearmodel-method)  : a function handle that works as a method.
+- [**getStateVariables**](#48-getstatevariables-method)          : a function handle that works as a method.
+- [**getFlowVariables**](#49-getflowvariables-method)            : a function handle that works as a method.
+- [**getSensorMeasurements**](#410-getsensormeasurements-method) : a function handle that works as a method.
+- [**getValveSignals**](#411-getvalvesignals-method)             : a function handle that works as a method.
+- [**getFaultSignals**](#412-getfaultsignals-method)             : a function handle that works as a method.
 
 ---
 ### 4.1. Model attribute
@@ -199,17 +199,17 @@ objSim3Tanks.displayFields();
 ```
 
 ---
-### 4.4. resetModel method
+### 4.4. clearModel method
 This method does not have an input argument. It clears all variables and restores an object's settings.
 ```
-objSim3Tanks.resetModel();
+objSim3Tanks.clearModel();
 ```
 
 ---
-### 4.5. resetVariables method
+### 4.5. clearVariables method
 This method does not have an input argument. It clears all state variables, valve, fault, flow signals, and sensor measurement data.
 ```
-objSim3Tanks.resetVariables();
+objSim3Tanks.clearVariables();
 ```
 
 ---
@@ -221,10 +221,10 @@ objSim3Tanks.setDefaultModel();
 <img src="/assets/images/default_scenario.jpg">
 
 ---
-### 4.7. getLinearModel method
+### 4.7. getDefaultLinearModel method
 This method returns a linear model of the default scenario.
 ```
-[SYS,OP] = objSim3Tanks.getLinearModel(x1op,METHOD,TSPAN);
+[SYS,OP] = objSim3Tanks.getDefaultLinearModel(x1op,METHOD,TSPAN);
 ```
 
 Input arguments: 
@@ -263,38 +263,38 @@ Input arguments:
 > A continuous model is returned if `METHOD` and `TSPAN` are omitted.
 
 ---
-### 4.8. getStates method
+### 4.8. getStateVariables method
 This method does not have an input argument. It returns a data table with the values of the state variables. 
 ```
-objSim3Tanks.getStates();
+objSim3Tanks.getStateVariables();
 ```
 
 ---
-### 4.9. getFlows method
+### 4.9. getFlowVariables method
 This method does not have an input argument. It returns a data table with the values of the flow variables.
 ```
-objSim3Tanks.getFlows();
+objSim3Tanks.getFlowVariables();
 ```
 
 ---
-### 4.10. getMeasurements method
+### 4.10. getSensorMeasurements method
 This method does not have an input argument. It returns a data table with the values of the measured variables.
 ```
-objSim3Tanks.getMeasurements();
+objSim3Tanks.getSensorMeasurements();
 ```
 
 ---
-### 4.11. getValves method
+### 4.11. getValveSignals method
 This method does not have an input argument. It returns a data table with the values of the valve signals.
 ```
-objSim3Tanks.getValves();
+objSim3Tanks.getValveSignals();
 ```
 
 ---
-### 4.12. getFaults method
+### 4.12. getFaultSignals method
 This method does not have an input argument. It returns a data table with the values of the fault signals.
 ```
-objSim3Tanks.getFaults();
+objSim3Tanks.getFaultSignals();
 ```
 
 ## 5. Contributions
