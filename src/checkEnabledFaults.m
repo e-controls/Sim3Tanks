@@ -33,19 +33,27 @@ faultMag = zeros(size(LIST_OF_FAULTS));
 faultID = cell(size(LIST_OF_FAULTS));
 
 for i = 1 : numel(LIST_OF_FAULTS)
-    
+
     fault = objSim3Tanks.Model.(LIST_OF_FIELDS{3}).(LIST_OF_FAULTS{i});
-    
+
     if(islogical(fault.EnableSignal) && fault.EnableSignal)
-        %Falta verificar quando fault.Magnitude = []
-        
-        faultMag(i) = satSignal(fault.Magnitude,[0 1]);
-        faultID{i}  = LIST_OF_FAULTS{i};
-    
+
+        if(isempty(fault.Magnitude))
+            warning(getMessage('WARN001'));
+            faultMag(i) = 0;
+        elseif(fault.Magnitude<0 || fault.Magnitude>1)
+            warning(getMessage('WARN002'));
+            faultMag(i) = satSignal(fault.Magnitude,[0 1]);
+        else
+            faultMag(i) = fault.Magnitude;
+        end
+
+        faultID{i} = LIST_OF_FAULTS{i};
+
     elseif(islogical(fault.EnableSignal))
         faultMag(i) = 0;
-        faultID{i}  = [];
-    
+        faultID{i} = [];
+
     else
         error(errorMessage(12));
     end

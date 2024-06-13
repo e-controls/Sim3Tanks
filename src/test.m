@@ -1,4 +1,3 @@
-restoredefaultpath;
 clc; clear all; close all;
 
 m1 = Sim3TanksModel;
@@ -47,6 +46,18 @@ m2.Model.PhysicalParam.CorrectionTerm = 100;
 m2.Model.FaultSettings.f1.EnableSignal = true;
 m2.Model.FaultSettings.f1.Magnitude = 0.5;
 
+
+m1.clearModel;
+m1.setDefaultModel;
+
+
+% m1.Model.FaultSettings.f1.EnableSignal = true;
+% m1.Model.FaultSettings.f1.Magnitude = [];
+% [f,fID] = checkEnabledFaults(m1)
+
+% m1.Model.ValveSettings.Kp1.EnableControl = true;
+% m1.Model.ValveSettings.Kp1.OpeningRate =1.1;
+% [v,vID] = checkEnabledValves(m1)
 
 
 

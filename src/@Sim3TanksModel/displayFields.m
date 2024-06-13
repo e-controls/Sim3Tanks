@@ -19,7 +19,8 @@ end
 
 fields = fieldnames(structVar);
 isThereSubfield = false;
-PREFIX = '|--';
+PREFIX1 = '+-- ';
+PREFIX2 = 'O-- ';
 
 for i = 1 : numel(fields)
     currentField = fields{i};
@@ -28,14 +29,14 @@ for i = 1 : numel(fields)
 
     if(isstruct(fieldValue))
         isThereSubfield = true;
-        fprintf('\n%s<strong>%s</strong> (Struct)\n', PREFIX, currentField);
+        fprintf('\n%s<strong>%s</strong> (Struct)\n', PREFIX1, currentField);
         displayFields(varargin{1},fieldValue);
 
     elseif(isThereSubfield)
-        fprintf('\n%s<strong>%s</strong>: %s (%s)\n', PREFIX, ...
+        fprintf('\n%s<strong>%s</strong>: %s (%s)\n', PREFIX1, ...
             currentField, mat2str(fieldValue), fieldType);
     else
-        fprintf('\t%s%s: %s (%s)\n', PREFIX, ...
+        fprintf('\t%s%s: %s (%s)\n', PREFIX2, ...
             currentField, mat2str(fieldValue), fieldType);
     end
 
