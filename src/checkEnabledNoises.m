@@ -6,7 +6,7 @@ function [varargout] = checkEnabledNoises(varargin)
 % value will be an array of 0s with appropriate dimensions.
 
 % Written by Arllem Farias, January/2024.
-% Last update February/2024 by Arllem Farias.
+% Last update June/2024 by Arllem Farias.
 
 %==========================================================================
 
@@ -16,32 +16,33 @@ elseif(nargin()>1)
     error(errorMessage(02));
 end
 
-if(isa(varargin{1},'Sim3TanksClass'))
+if(isa(varargin{1},'Sim3TanksModel'))
     objSim3Tanks = varargin{1};
-    ClassPropers = properties(objSim3Tanks);
 else
     error(errorMessage(07));
 end
 
 %==========================================================================
-global SIM3TANKS_LISTS; %#ok<*GVMIS>
 
-if(isempty(SIM3TANKS_LISTS))
-    error(errorMessage(04));
-else
-    Nx = numel(SIM3TANKS_LISTS.LIST_OF_STATES);
-    Nq = numel(SIM3TANKS_LISTS.LIST_OF_FLOWS);
-end
+LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
+Nx = numel(Sim3TanksModel.LIST_OF_STATES);
+Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
+
 %==========================================================================
 
-pNoise = objSim3Tanks.(ClassPropers{4});
+pNoise = objSim3Tanks.Model.(LIST_OF_FIELDS{4});
 
 if(islogical(pNoise.EnableSignal) && pNoise.EnableSignal)
-    if(numel(pNoise.Magnitude)~=Nx)
+
+    if(isempty(pNoise.Magnitude))
+        warning(getMessage('WARN005'));
+        pNoiseMag = zeros(1,Nx);
+    elseif(numel(pNoise.Magnitude)~=Nx)
         error(errorMessage(06));
     else
         pNoiseMag = pNoise.Magnitude;
     end
+
 elseif(islogical(pNoise.EnableSignal))
     pNoiseMag = zeros(1,Nx);
 else
@@ -50,14 +51,19 @@ end
 
 %==========================================================================
 
-mNoise = objSim3Tanks.(ClassPropers{5});
+mNoise = objSim3Tanks.Model.(LIST_OF_FIELDS{5});
 
 if(islogical(mNoise.EnableSignal) && mNoise.EnableSignal)
-    if(numel(mNoise.Magnitude)~=Nx+Nq)
+
+    if(isempty(mNoise.Magnitude))
+        warning(getMessage('WARN006'));
+        mNoiseMag = zeros(1,Nx+Nq);
+    elseif(numel(mNoise.Magnitude)~=Nx+Nq)
         error(errorMessage(06));
     else
         mNoiseMag = mNoise.Magnitude;
     end
+
 elseif(islogical(mNoise.EnableSignal))
     mNoiseMag = zeros(1,Nx+Nq);
 else

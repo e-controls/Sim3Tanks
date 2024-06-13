@@ -118,23 +118,20 @@ end
 
 %==========================================================================
 
-global SIM3TANKS_LISTS; %#ok<*GVMIS>
-
-x = objSim3Tanks.getStateVariables();
+x = objSim3Tanks.getInternalStateVariables();
 
 if(isempty(x))
-    if(isempty(SIM3TANKS_LISTS))
-        error(errorMessage(04));
-    else
-        Nx = numel(SIM3TANKS_LISTS.LIST_OF_STATES);
-        Nq = numel(SIM3TANKS_LISTS.LIST_OF_FLOWS);
-        x  = objSim3Tanks.InitialCondition;
-    end
-    objSim3Tanks.setStateVariables(x);
-    objSim3Tanks.setFlowVariables(zeros(1,Nq));
-    objSim3Tanks.setSensorMeasurements(zeros(1,Nx+Nq));
-    objSim3Tanks.setValveSignals(opMode');
-    objSim3Tanks.setFaultSignals(f');
+
+    Nx = numel(Sim3TanksModel.LIST_OF_STATES);
+    Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
+    x  = objSim3Tanks.Model.InitialCondition;
+
+    objSim3Tanks.setInternalStateVariables(x);
+    objSim3Tanks.setInternalFlowVariables(zeros(1,Nq));
+    objSim3Tanks.setInternalSensorMeasurements(zeros(1,Nx+Nq));
+    objSim3Tanks.setInternalValveSignals(opMode');
+    objSim3Tanks.setInternalFaultSignals(f');
+
 else
     x = x(end,:);
 end
@@ -215,10 +212,10 @@ end
 % Measurements ---> y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
 y = sensorMeasurements(x,q,f,mNoise);
 
-objSim3Tanks.pushStateVariables(x);
-objSim3Tanks.pushFlowVariables(q);
-objSim3Tanks.pushSensorMeasurements(y);
-objSim3Tanks.pushValveSignals(K');
-objSim3Tanks.pushFaultSignals(f');
+objSim3Tanks.pushInternalStateVariables(x);
+objSim3Tanks.pushInternalFlowVariables(q);
+objSim3Tanks.pushInternalSensorMeasurements(y);
+objSim3Tanks.pushInternalValveSignals(K');
+objSim3Tanks.pushInternalFaultSignals(f');
 
 end

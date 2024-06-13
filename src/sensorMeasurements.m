@@ -6,13 +6,9 @@ function [y] = sensorMeasurements(h, q, f, v)
 % Last update January/2024 by Arllem Farias.
 
 %==========================================================================
-global SIM3TANKS_LISTS; %#ok<*GVMIS>
 
-if(isempty(SIM3TANKS_LISTS))
-    error(errorMessage(04));
-else
-    LIST_OF_VALVES = SIM3TANKS_LISTS.LIST_OF_VALVES;
-end
+LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
+
 %==========================================================================
 
 N = numel(LIST_OF_VALVES);

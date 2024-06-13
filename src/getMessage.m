@@ -36,13 +36,17 @@ switch messageCode
     case 'ERR003'
         msg = 'Invalid input parameter.';
     case 'WARN001'
-        msg = 'Uma falha Habilitada esta com o campo Magnitude Vazio, usa-se 0!';%'An enabled fault has its Magnitude field set to empty.';
+        msg = 'Uma falha Habilitada esta com o campo Magnitude Vazio, assume-se 0!';%'An enabled fault has its Magnitude field set to empty.';
     case 'WARN002'
         msg = 'A magnitude de uma falha esta fora dos limites [0,1], satura-se!';
     case 'WARN003'
-        msg = 'Uma valvula Habilitada esta com o campo OpeningRate Vazio, usa-se OperationMode!';
+        msg = 'Uma valvula Habilitada esta com o campo OpeningRate Vazio, assume-se OperationMode!';
     case 'WARN004'
         msg = 'O OpeningRate de uma valvula esta fora dos limites [0,1], satura-se!';
+    case 'WARN005'
+        msg = 'processNoise esta habilitado, mas Magnitude eh vazio, assume-se zero!';
+    case 'WARN006'
+        msg = 'measurmentNoise esta habilitado, mas Magnitude eh vazio, assume-se zero!';
     otherwise
         msg = ['Code ',messageCode,' not found!'];
         messageCode = [];

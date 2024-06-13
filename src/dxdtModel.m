@@ -18,9 +18,9 @@ Q1   = q(8);
 Q2   = q(9);
 Q3   = q(10);
 
-dx1dt = 1/A * (Q1in - Qa - Q13 - Q1) + w(1);
-dx2dt = 1/A * (Q2in - Qb - Q23 - Q2) + w(2);
-dx3dt = 1/A * (Q3in + Q13 + Q23 + Qa + Qb - Q3) + w(3);
+dx1dt = (1/A)*(Q1in - Qa - Q13 - Q1) + w(1);
+dx2dt = (1/A)*(Q2in - Qb - Q23 - Q2) + w(2);
+dx3dt = (1/A)*(Q3in + Q13 + Q23 + Qa + Qb - Q3) + w(3);
 
 dxdt = [dx1dt dx2dt dx3dt]';
 

@@ -62,7 +62,7 @@ f2 = 1./(1+exp(-(1/time(floor(N/4)))*(-3*floor(N/4):1*floor(N/4)))); % sigmoid f
 
 for k = 2 : N % k=1 conrresponds to initial condition
 
-    fprintf('#Sim3Tanks. Running simulation (%d/%d)\n',k,N);
+    fprintf([getMessage('tag'),'Running simulation (%d/%d)\n'],k,N);
 
     % Simulating a control signal for the valves Kp1 and Kp2.
     u = rand(2,1);
@@ -100,31 +100,44 @@ for k = 2 : N % k=1 conrresponds to initial condition
     [y,x,q] = objSim3Tanks.simulateModel('Qp1',Qp1(k),'Qp2',Qp2(k),'Qp3',Qp3(k),'Tspan',Ts);
 
 end
-fprintf('#Sim3Tanks. The simulation is done!\n');
+
+fprintf([getMessage('tag'),'The simulation is done!\n']);
 
 %% Plots
 
+fprintf([getMessage('tag'),'Plotting Graphs...\n']);
+
 figure; hold on; grid on;
-title('States');
-X = objSim3Tanks.getStates();
+title('State Variables');
+xlabel('Time');
+ylabel('Level');
+X = objSim3Tanks.getStateVariables();
 plot(time,X.Variables);
 
 figure; hold on; grid on;
-title('Flows');
-Q = objSim3Tanks.getFlows();
+title('Flow Variables');
+xlabel('Time');
+ylabel('Flow Rate');
+Q = objSim3Tanks.getFlowVariables();
 plot(time,Q.Variables);
 
 figure; hold on; grid on;
-title('Measurements');
-Y = objSim3Tanks.getMeasurements();
+title('Sensor Measurements');
+xlabel('Time');
+ylabel('Data');
+Y = objSim3Tanks.getSensorMeasurements();
 plot(time,Y.Variables);
 
 figure; hold on; grid on;
-title('Valves');
-K = objSim3Tanks.getValves();
+title('Valve Signals');
+xlabel('Time');
+ylabel('Opening Rate');
+K = objSim3Tanks.getValveSignals();
 plot(time,K.Variables);
 
 figure; hold on; grid on;
-title('Faults');
-F = objSim3Tanks.getFaults();
+title('Fault Signals');
+xlabel('Time');
+ylabel('Magnitude');
+F = objSim3Tanks.getFaultSignals();
 plot(time,F.Variables);
