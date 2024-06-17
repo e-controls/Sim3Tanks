@@ -36,17 +36,17 @@ switch messageCode
     case 'ERR003'
         msg = 'Invalid input parameter.';
     case 'WARN001'
-        msg = 'Uma falha Habilitada esta com o campo Magnitude Vazio, assume-se 0!';%'An enabled fault has its Magnitude field set to empty.';
+        msg = 'An enabled fault has its Magnitude field set to empty. In this case, zero is assumed as the default value.';
     case 'WARN002'
-        msg = 'A magnitude de uma falha esta fora dos limites [0,1], satura-se!';
+        msg = 'The magnitude of an enabled fault is out of bounds [0,1]. In this case, its value is saturated.';
     case 'WARN003'
-        msg = 'Uma valvula Habilitada esta com o campo OpeningRate Vazio, assume-se OperationMode!';
+        msg = 'An enabled valve has its OpeningRate field set to empty. In this case, OperationMode is assumed as the default value.';
     case 'WARN004'
-        msg = 'O OpeningRate de uma valvula esta fora dos limites [0,1], satura-se!';
+        msg = 'The OpeningRate of an enabled valve is out of bounds [0,1]. In this case, its value is saturated.';
     case 'WARN005'
-        msg = 'processNoise esta habilitado, mas Magnitude eh vazio, assume-se zero!';
+        msg = 'The processNoise is enabled, but its magnitude is set to empty. In this case, a row vector of zeros is assumed as the default value.';
     case 'WARN006'
-        msg = 'measurmentNoise esta habilitado, mas Magnitude eh vazio, assume-se zero!';
+        msg = 'The measurmentNoise is enabled, but its magnitude is set to empty. In this case, a row vector of zeros is assumed as the default value.';
     otherwise
         msg = ['Code ',messageCode,' not found!'];
         messageCode = [];
