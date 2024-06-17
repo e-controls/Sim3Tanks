@@ -5,7 +5,7 @@ function [varargout] = checkOperationMode(varargin)
 % array with the IDs of the valves is also returned.
 
 % Written by Arllem Farias, January/2024.
-% Last update May/2024 by Arllem Farias.
+% Last update June/2024 by Arllem Farias.
 
 %==========================================================================
 
@@ -15,28 +15,24 @@ elseif(nargin()>1)
     error(errorMessage(02));
 end
 
-if(isa(varargin{1},'Sim3TanksClass'))
+if(isa(varargin{1},'Sim3TanksModel'))
     objSim3Tanks = varargin{1};
-    ClassPropers = properties(objSim3Tanks);
 else
     error(errorMessage(07));
 end
 
 %==========================================================================
-global SIM3TANKS_LISTS; %#ok<*GVMIS>
 
-if(isempty(SIM3TANKS_LISTS))
-    error(errorMessage(04));
-else
-    LIST_OF_VALVES = SIM3TANKS_LISTS.LIST_OF_VALVES;
-end
+LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
+LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
+
 %==========================================================================
 
 opMode = zeros(size(LIST_OF_VALVES));
 valveID = cell(size(LIST_OF_VALVES));
 
 for i = 1 : numel(LIST_OF_VALVES)
-    valve = objSim3Tanks.(ClassPropers{2}).(LIST_OF_VALVES{i}).OperationMode;
+    valve = objSim3Tanks.Model.(LIST_OF_FIELDS{2}).(LIST_OF_VALVES{i}).OperationMode;
     if(strcmpi(valve,'Open'))
         opMode(i) = 1;
     elseif(strcmpi(valve,'Closed'))

@@ -1,13 +1,16 @@
-classdef Sim3TanksClass < handle
-    % Sim3TanksClass is the model class of the simulator.
+classdef Sim3TanksModel < handle
+    % Sim3TanksModel is the model used to define the system configurations.
 
     % Written by Arllem Farias, January/2024.
-    % Last update February/2024 by Arllem Farias.
+    % Last update June/2024 by Arllem Farias.
 
     %======================================================================
 
-    properties (Access = private, Hidden = true, Constant = true)
-        % The sequential order of these properties must be maintained.
+    properties (Access = public, Hidden = true, Constant = true)
+
+        % The sequential order of the cell elements must be maintained.
+        LIST_OF_FIELDS = {'PhysicalParam';'ValveSettings';'FaultSettings';...
+            'ProcessNoise';'MeasurementNoise';'InitialCondition'};
         LIST_OF_PARAM = {'TankRadius';'TankHeight';'PipeRadius';
             'TransPipeHeight';'CorrectionTerm';'GravityConstant';...
             'PumpMinFlow';'PumpMaxFlow'};
@@ -17,66 +20,68 @@ classdef Sim3TanksClass < handle
             'f9';'f10';'f11';'f12';'f13';'f14';'f15';'f16';'f17';...
             'f18';'f19';'f20';'f21';'f22';'f23'};
         LIST_OF_STATES = {'h1';'h2';'h3'};
-        LIST_OF_FLOWS = {'Q1in';'Q2in';'Q3in';'Qa';'Qb';'Q13';'Q23';'Q1';...
-            'Q2';'Q3'};
+        LIST_OF_FLOWS = {'Q1in';'Q2in';'Q3in';'Qa';'Qb';'Q13';'Q23';...
+            'Q1';'Q2';'Q3'};
     end
 
     %======================================================================
 
     properties (Access = public, Hidden = false)
-        % The name of these properties can be changed as wished, but the
-        % sequential order must be maintained.
-        PhysicalParam = [];
-        ValveSettings = [];
-        FaultSettings = [];
-        ProcessNoise  = [];
-        MeasurementNoise = [];
-        InitialCondition = [];
+
+        Model = [];
+
     end
 
     %======================================================================
 
-    methods (Access = public, Hidden = true)
+    methods % Class Constructor
+        function obj = Sim3TanksModel(varargin)
+
+            % Check input arguments
+            if(nargin()==0)
+                obj.prepareModel();
+            else
+                error(errorMessage(02));
+            end
+
+        end
+    end
+
+    %======================================================================
+
+    methods (Access = private, Hidden = true)
 
         function prepareModel(this)
-            %--------------------------------------------------------------
-            clear global SIM3TANKS_LISTS;
-            global SIM3TANKS_LISTS; %#ok<*GVMIS>
-            SIM3TANKS_LISTS.LIST_OF_PARAM  = this.LIST_OF_PARAM;
-            SIM3TANKS_LISTS.LIST_OF_VALVES = this.LIST_OF_VALVES;
-            SIM3TANKS_LISTS.LIST_OF_FAULTS = this.LIST_OF_FAULTS;
-            SIM3TANKS_LISTS.LIST_OF_STATES = this.LIST_OF_STATES;
-            SIM3TANKS_LISTS.LIST_OF_FLOWS  = this.LIST_OF_FLOWS;
-            %--------------------------------------------------------------
 
-            ClassPropers = properties(this);
-
-            %--------------------------------------------------------------
+            % PhysicalParam
             for i = 1 : numel(this.LIST_OF_PARAM)
-                this.(ClassPropers{1}).(this.LIST_OF_PARAM{i}) = [];
+                this.Model.(this.LIST_OF_FIELDS{1}).(this.LIST_OF_PARAM{i}) = [];
             end
-            %--------------------------------------------------------------
+
+            % ValveSettings
             for i = 1 : numel(this.LIST_OF_VALVES)
-                this.(ClassPropers{2}).(this.LIST_OF_VALVES{i}).OperationMode = 'Closed';
-                this.(ClassPropers{2}).(this.LIST_OF_VALVES{i}).EnableControl = false;
-                this.(ClassPropers{2}).(this.LIST_OF_VALVES{i}).OpeningRate = 0;
+                this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).OperationMode = 'Closed';
+                this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).EnableControl = false;
+                this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).OpeningRate = [];
             end
-            %--------------------------------------------------------------
+
+            % FaultSettings
             for i = 1 : numel(this.LIST_OF_FAULTS)
-                this.(ClassPropers{3}).(this.LIST_OF_FAULTS{i}).EnableSignal = false;
-                this.(ClassPropers{3}).(this.LIST_OF_FAULTS{i}).Magnitude = 0;
+                this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).EnableSignal = false;
+                this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Magnitude = [];
             end
-            %--------------------------------------------------------------
-            Nx = numel(this.LIST_OF_STATES);
-            this.(ClassPropers{4}).EnableSignal = false;
-            this.(ClassPropers{4}).Magnitude = zeros(1,Nx);
-            %--------------------------------------------------------------
-            Nq = numel(this.LIST_OF_FLOWS);
-            this.(ClassPropers{5}).EnableSignal = false;
-            this.(ClassPropers{5}).Magnitude = zeros(1,Nx+Nq);
-            %--------------------------------------------------------------
-            this.(ClassPropers{6}) = zeros(1,Nx);
-            %--------------------------------------------------------------
+
+            % ProcessNoise
+            this.Model.(this.LIST_OF_FIELDS{4}).EnableSignal = false;
+            this.Model.(this.LIST_OF_FIELDS{4}).Magnitude = [];
+
+            % MeasurementNoise
+            this.Model.(this.LIST_OF_FIELDS{5}).EnableSignal = false;
+            this.Model.(this.LIST_OF_FIELDS{5}).Magnitude = [];
+
+            % InitialCondition
+            this.Model.(this.LIST_OF_FIELDS{6}) = [];
+
         end
 
     end
@@ -93,11 +98,13 @@ classdef Sim3TanksClass < handle
 
     %======================================================================
 
-    methods (Access = public, Hidden = true) % Setter methods
+    methods (Access = private, Hidden = true) % Setter methods
 
-        function setStateVariables(this,x)
+        function setInternalStateVariables(this,x)
             N = numel(this.LIST_OF_STATES);
-            if(~isrow(x) && ~isempty(x))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(x) && ~isempty(x))
                 error(errorMessage(08));
             elseif(numel(x)~=N && ~isempty(x))
                 error([errorMessage(06),' The system has ',num2str(N),' state variables.']);
@@ -105,9 +112,11 @@ classdef Sim3TanksClass < handle
             this.StateVariables = x;
         end
 
-        function setFlowVariables(this,q)
+        function setInternalFlowVariables(this,q)
             N = numel(this.LIST_OF_FLOWS);
-            if(~isrow(q) && ~isempty(q))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(q) && ~isempty(q))
                 error(errorMessage(08));
             elseif(numel(q)~=N && ~isempty(q))
                 error([errorMessage(06),' The system has ',num2str(N),' flow variables.']);
@@ -115,9 +124,11 @@ classdef Sim3TanksClass < handle
             this.FlowVariables = q;
         end
 
-        function setSensorMeasurements(this,y)
+        function setInternalSensorMeasurements(this,y)
             N = numel(this.LIST_OF_STATES) + numel(this.LIST_OF_FLOWS);
-            if(~isrow(y) && ~isempty(y))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(y) && ~isempty(y))
                 error(errorMessage(08));
             elseif(numel(y)~=N && ~isempty(y))
                 error([errorMessage(06),' The system has ',num2str(N),' measured variables.']);
@@ -125,9 +136,11 @@ classdef Sim3TanksClass < handle
             this.SensorMeasurements = y;
         end
 
-        function setValveSignals(this,v)
+        function setInternalValveSignals(this,v)
             N = numel(this.LIST_OF_VALVES);
-            if(~isrow(v) && ~isempty(v))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(v) && ~isempty(v))
                 error(errorMessage(08));
             elseif(numel(v)~=N && ~isempty(v))
                 error([errorMessage(06),' The system has ',num2str(N),' valves.']);
@@ -135,9 +148,11 @@ classdef Sim3TanksClass < handle
             this.ValveSignals = v;
         end
 
-        function setFaultSignals(this,f)
+        function setInternalFaultSignals(this,f)
             N = numel(this.LIST_OF_FAULTS);
-            if(~isrow(f) && ~isempty(f))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(f) && ~isempty(f))
                 error(errorMessage(08));
             elseif(numel(f)~=N && ~isempty(f))
                 error([errorMessage(06),' The system has ',num2str(N),' fault signals.']);
@@ -149,11 +164,13 @@ classdef Sim3TanksClass < handle
 
     %======================================================================
 
-    methods (Access = public, Hidden = true) % Pusher methods
+    methods (Access = private, Hidden = true) % Pusher methods
 
-        function pushStateVariables(this,x)
+        function pushInternalStateVariables(this,x)
             N = numel(this.LIST_OF_STATES);
-            if(~isrow(x) && ~isempty(x))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(x) && ~isempty(x))
                 error(errorMessage(08));
             elseif(numel(x)~=N && ~isempty(x))
                 error([errorMessage(06),' The system has ',num2str(N),' state variables.']);
@@ -161,9 +178,11 @@ classdef Sim3TanksClass < handle
             this.StateVariables = [this.StateVariables;x];
         end
 
-        function pushFlowVariables(this,q)
+        function pushInternalFlowVariables(this,q)
             N = numel(this.LIST_OF_FLOWS);
-            if(~isrow(q) && ~isempty(q))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(q) && ~isempty(q))
                 error(errorMessage(08));
             elseif(numel(q)~=N && ~isempty(q))
                 error([errorMessage(06),' The system has ',num2str(N),' flow variables.']);
@@ -171,9 +190,11 @@ classdef Sim3TanksClass < handle
             this.FlowVariables = [this.FlowVariables;q];
         end
 
-        function pushSensorMeasurements(this,y)
+        function pushInternalSensorMeasurements(this,y)
             N = numel(this.LIST_OF_STATES) + numel(this.LIST_OF_FLOWS);
-            if(~isrow(y) && ~isempty(y))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(y) && ~isempty(y))
                 error(errorMessage(08));
             elseif(numel(y)~=N && ~isempty(y))
                 error([errorMessage(06),' The system has ',num2str(N),' measured variables.']);
@@ -181,9 +202,11 @@ classdef Sim3TanksClass < handle
             this.SensorMeasurements = [this.SensorMeasurements;y];
         end
 
-        function pushValveSignals(this,v)
+        function pushInternalValveSignals(this,v)
             N =numel(this.LIST_OF_VALVES);
-            if(~isrow(v) && ~isempty(v))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(v) && ~isempty(v))
                 error(errorMessage(08));
             elseif(numel(v)~=N && ~isempty(v))
                 error([errorMessage(06),' The system has ',num2str(N),' valves.']);
@@ -191,9 +214,11 @@ classdef Sim3TanksClass < handle
             this.ValveSignals = [this.ValveSignals;v];
         end
 
-        function pushFaultSignals(this,f)
+        function pushInternalFaultSignals(this,f)
             N = numel(this.LIST_OF_FAULTS);
-            if(~isrow(f) && ~isempty(f))
+            if(nargin()==1)
+                error(errorMessage(01));
+            elseif(~isrow(f) && ~isempty(f))
                 error(errorMessage(08));
             elseif(numel(f)~=N && ~isempty(f))
                 error([errorMessage(06),' The system has ',num2str(N),' fault signals.']);
@@ -205,9 +230,9 @@ classdef Sim3TanksClass < handle
 
     %======================================================================
 
-    methods (Access = public, Hidden = true) % Getter methods
+    methods (Access = private, Hidden = true) % Getter methods
 
-        function x = getStateVariables(varargin)
+        function x = getInternalStateVariables(varargin)
             this = varargin{1};
             x = this.StateVariables;
             if(nargin()==2 && ~isempty(x))
@@ -219,7 +244,7 @@ classdef Sim3TanksClass < handle
             end
         end
 
-        function q = getFlowVariables(varargin)
+        function q = getInternalFlowVariables(varargin)
             this = varargin{1};
             q = this.FlowVariables;
             if(nargin()==2 && ~isempty(q))
@@ -231,7 +256,7 @@ classdef Sim3TanksClass < handle
             end
         end
 
-        function y = getSensorMeasurements(varargin)
+        function y = getInternalSensorMeasurements(varargin)
             this = varargin{1};
             y = this.SensorMeasurements;
             if(nargin()==2 && ~isempty(y))
@@ -243,7 +268,7 @@ classdef Sim3TanksClass < handle
             end
         end
 
-        function v = getValveSignals(varargin)
+        function v = getInternalValveSignals(varargin)
             this = varargin{1};
             v = this.ValveSignals;
             if(nargin()==2 && ~isempty(v))
@@ -255,7 +280,7 @@ classdef Sim3TanksClass < handle
             end
         end
 
-        function f = getFaultSignals(varargin)
+        function f = getInternalFaultSignals(varargin)
             this = varargin{1};
             f = this.FaultSignals;
             if(nargin()==2 && ~isempty(f))

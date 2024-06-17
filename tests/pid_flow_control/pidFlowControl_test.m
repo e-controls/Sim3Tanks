@@ -72,11 +72,11 @@ uk(:,1) = [0;0]; % First control signal
 
 %% System simulation
 
-fprintf('#Sim3Tanks. Running simulation...\n');
+fprintf([getMessage('tag'),'Starting simulation...\n']);
 
 for k = 2 : N % k=1 conrresponds to initial condition
 
-    fprintf('Simulating NONLINEAR plant (%d/%d)\n',k,N);
+    fprintf([getMessage('tag'),'Simulating NONLINEAR plant (%d/%d)\n'],k,N);
 
     % +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     % #BEGIN: Continuous Nonlinear Plant ++++++++++++++++++++++++++++++++++
@@ -141,19 +141,20 @@ for k = 2 : N % k=1 conrresponds to initial condition
 
 end
 
-fprintf('#Sim3Tanks. The simulation is done!\n');
+fprintf([getMessage('tag'),'The simulation is done!\n']);
 
 % Preparing variables
 
-X = tts.getStates();
-Q = tts.getFlows();
-Y = tts.getMeasurements();
-K = tts.getValves();
-F = tts.getFaults();
+X = tts.getStateVariables();
+Q = tts.getFlowVariables();
+Y = tts.getSensorMeasurements();
+K = tts.getValveSignals();
+F = tts.getFaultSignals();
 
 %% Plots
 
-fprintf('#Plotting Graphs...\n');
+fprintf([getMessage('tag'),'Plotting Graphs...\n']);
+
 MarkIdx = 1:round(N/20):N;
 
 % Valve signals (Actuators)

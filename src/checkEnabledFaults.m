@@ -6,7 +6,7 @@ function [varargout] = checkEnabledFaults(varargin)
 % second array with the IDs of the enabled faults is also returned.
 
 % Written by Arllem Farias, January/2024.
-% Last update January/2024 by Arllem Farias.
+% Last update June/2024 by Arllem Farias.
 
 %==========================================================================
 
@@ -16,37 +16,48 @@ elseif(nargin()>1)
     error(errorMessage(02));
 end
 
-if(isa(varargin{1},'Sim3TanksClass'))
+if(isa(varargin{1},'Sim3TanksModel'))
     objSim3Tanks = varargin{1};
-    ClassPropers = properties(objSim3Tanks);
 else
     error(errorMessage(07));
 end
 
 %==========================================================================
-global SIM3TANKS_LISTS; %#ok<*GVMIS>
 
-if(isempty(SIM3TANKS_LISTS))
-    error(errorMessage(04));
-else
-    LIST_OF_FAULTS = SIM3TANKS_LISTS.LIST_OF_FAULTS;
-end
+LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
+LIST_OF_FAULTS = Sim3TanksModel.LIST_OF_FAULTS;
+
 %==========================================================================
 
 faultMag = zeros(size(LIST_OF_FAULTS));
 faultID = cell(size(LIST_OF_FAULTS));
 
 for i = 1 : numel(LIST_OF_FAULTS)
-    fault = objSim3Tanks.(ClassPropers{3}).(LIST_OF_FAULTS{i});
+
+    fault = objSim3Tanks.Model.(LIST_OF_FIELDS{3}).(LIST_OF_FAULTS{i});
+
     if(islogical(fault.EnableSignal) && fault.EnableSignal)
-        faultMag(i) = satSignal(fault.Magnitude,[0 1]);
-        faultID{i}  = LIST_OF_FAULTS{i};
+
+        if(isempty(fault.Magnitude))
+            warning(getMessage('WARN001'));
+            faultMag(i) = 0;
+        elseif(fault.Magnitude<0 || fault.Magnitude>1)
+            warning(getMessage('WARN002'));
+            faultMag(i) = satSignal(fault.Magnitude,[0 1]);
+        else
+            faultMag(i) = fault.Magnitude;
+        end
+
+        faultID{i} = LIST_OF_FAULTS{i};
+
     elseif(islogical(fault.EnableSignal))
         faultMag(i) = 0;
-        faultID{i}  = [];
+        faultID{i} = [];
+
     else
         error(errorMessage(12));
     end
+
 end
 
 varargout{1} = faultMag;

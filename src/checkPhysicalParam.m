@@ -18,27 +18,23 @@ elseif(nargin()>1)
     error(errorMessage(02));
 end
 
-if(isa(varargin{1},'Sim3TanksClass'))
+if(isa(varargin{1},'Sim3TanksModel'))
     objSim3Tanks = varargin{1};
-    ClassPropers = properties(objSim3Tanks);
 else
     error(errorMessage(07));
 end
 
 %==========================================================================
-global SIM3TANKS_LISTS; %#ok<*GVMIS>
 
-if(isempty(SIM3TANKS_LISTS))
-    error(errorMessage(04));
-else
-    LIST_OF_PARAM = SIM3TANKS_LISTS.LIST_OF_PARAM;
-end
+LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
+LIST_OF_PARAM = Sim3TanksModel.LIST_OF_PARAM;
+
 %==========================================================================
 
 Param = struct();
 
 for i = 1 : numel(LIST_OF_PARAM)
-    value = objSim3Tanks.(ClassPropers{1}).(LIST_OF_PARAM{i});
+    value = objSim3Tanks.Model.(LIST_OF_FIELDS{1}).(LIST_OF_PARAM{i});
     if(isempty(value))
         error(errorMessage(09));
     elseif(isnumeric(value) && isfinite(value))
