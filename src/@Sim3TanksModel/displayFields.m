@@ -12,7 +12,7 @@ if(nargin()==1)
 elseif(nargin()==2 && isa(varargin{2},'struct'))
     structVar = varargin{2};
 else
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 end
 
 %==========================================================================

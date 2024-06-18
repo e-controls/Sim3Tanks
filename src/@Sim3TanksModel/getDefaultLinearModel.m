@@ -11,9 +11,9 @@ function [varargout] = getDefaultLinearModel(varargin)
 %==========================================================================
 
 if(nargin()>4)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 elseif(mod(nargin(),2) ~= 0)
-    error(errorMessage(22));
+    error(getMessage('ERR021'));
 else
     objSim3Tanks = varargin{1};
 end
@@ -25,10 +25,10 @@ end
 Rtank = Param.(ID{1});
 Hmax  = Param.(ID{2});
 Rpipe = Param.(ID{3});
-h0    = Param.(ID{4});
+% h0    = Param.(ID{4});
 mu    = Param.(ID{5});
 g     = Param.(ID{6});
-Qmin  = Param.(ID{7});
+% Qmin  = Param.(ID{7});
 Qmax  = Param.(ID{8});
 
 Sc = pi()*(Rtank^2); % Cross-sectional area of the tanks (cm^2)
@@ -39,8 +39,8 @@ Beta = mu*S*sqrt(2*g); % Constant value
 
 x1op = varargin{2};
 
-if(~(isnumeric(x1op) && isfinite(x1op) && isscalar(x1op) && x1op>0 && x1op<Hmax))
-    error(errorMessage(03));
+if ~(isnumeric(x1op) && isfinite(x1op) && isscalar(x1op) && x1op>0 && x1op<Hmax)
+    error(getMessage('ERR003'));
 end
 
 %==========================================================================
@@ -95,12 +95,12 @@ if(nargin()==4)
     options.matched = 'matched';
     options.euler   = 'euler';
 
-    if(~isfield(options,lower(METHOD)))
-        error(errorMessage(03));
+    if ~isfield(options,lower(METHOD))
+        error(getMessage('ERR003'));
     end
 
-    if(~(isnumeric(TS) && isfinite(TS) && isscalar(TS) && TS>0))
-        error(errorMessage(03));
+    if ~(isnumeric(TS) && isfinite(TS) && isscalar(TS) && TS>0)
+        error(getMessage('ERR003'));
     end
 
     if(strcmpi(METHOD,options.euler))

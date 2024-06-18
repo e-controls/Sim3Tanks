@@ -17,7 +17,7 @@ function clearVariables(varargin)
 %==========================================================================
 
 if(nargin()>2)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 else
     objSim3Tanks = varargin{1};
 end
@@ -43,6 +43,6 @@ else
         case 'faults'
             objSim3Tanks.setInternalFaultSignals([]);
         otherwise
-            error(errorMessage(03));
+            error(getMessage('ERR003'));
     end
 end

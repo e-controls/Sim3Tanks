@@ -10,15 +10,15 @@ function [varargout] = checkOperationMode(varargin)
 %==========================================================================
 
 if(nargin()<1)
-    error(errorMessage(01));
+    error(getMessage('ERR001'));
 elseif(nargin()>1)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 end
 
 if(isa(varargin{1},'Sim3TanksModel'))
     objSim3Tanks = varargin{1};
 else
-    error(errorMessage(07));
+    error(getMessage('ERR004'));
 end
 
 %==========================================================================
@@ -38,7 +38,7 @@ for i = 1 : numel(LIST_OF_VALVES)
     elseif(strcmpi(valve,'Closed'))
         opMode(i) = 0;
     else
-        error(errorMessage(10));
+        error(getMessage('ERR009'));
     end
     valveID{i} = LIST_OF_VALVES{i};
 end

@@ -26,7 +26,7 @@ function [y,x,q] = simulateModel(varargin)
 %==========================================================================
 
 if(mod(nargin(),2) == 0)
-    error(errorMessage(21));
+    error(getMessage('ERR020'));
 else
     objSim3Tanks = varargin{1};
 end
@@ -62,7 +62,7 @@ for i = 2 : 2 : nargin()
     if(isfield(options,name))
         options.(name) = varargin{i+1};
     else
-        error(errorMessage(03));
+        error(getMessage('ERR003'));
     end
 end
 
@@ -108,7 +108,7 @@ for i = 1 : numel(opMode)
         K(i) = 1-f(i);
 
     else % Invalid state
-        error(errorMessage(00));
+        error(getMessage('ERR000'));
     end
 end
 
@@ -183,7 +183,7 @@ elseif(h1>h0 && h2>h0 && h3>h0)
     Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
 
 else
-    error(errorMessage(00));
+    error(getMessage('ERR000'));
 end
 
 Q1in = K(1)*satSignal(Qp1,[Qmin Qmax]);
@@ -206,7 +206,7 @@ options = odeset('MaxStep',Tspan,'RelTol',1e-6);
 if(isfinite(x))
     x = satSignal(x(end,:),[0 Hmax]);
 else
-    error(errorMessage(05));
+    error(getMessage('ERR007'));
 end
 
 % Measurements ---> y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]

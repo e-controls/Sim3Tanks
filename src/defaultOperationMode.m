@@ -24,7 +24,7 @@ function [varargout] = defaultOperationMode(varargin)
 %==========================================================================
 
 if(nargin()>1)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 end
 
 %==========================================================================
@@ -43,7 +43,7 @@ valve{10} = 'Open';   % Default state of the valve K3
 LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
 
 if(numel(valve) ~= numel(LIST_OF_VALVES))
-    error(errorMessage(06));
+    error(getMessage('ERR006'));
 end
 
 %==========================================================================
@@ -66,9 +66,9 @@ elseif(nargin()==1)
     end
 
     if(isempty(varargout{1}))
-        error(errorMessage(03));
+        error(getMessage('ERR003'));
     end
 
 else
-    error(errorMessage(00));
+    error(getMessage('ERR000'));
 end

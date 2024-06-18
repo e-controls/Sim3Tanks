@@ -41,7 +41,7 @@ classdef Sim3TanksModel < handle
             if(nargin()==0)
                 obj.prepareModel();
             else
-                error(errorMessage(02));
+                error(getMessage('ERR002'));
             end
 
         end
@@ -103,11 +103,11 @@ classdef Sim3TanksModel < handle
         function setInternalStateVariables(this,x)
             N = numel(this.LIST_OF_STATES);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(x) && ~isempty(x))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(x)~=N && ~isempty(x))
-                error([errorMessage(06),' The system has ',num2str(N),' state variables.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' state variables.']);
             end
             this.StateVariables = x;
         end
@@ -115,11 +115,11 @@ classdef Sim3TanksModel < handle
         function setInternalFlowVariables(this,q)
             N = numel(this.LIST_OF_FLOWS);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(q) && ~isempty(q))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(q)~=N && ~isempty(q))
-                error([errorMessage(06),' The system has ',num2str(N),' flow variables.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' flow variables.']);
             end
             this.FlowVariables = q;
         end
@@ -127,11 +127,11 @@ classdef Sim3TanksModel < handle
         function setInternalSensorMeasurements(this,y)
             N = numel(this.LIST_OF_STATES) + numel(this.LIST_OF_FLOWS);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(y) && ~isempty(y))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(y)~=N && ~isempty(y))
-                error([errorMessage(06),' The system has ',num2str(N),' measured variables.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' measured variables.']);
             end
             this.SensorMeasurements = y;
         end
@@ -139,11 +139,11 @@ classdef Sim3TanksModel < handle
         function setInternalValveSignals(this,v)
             N = numel(this.LIST_OF_VALVES);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(v) && ~isempty(v))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(v)~=N && ~isempty(v))
-                error([errorMessage(06),' The system has ',num2str(N),' valves.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' valves.']);
             end
             this.ValveSignals = v;
         end
@@ -151,11 +151,11 @@ classdef Sim3TanksModel < handle
         function setInternalFaultSignals(this,f)
             N = numel(this.LIST_OF_FAULTS);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(f) && ~isempty(f))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(f)~=N && ~isempty(f))
-                error([errorMessage(06),' The system has ',num2str(N),' fault signals.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' fault signals.']);
             end
             this.FaultSignals = f;
         end
@@ -169,11 +169,11 @@ classdef Sim3TanksModel < handle
         function pushInternalStateVariables(this,x)
             N = numel(this.LIST_OF_STATES);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(x) && ~isempty(x))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(x)~=N && ~isempty(x))
-                error([errorMessage(06),' The system has ',num2str(N),' state variables.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' state variables.']);
             end
             this.StateVariables = [this.StateVariables;x];
         end
@@ -181,11 +181,11 @@ classdef Sim3TanksModel < handle
         function pushInternalFlowVariables(this,q)
             N = numel(this.LIST_OF_FLOWS);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(q) && ~isempty(q))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(q)~=N && ~isempty(q))
-                error([errorMessage(06),' The system has ',num2str(N),' flow variables.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' flow variables.']);
             end
             this.FlowVariables = [this.FlowVariables;q];
         end
@@ -193,11 +193,11 @@ classdef Sim3TanksModel < handle
         function pushInternalSensorMeasurements(this,y)
             N = numel(this.LIST_OF_STATES) + numel(this.LIST_OF_FLOWS);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(y) && ~isempty(y))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(y)~=N && ~isempty(y))
-                error([errorMessage(06),' The system has ',num2str(N),' measured variables.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' measured variables.']);
             end
             this.SensorMeasurements = [this.SensorMeasurements;y];
         end
@@ -205,11 +205,11 @@ classdef Sim3TanksModel < handle
         function pushInternalValveSignals(this,v)
             N =numel(this.LIST_OF_VALVES);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(v) && ~isempty(v))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(v)~=N && ~isempty(v))
-                error([errorMessage(06),' The system has ',num2str(N),' valves.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' valves.']);
             end
             this.ValveSignals = [this.ValveSignals;v];
         end
@@ -217,11 +217,11 @@ classdef Sim3TanksModel < handle
         function pushInternalFaultSignals(this,f)
             N = numel(this.LIST_OF_FAULTS);
             if(nargin()==1)
-                error(errorMessage(01));
+                error(getMessage('ERR001'));
             elseif(~isrow(f) && ~isempty(f))
-                error(errorMessage(08));
+                error(getMessage('ERR005'));
             elseif(numel(f)~=N && ~isempty(f))
-                error([errorMessage(06),' The system has ',num2str(N),' fault signals.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' fault signals.']);
             end
             this.FaultSignals = [this.FaultSignals;f];
         end
@@ -240,7 +240,7 @@ classdef Sim3TanksModel < handle
                 varNames = this.LIST_OF_STATES;
                 x = array2timetable(x,'SampleRate',1/Ts,'VariableNames',varNames);
             elseif(nargin()>2)
-                error(errorMessage(02));
+                error(getMessage('ERR002'));
             end
         end
 
@@ -252,7 +252,7 @@ classdef Sim3TanksModel < handle
                 varNames = this.LIST_OF_FLOWS;
                 q = array2timetable(q,'SampleRate',1/Ts,'VariableNames',varNames);
             elseif(nargin()>2)
-                error(errorMessage(02));
+                error(getMessage('ERR002'));
             end
         end
 
@@ -264,7 +264,7 @@ classdef Sim3TanksModel < handle
                 varNames = [this.LIST_OF_STATES;this.LIST_OF_FLOWS];
                 y = array2timetable(y,'SampleRate',1/Ts,'VariableNames',varNames);
             elseif(nargin()>2)
-                error(errorMessage(02));
+                error(getMessage('ERR002'));
             end
         end
 
@@ -276,7 +276,7 @@ classdef Sim3TanksModel < handle
                 varNames = this.LIST_OF_VALVES;
                 v = array2timetable(v,'SampleRate',1/Ts,'VariableNames',varNames);
             elseif(nargin()>2)
-                error(errorMessage(02));
+                error(getMessage('ERR002'));
             end
         end
 
@@ -288,7 +288,7 @@ classdef Sim3TanksModel < handle
                 varNames = this.LIST_OF_FAULTS;
                 f = array2timetable(f,'SampleRate',1/Ts,'VariableNames',varNames);
             elseif(nargin()>2)
-                error(errorMessage(02));
+                error(getMessage('ERR002'));
             end
         end
 

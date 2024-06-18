@@ -8,7 +8,7 @@ function setDefaultModel(varargin)
 %==========================================================================
 
 if(nargin()>1)
-    error(errorMessage(01));
+    error(getMessage('ERR002'));
 else
     objSim3Tanks = varargin{1};
 end

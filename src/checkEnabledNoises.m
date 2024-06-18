@@ -11,15 +11,15 @@ function [varargout] = checkEnabledNoises(varargin)
 %==========================================================================
 
 if(nargin()<1)
-    error(errorMessage(01));
+    error(getMessage('ERR001'));
 elseif(nargin()>1)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 end
 
 if(isa(varargin{1},'Sim3TanksModel'))
     objSim3Tanks = varargin{1};
 else
-    error(errorMessage(07));
+    error(getMessage('ERR004'));
 end
 
 %==========================================================================
@@ -38,7 +38,7 @@ if(islogical(pNoise.EnableSignal) && pNoise.EnableSignal)
         warning(getMessage('WARN005'));
         pNoiseMag = zeros(1,Nx);
     elseif(numel(pNoise.Magnitude)~=Nx)
-        error(errorMessage(06));
+        error(getMessage('ERR006'));
     else
         pNoiseMag = pNoise.Magnitude;
     end
@@ -46,7 +46,7 @@ if(islogical(pNoise.EnableSignal) && pNoise.EnableSignal)
 elseif(islogical(pNoise.EnableSignal))
     pNoiseMag = zeros(1,Nx);
 else
-    error(errorMessage(12));
+    error(getMessage('ERR011'));
 end
 
 %==========================================================================
@@ -59,7 +59,7 @@ if(islogical(mNoise.EnableSignal) && mNoise.EnableSignal)
         warning(getMessage('WARN006'));
         mNoiseMag = zeros(1,Nx+Nq);
     elseif(numel(mNoise.Magnitude)~=Nx+Nq)
-        error(errorMessage(06));
+        error(getMessage('ERR006'));
     else
         mNoiseMag = mNoise.Magnitude;
     end
@@ -67,7 +67,7 @@ if(islogical(mNoise.EnableSignal) && mNoise.EnableSignal)
 elseif(islogical(mNoise.EnableSignal))
     mNoiseMag = zeros(1,Nx+Nq);
 else
-    error(errorMessage(12));
+    error(getMessage('ERR011'));
 end
 
 varargout{1} = pNoiseMag;

@@ -8,7 +8,7 @@ function clearModel(varargin)
 %==========================================================================
 
 if(nargin()>1)
-    error(errorMessage(01));
+    error(getMessage('ERR001'));
 else
     objSim3Tanks = varargin{1};
 end

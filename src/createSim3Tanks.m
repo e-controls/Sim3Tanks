@@ -4,12 +4,12 @@ function [varargout] = createSim3Tanks(varargin)
 %
 % objSim3Tanks = createSim3Tanks() returns an object with the following
 % fields:
-%              Model: [1×1 Sim3TanksClass]
+%      Model: [1×1 Sim3TanksModel]
 %      simulateModel: [function_handle]
-%         resetModel: [function_handle]
-%     resetVariables: [function_handle]
+%         clearModel: [function_handle]
+%     clearVariables: [function_handle]
 %    setDefaultModel: [function_handle]
-%     getLinearModel: [function_handle]
+%   getDefaultLinearModel: [function_handle]
 %          getStates: [function_handle]
 %           getFlows: [function_handle]
 %    getMeasurements: [function_handle]
@@ -22,7 +22,7 @@ function [varargout] = createSim3Tanks(varargin)
 %==========================================================================
 
 if(nargin()~=0)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 end
 
 %==========================================================================

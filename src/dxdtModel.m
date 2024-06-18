@@ -1,11 +1,29 @@
-function [dxdt] = dxdtModel(A,q,w)
+function [dxdt] = dxdtModel(varargin)
 % dxdtModel is a Sim3Tanks function. This function describes the state
 % equations of the three-tank system.
 
 % Written by Arllem Farias, January/2024.
-% Last update January/2024 by Arllem Farias.
+% Last update June/2024 by Arllem Farias.
 
 %==========================================================================
+
+if(nargin()<3)
+    error(getMessage('ERR001'));
+elseif(nargin()>3)
+    error(getMessage('ERR002'));
+else
+    A = varargin{1};
+    q = varargin{2};
+    w = varargin{3};
+end
+
+if ~(isnumeric(A) && isnumeric(q) && isnumeric(w))
+    error(getMessage('ERR003'));
+elseif (~isscalar(A) ...
+        || numel(q) ~= numel(Sim3TanksModel.LIST_OF_FLOWS) ...
+        || numel(w) ~= numel(Sim3TanksModel.LIST_OF_STATES))
+    error(getMessage('ERR006'));
+end
 
 Q1in = q(1);
 Q2in = q(2);

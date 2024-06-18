@@ -11,15 +11,15 @@ function [varargout] = checkEnabledFaults(varargin)
 %==========================================================================
 
 if(nargin()<1)
-    error(errorMessage(01));
+    error(getMessage('ERR001'));
 elseif(nargin()>1)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 end
 
 if(isa(varargin{1},'Sim3TanksModel'))
     objSim3Tanks = varargin{1};
 else
-    error(errorMessage(07));
+    error(getMessage('ERR004'));
 end
 
 %==========================================================================
@@ -55,7 +55,7 @@ for i = 1 : numel(LIST_OF_FAULTS)
         faultID{i} = [];
 
     else
-        error(errorMessage(12));
+        error(getMessage('ERR011'));
     end
 
 end

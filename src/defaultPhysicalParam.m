@@ -22,7 +22,7 @@ function [varargout] = defaultPhysicalParam(varargin)
 %==========================================================================
 
 if(nargin()>1)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 end
 
 %==========================================================================
@@ -39,7 +39,7 @@ param{8} = 120; % Maximum flow value of the pumps (cm^3/s)
 LIST_OF_PARAM = Sim3TanksModel.LIST_OF_PARAM;
 
 if(numel(param) ~= numel(LIST_OF_PARAM))
-    error(errorMessage(06));
+    error(getMessage('ERR006'));
 end
 
 %==========================================================================
@@ -63,9 +63,9 @@ elseif(nargin()==1)
     end
 
     if(isempty(varargout{1}))
-        error(errorMessage(03));
+        error(getMessage('ERR003'));
     end
 
 else
-    error(errorMessage(00));
+    error(getMessage('ERR000'));
 end

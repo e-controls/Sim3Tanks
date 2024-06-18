@@ -8,7 +8,7 @@ function [varargout] = getStateVariables(varargin)
 %==========================================================================
 
 if(nargin()>1)
-    error(errorMessage(02));
+    error(getMessage('ERR002'));
 else
     objSim3Tanks = varargin{1};
 end
