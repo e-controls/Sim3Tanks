@@ -21,13 +21,11 @@ end
 
 if ~(isnumeric(x) && isnumeric(xrange))
     error(getMessage('ERR003'));
-elseif (numel(xrange) ~= 2)
-    error(getMessage('ERR006'));
 end
 
 minValue = xrange(:,1);
 maxValue = xrange(:,2);
 
-y = min(maxValue, max(minValue,x));
+y = min(maxValue,max(minValue,x));
 
 end
