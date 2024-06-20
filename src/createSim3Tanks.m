@@ -3,18 +3,19 @@ function [varargout] = createSim3Tanks(varargin)
 % input argument and returns a Sim3Tanks object.
 %
 % objSim3Tanks = createSim3Tanks() returns an object with the following
-% fields:
-%      Model: [1×1 Sim3TanksModel]
-%      simulateModel: [function_handle]
-%         clearModel: [function_handle]
-%     clearVariables: [function_handle]
-%    setDefaultModel: [function_handle]
-%   getDefaultLinearModel: [function_handle]
-%          getStates: [function_handle]
-%           getFlows: [function_handle]
-%    getMeasurements: [function_handle]
-%          getValves: [function_handle]
-%          getFaults: [function_handle]
+% attributes and methods:
+%                   Model: [attribute]
+%           simulateModel: [method]
+%           displayFields: [method]
+%              clearModel: [method]
+%          clearVariables: [method]
+%         setDefaultModel: [method]
+%   getDefaultLinearModel: [method]
+%       getStateVariables: [method]
+%        getFlowVariables: [method]
+%   getSensorMeasurements: [method]
+%         getValveSignals: [method]
+%         getFaultSignals: [method]
 
 % Written by Arllem Farias, December/2023.
 % Last update May/2024 by Arllem Farias.
@@ -26,6 +27,9 @@ if(nargin()~=0)
 end
 
 %==========================================================================
+
+% Should I create a constructor using KEY-VALUE pairs???
+% Ex.: createSim3Tanks('TankRadius',0.5,'Kp1',{open,enabled,openingRate},...)
 
 varargout{1} = Sim3TanksModel();
 
