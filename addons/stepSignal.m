@@ -7,16 +7,16 @@ function [varargout] = stepSignal(VALUES,TIMES,TIME_VECTOR)
 % and TIME_VECTOR is a vector of time points.
 %
 % If TIME_VECTOR is omitted, a default time vector is declared with the
-% following settings: 0 : 0.1 : (max(TIMES)+10)
+% following settings: [0 : 0.1 : max(FAULT_TIME)+10]
 %
 % Example:
-%   VALUES = [10, 50, 40];
-%   TIMES  = [0, 20, 35];
+%   VALUES = [30, 50, 40];
+%   TIMES  = [10, 30, 50];
 %   [signal,t] = stepSignal(VALUES,TIMES);
 %   plot(t,signal);
 %   grid on;
-%   xlabel('Time (s)');
-%   ylabel('Signal Value');
+%   xlabel('time');
+%   ylabel('magnitude');
 %   title('Setpoint Signal');
 
 % Written by Arllem Farias, 2024.

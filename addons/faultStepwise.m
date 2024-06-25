@@ -7,15 +7,15 @@ function [varargout] = faultStepwise(MAGNITUDE,FAULT_TIME,TIME_VECTOR)
 % vector of time points.
 %
 % If TIME_VECTOR is omitted, a default time vector is declared with the
-% following settings: 0 : 0.1 : (max(FAULT_TIME)+10)
+% following settings: [0 : 0.1 : max(FAULT_TIME)+10]
 %
 % Example:
 %   [signal,t] = faultStepwise(0.8,[10 40]);
 %   plot(t,signal);
 %   grid on;
-%   xlabel('Time (s)');
-%   ylabel('Fault Magnitude');
-%   title('Stepwise Signal');
+%   xlabel('time');
+%   ylabel('magnitude');
+%   title('Stepwise Fault Signal');
 
 % Written by Arllem Farias, 2024.
 
