@@ -1,8 +1,6 @@
-function [varargout] = stepSignal(VALUES, TIMES, TIME_VECTOR)
-% stepSignal Generates a step signal based on specified VALUES and TIMES.
-%
-% [SIGNAL, TIME_VECTOR] = stepSignal(VALUES, TIMES, TIME_VECTOR) generates
-% a step signal where VALUES specifies the amplitude of the SIGNAL at the
+function [varargout] = stepSignal(VALUES,TIMES,TIME_VECTOR)
+% [SIGNAL,TIME_VECTOR] = stepSignal(VALUES,TIMES,TIME_VECTOR) generates a
+% step signal, where VALUES specifies the amplitude of the SIGNAL at the
 % corresponding TIMES position. The SIGNAL remains at zero until the first
 % time in TIMES, after that it changes to the next value at the subsequent
 % time, and so on. The output SIGNAL is the corresponding signal values,
@@ -14,8 +12,8 @@ function [varargout] = stepSignal(VALUES, TIMES, TIME_VECTOR)
 % Example:
 %   VALUES = [10, 50, 40];
 %   TIMES  = [0, 20, 35];
-%   [signal,t] = stepSignal(VALUES, TIMES);
-%   plot(t, signal);
+%   [signal,t] = stepSignal(VALUES,TIMES);
+%   plot(t,signal);
 %   grid on;
 %   xlabel('Time (s)');
 %   ylabel('Signal Value');
