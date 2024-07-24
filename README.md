@@ -15,7 +15,8 @@ The original paper that publishes the simulator can be accessed at <http://dx.do
 - [Fault Description and Symbols](#3-fault-description-and-symbols)
 - [How to Create and Configure a Sim3Tanks Object](#4-how-to-create-and-configure-a-sim3tanks-object)
 - [Contributions](#5-contributions)
-- [License](#6-license)
+- [Citation](#6-citation)
+- [License](#7-license)
 
 
 ## 2. Sim3Tanks Plant Description
@@ -35,8 +36,10 @@ Sim3Tanks simulates the dynamic behavior of the following plant:
 
 - The tanks are identical and have the same radius and maximum height. Similarly, all pipes are also identical and have the same radius value. The system has three level sensors (one per tank) and ten flow sensors (one per valve), and any valve can be configured as an actuator.
 
+- When a valve is enabled to be controlled, it becomes an actuator and, consequently, Sim3Tanks simulates an actuator fault (loss of effectiveness). Otherwise, a plant fault is simulated, which could be a clogging if the valve operation mode is defined as 'Open', or leakage if its operation mode is set to 'Closed'.
+
 ## 3. Fault Description and Symbols
-The following table briefly describes the faults modeled in Sim3Tanks.
+Sim3Tanks allows the user to define different scenarios for case studies with as many actuators and sensors as necessary, in addition to simulating different kinds of perturbations, faults, and noises. The following table briefly describes the faults modeled in Sim3Tanks.
 
 | Symbol | Description |
 | --- | --- |
@@ -60,19 +63,19 @@ The following table briefly describes the faults modeled in Sim3Tanks.
 |         | Leakage in tank 2, if `ValveSettings.K2.OperationMode = 'Closed'`. |
 | `f10` | Clogging in output pipe of the tank 3, if `ValveSettings.K3.OperationMode = 'Open'`. |
 |         | Leakage in tank 3, if `ValveSettings.K3.OperationMode = 'Closed'`. |
-| `f11` | Level sensor fault `h1`. |
-| `f12` | Level sensor fault `h2`. |
-| `f13` | Level sensor fault `h3`. |
-| `f14` | Flow sensor fault `Q1in`. |
-| `f15` | Flow sensor fault `Q2in`. |
-| `f16` | Flow sensor fault `Q2in`. |
-| `f17` | Flow sensor fault `Qa`. |
-| `f18` | Flow sensor fault `Qb`. |
-| `f19` | Flow sensor fault `Q13`. |
-| `f20` | Flow sensor fault `Q23`. |
-| `f21` | Flow sensor fault `Q1`. |
-| `f22` | Flow sensor fault `Q2`. |
-| `f23` | Flow sensor fault `Q3`. |
+| `f11` | Fault in level sensor `h1`. |
+| `f12` | Fault in level sensor `h2`. |
+| `f13` | Fault in level sensor `h3`. |
+| `f14` | Fault in flow sensor `Q1in`. |
+| `f15` | Fault in flow sensor `Q2in`. |
+| `f16` | Fault in flow sensor `Q3in`. |
+| `f17` | Fault in flow sensor `Qa`. |
+| `f18` | Fault in flow sensor `Qb`. |
+| `f19` | Fault in flow sensor `Q13`. |
+| `f20` | Fault in flow sensor `Q23`. |
+| `f21` | Fault in flow sensor `Q1`. |
+| `f22` | Fault in flow sensor `Q2`. |
+| `f23` | Fault in flow sensor `Q3`. |
 
 ## 4. How to Create and Configure a Sim3Tanks Object
 A Sim3Tanks object is created using the `createSim3Tanks()` function.
@@ -83,21 +86,21 @@ objSim3Tanks = createSim3Tanks();
 
 This function does not have an input argument and returns an object with the following fields:
 
-- [**Model**](#41-model-attribute)                               : a Sim3TanksClass that works as an attribute.
-- [**simulateModel**](#42-simulatemodel-method)                  : a function handle that works as a method.
-- [**displayFields**](#43-displayfields-method)                  : a function handle that works as a method.
-- [**clearModel**](#44-clearmodel-method)                        : a function handle that works as a method.
-- [**clearVariables**](#45-clearvariables-method)                : a function handle that works as a method.
-- [**setDefaultModel**](#46-setdefaultmodel-method)              : a function handle that works as a method.
-- [**getDefaultLinearModel**](#47-getdefaultlinearmodel-method)  : a function handle that works as a method.
-- [**getStateVariables**](#48-getstatevariables-method)          : a function handle that works as a method.
-- [**getFlowVariables**](#49-getflowvariables-method)            : a function handle that works as a method.
-- [**getSensorMeasurements**](#410-getsensormeasurements-method) : a function handle that works as a method.
-- [**getValveSignals**](#411-getvalvesignals-method)             : a function handle that works as a method.
-- [**getFaultSignals**](#412-getfaultsignals-method)             : a function handle that works as a method.
+- [**Model**](#41-the-model-attribute)                               : a Sim3TanksClass that works as an attribute.
+- [**simulateModel**](#42-the-simulatemodel-method)                  : a function handle that works as a method.
+- [**displayFields**](#43-the-displayfields-method)                  : a function handle that works as a method.
+- [**clearModel**](#44-the-clearmodel-method)                        : a function handle that works as a method.
+- [**clearVariables**](#45-the-clearvariables-method)                : a function handle that works as a method.
+- [**setDefaultModel**](#46-the-setdefaultmodel-method)              : a function handle that works as a method.
+- [**getDefaultLinearModel**](#47-the-getdefaultlinearmodel-method)  : a function handle that works as a method.
+- [**getStateVariables**](#48-the-getstatevariables-method)          : a function handle that works as a method.
+- [**getFlowVariables**](#49-the-getflowvariables-method)            : a function handle that works as a method.
+- [**getSensorMeasurements**](#410-the-getsensormeasurements-method) : a function handle that works as a method.
+- [**getValveSignals**](#411-the-getvalvesignals-method)             : a function handle that works as a method.
+- [**getFaultSignals**](#412-the-getfaultsignals-method)             : a function handle that works as a method.
 
 ---
-### 4.1. Model attribute
+### 4.1. The `Model` attribute
 This attribute is used to define the system configurations. It is divided into the following subfields:
 
 - **PhysicalParam**: used to define the system's physical structure.
@@ -183,7 +186,7 @@ This attribute is used to define the system configurations. It is divided into t
     objSim3Tanks.Model.InitialCondition = [40 25 20];
     ```
 ---
-### 4.2. simulateModel method
+### 4.2. The `simulateModel()` method
 This method simulates the dynamic behavior of the three-tank system.
 ```
 [y,x,q] = objSim3Tanks.simulateModel('Qp1',VALUE1,'Qp2',VALUE2,'Qp3',VALUE3,'Tspan',VALUE4);
@@ -192,28 +195,28 @@ This method simulates the dynamic behavior of the three-tank system.
 > Sim3Tanks uses the ode45 solver to solve the system differential equations numerically, and it is highly recommended that the simulation time increment be used as the Tspan.
 
 ---
-### 4.3. displayFields method
+### 4.3. The `displayFields()` method
 This method does not have an input argument. It displays all fields and subfields of an object on the command line.
 ```
 objSim3Tanks.displayFields();
 ```
 
 ---
-### 4.4. clearModel method
+### 4.4. The `clearModel()` method
 This method does not have an input argument. It clears all variables and restores an object's settings.
 ```
 objSim3Tanks.clearModel();
 ```
 
 ---
-### 4.5. clearVariables method
+### 4.5. The `clearVariables()` method
 This method does not have an input argument. It clears all state variables, valve, fault, flow signals, and sensor measurement data.
 ```
 objSim3Tanks.clearVariables();
 ```
 
 ---
-### 4.6. setDefaultModel method
+### 4.6. The `setDefaultModel()` method
 This method does not have an input argument. It configures a Sim3Tanks object to the default model.
 ```
 objSim3Tanks.setDefaultModel();
@@ -221,7 +224,7 @@ objSim3Tanks.setDefaultModel();
 <img src="/assets/images/default_scenario.jpg">
 
 ---
-### 4.7. getDefaultLinearModel method
+### 4.7. The `getDefaultLinearModel()` method
 This method returns a linear model of the default scenario.
 ```
 [SYS,OP] = objSim3Tanks.getDefaultLinearModel(x1op,METHOD,TSPAN);
@@ -263,35 +266,35 @@ Input arguments:
 > A continuous model is returned if `METHOD` and `TSPAN` are omitted.
 
 ---
-### 4.8. getStateVariables method
+### 4.8. The `getStateVariables()` method
 This method does not have an input argument. It returns a data table with the values of the state variables. 
 ```
 objSim3Tanks.getStateVariables();
 ```
 
 ---
-### 4.9. getFlowVariables method
+### 4.9. The `getFlowVariables()` method
 This method does not have an input argument. It returns a data table with the values of the flow variables.
 ```
 objSim3Tanks.getFlowVariables();
 ```
 
 ---
-### 4.10. getSensorMeasurements method
+### 4.10. The `getSensorMeasurements()` method
 This method does not have an input argument. It returns a data table with the values of the measured variables.
 ```
 objSim3Tanks.getSensorMeasurements();
 ```
 
 ---
-### 4.11. getValveSignals method
+### 4.11. The `getValveSignals()` method
 This method does not have an input argument. It returns a data table with the values of the valve signals.
 ```
 objSim3Tanks.getValveSignals();
 ```
 
 ---
-### 4.12. getFaultSignals method
+### 4.12. The `getFaultSignals()` method
 This method does not have an input argument. It returns a data table with the values of the fault signals.
 ```
 objSim3Tanks.getFaultSignals();
@@ -313,7 +316,24 @@ git commit -m 'feat: add my feature to do something'
 ```
 git push origin my-feature
 ```
+
 5. Open a Pull Request.
 
-## 6. License
+## 6. Citation
+If this project has helped you in your research, please consider citing:
+
+```
+@article{farias2018sim3tanks,
+    title={Sim3Tanks: A benchmark model simulator for process control and monitoring},
+    author={Farias, Arllem O. and Queiroz, Gabriel Alisson C. and Bessa, Iury V. and Medeiros, Renan Landau P. and Cordeiro, Lucas C. and Palhares, Reinaldo M.},
+    journal={IEEE Access},
+    volume={6},
+    pages={62234--62254},
+    year={2018},
+    publisher={IEEE},
+    doi={10.1109/ACCESS.2018.2874752}
+}
+```
+
+## 7. License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
