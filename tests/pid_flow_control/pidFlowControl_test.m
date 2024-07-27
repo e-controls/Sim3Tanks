@@ -55,7 +55,7 @@ tts.Model.FaultSettings.f23.EnableSignal = true; % Sensor Q3
 sp = stepSignal([140 180 80],[0 20 60],time);
 
 % Fault signals
-f1 = zeros(size(time)); % stepSignal(1,50,time);
+f1 = zeros(size(time));
 f2 = zeros(size(time));
 f6 = zeros(size(time));
 f9 = zeros(size(time));
@@ -65,6 +65,12 @@ f12 = zeros(size(time));
 f19 = zeros(size(time));
 f20 = zeros(size(time));
 f23 = zeros(size(time));
+
+tts.Model.FaultSettings.f11.Offset = 0;
+tts.Model.FaultSettings.f12.Offset = 0;
+tts.Model.FaultSettings.f19.Offset = 0;
+tts.Model.FaultSettings.f20.Offset = 0;
+tts.Model.FaultSettings.f23.Offset = 0;
 
 % Initial condition
 tts.Model.InitialCondition = [10 10 8];

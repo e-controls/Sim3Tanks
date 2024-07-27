@@ -46,6 +46,10 @@ for i = 1 : numel(LIST_OF_FAULTS)
     objSim3Tanks.Model.(LIST_OF_FIELDS{3}).(LIST_OF_FAULTS{i}).Magnitude = 0;
 end
 
+for i = 11 : numel(LIST_OF_FAULTS)
+    objSim3Tanks.Model.(LIST_OF_FIELDS{3}).(LIST_OF_FAULTS{i}).Offset = 0;
+end
+
 objSim3Tanks.Model.(LIST_OF_FIELDS{4}).EnableSignal = false;
 objSim3Tanks.Model.(LIST_OF_FIELDS{4}).Magnitude = zeros(1,Nx);
 

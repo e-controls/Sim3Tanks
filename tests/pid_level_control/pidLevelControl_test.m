@@ -69,6 +69,12 @@ f19 = zeros(size(time));
 f20 = zeros(size(time));
 f23 = zeros(size(time));
 
+tts.Model.FaultSettings.f11.Offset = 0;
+tts.Model.FaultSettings.f12.Offset = 0;
+tts.Model.FaultSettings.f19.Offset = 0;
+tts.Model.FaultSettings.f20.Offset = 0;
+tts.Model.FaultSettings.f23.Offset = 0;
+
 % Initial condition
 tts.Model.InitialCondition = [10 10 8];
 uk(:,1) = [0;0]; % First control signal

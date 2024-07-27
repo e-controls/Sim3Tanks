@@ -70,6 +70,11 @@ classdef Sim3TanksModel < handle
                 this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Magnitude = [];
             end
 
+            % Additional FaultSettings for sensors
+            for i = 11 : numel(this.LIST_OF_FAULTS)
+                this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Offset = [];
+            end
+
             % ProcessNoise
             this.Model.(this.LIST_OF_FIELDS{4}).EnableSignal = false;
             this.Model.(this.LIST_OF_FIELDS{4}).Magnitude = [];

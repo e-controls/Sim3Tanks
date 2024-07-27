@@ -73,17 +73,17 @@ Tspan = options.TSPAN;
 
 %==========================================================================
 
-opMode  = checkOperationMode(objSim3Tanks);
-[v,vID] = checkEnabledValves(objSim3Tanks);
-[f,fID] = checkEnabledFaults(objSim3Tanks);
+opMode = checkOperationMode(objSim3Tanks);
+[valveID,openingRate] = checkEnabledValves(objSim3Tanks);
+[faultID,faultMag,Offset] = checkEnabledFaults(objSim3Tanks);
 
 K = zeros(size(opMode));
 
 % ID = {'Kp1';'Kp2';'Kp3';'Ka';'Kb';'K13';'K23';'K1';'K2';'K3'};
 for i = 1 : numel(opMode)
     OP = opMode(i);
-    EC = isempty(vID{i});
-    EF = isempty(fID{i});
+    EC = isempty(valveID{i});
+    EF = isempty(faultID{i});
 
     % State machine to select the valve behavior
     if(~OP && EC && EF || OP && EC && EF)
@@ -92,19 +92,19 @@ for i = 1 : numel(opMode)
 
     elseif(~OP && EC && ~EF)
         % fprintf('STATE 2 : %s = f\n',ID{i});
-        K(i) = f(i);
+        K(i) = faultMag(i);
 
     elseif(~OP && ~EC && EF || OP && ~EC && EF)
         % fprintf('STATE 3 : %s = K\n',ID{i});
-        K(i) = v(i);
+        K(i) = openingRate(i);
 
     elseif(~OP && ~EC && ~EF || OP && ~EC && ~EF)
         % fprintf('STATE 4 : %s = K*(1-f)\n',ID{i});
-        K(i) = v(i)*(1-f(i));
+        K(i) = openingRate(i)*(1-faultMag(i));
 
     elseif(OP && EC && ~EF)
         % fprintf('STATE 5 : %s = 1-f\n',ID{i});
-        K(i) = 1-f(i);
+        K(i) = 1-faultMag(i);
 
     else % Invalid state
         error(getMessage('ERR000'));
@@ -129,7 +129,7 @@ if(isempty(x))
     objSim3Tanks.setInternalFlowVariables(zeros(1,Nq));
     objSim3Tanks.setInternalSensorMeasurements(zeros(1,Nx+Nq));
     objSim3Tanks.setInternalValveSignals(opMode');
-    objSim3Tanks.setInternalFaultSignals(f');
+    objSim3Tanks.setInternalFaultSignals(faultMag');
 
 else
     x = x(end,:);
@@ -209,12 +209,12 @@ else
 end
 
 % Measurements ---> y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
-y = sensorMeasurements(x,q,f,mNoise);
+y = sensorMeasurements(x,q,faultMag,Offset,mNoise);
 
 objSim3Tanks.pushInternalStateVariables(x);
 objSim3Tanks.pushInternalFlowVariables(q);
 objSim3Tanks.pushInternalSensorMeasurements(y);
 objSim3Tanks.pushInternalValveSignals(K');
-objSim3Tanks.pushInternalFaultSignals(f');
+objSim3Tanks.pushInternalFaultSignals(faultMag');
 
 end
