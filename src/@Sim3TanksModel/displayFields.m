@@ -2,8 +2,7 @@ function displayFields(varargin)
 % displayFields is a Sim3Tanks method. This method displays all fields and
 % subfields of a Sim3Tanks object.
 
-% Written by Arllem Farias, May/2024.
-% Last update Jun/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

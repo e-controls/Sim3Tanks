@@ -11,8 +11,7 @@ function clearVariables(varargin)
 %   'valves'  : to clear only the valve signals.
 %   'faults'  : to clear only the fault singals
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

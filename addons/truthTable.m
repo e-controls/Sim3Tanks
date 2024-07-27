@@ -2,6 +2,7 @@ function [T] = truthTable(N)
 % T = truthTable(N) returns the truth table for N variables.
 
 % Written by Arllem Farias, 2024.
+% https://github.com/e-controls/Sim3Tanks
 
 if(nargin() ~= 1)
     error('This function must have just one input argument.');

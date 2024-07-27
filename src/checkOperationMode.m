@@ -4,8 +4,7 @@ function [varargout] = checkOperationMode(varargin)
 % 1, where 0 corresponds to Closed and 1 corresponds to Open. A second
 % array with the IDs of the valves is also returned.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

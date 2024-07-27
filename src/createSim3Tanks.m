@@ -17,8 +17,7 @@ function [varargout] = createSim3Tanks(varargin)
 %         getValveSignals: [method]
 %         getFaultSignals: [method]
 
-% Written by Arllem Farias, December/2023.
-% Last update May/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

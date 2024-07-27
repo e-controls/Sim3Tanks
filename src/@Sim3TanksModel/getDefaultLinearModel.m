@@ -5,8 +5,7 @@ function [varargout] = getDefaultLinearModel(varargin)
 % Example:
 %   [SYS,OP] = getDefaultLinearModel(objSim3Tanks,x1op,METHOD,TSPAN)
 
-% Written by Arllem Farias, Jun/2024.
-% Last update Jun/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

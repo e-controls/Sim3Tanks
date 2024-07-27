@@ -20,8 +20,7 @@ function [y,x,q] = simulateModel(varargin)
 % 4) simulateModel('Qp1',100,'Qp2',110,'Qp3',120,'Tspan',0.1) : all
 % possible values are updated.
 
-% Written by Arllem Farias, January/2024.
-% Last update May/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

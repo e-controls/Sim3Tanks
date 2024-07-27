@@ -16,8 +16,7 @@ function [varargout] = defaultPhysicalParam(varargin)
 % If the input argument is omitted, all parameters are grouped and returned
 % in a single struct.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

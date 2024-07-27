@@ -2,8 +2,7 @@ function [dxdt] = dxdtModel(varargin)
 % dxdtModel is a Sim3Tanks function. This function describes the state
 % equations of the three-tank system.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

@@ -2,8 +2,7 @@ function [varargout] = getFlowVariables(varargin)
 % getFlowVariables is a Sim3Tanks method. This method returns a data table
 % with the values of the flow variables.
 
-% Written by Arllem Farias, February/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

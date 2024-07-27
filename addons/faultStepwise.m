@@ -18,6 +18,7 @@ function [varargout] = faultStepwise(MAGNITUDE,FAULT_TIME,TIME_VECTOR)
 %   title('Stepwise Fault Signal');
 
 % Written by Arllem Farias, 2024.
+% https://github.com/e-controls/Sim3Tanks
 
 if(MAGNITUDE<0 || MAGNITUDE>1)
     error('MAGNITUDE must be within the range [0,1].');

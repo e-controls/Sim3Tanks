@@ -5,8 +5,7 @@ function [varargout] = checkEnabledNoises(varargin)
 % values. If the EnableSignal field is set to false, then the returned
 % value will be an array of 0s with appropriate dimensions.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

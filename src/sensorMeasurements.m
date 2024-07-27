@@ -2,8 +2,7 @@ function [y] = sensorMeasurements(varargin)
 % sensorMeasurements is a Sim3Tanks function. This function describes the
 % measurements of the output equations of the three-tank system.
 
-% Written by Arllem Farias, January/2024.
-% Last update January/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

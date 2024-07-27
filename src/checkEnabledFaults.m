@@ -5,8 +5,7 @@ function [varargout] = checkEnabledFaults(varargin)
 % EnableSignal field is set to false, then the returned value will be 0. A
 % second array with the IDs of the enabled faults is also returned.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

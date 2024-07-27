@@ -2,8 +2,7 @@ function [varargout] = getMessage(varargin)
 % getMessage is a Sim3Tanks function. This function returns the message
 % associated with a code.
 
-% Written by Arllem Farias, June/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

@@ -1,8 +1,7 @@
 classdef Sim3TanksModel < handle
     % Sim3TanksModel is the model used to define the system configurations.
 
-    % Written by Arllem Farias, January/2024.
-    % Last update June/2024 by Arllem Farias.
+    % https://github.com/e-controls/Sim3Tanks
 
     %======================================================================
 

@@ -7,8 +7,7 @@ function [varargout] = checkEnabledValves(varargin)
 % Open, respectively). A second array with the IDs of the enabled valves is
 % also returned.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

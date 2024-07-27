@@ -2,8 +2,7 @@ function setDefaultModel(varargin)
 % setDefaultModel is a Sim3Tanks method. This method configures a Sim3Tanks
 % object to the default model.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 
