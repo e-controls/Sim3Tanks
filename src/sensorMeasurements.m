@@ -6,7 +6,7 @@ function [y] = sensorMeasurements(varargin)
 
 %==========================================================================
 
-LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
+LIST_OF_VALVES = Sim3Tanks.LIST_OF_VALVES;
 
 %==========================================================================
 

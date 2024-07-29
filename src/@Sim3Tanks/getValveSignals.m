@@ -14,7 +14,7 @@ end
 
 %==========================================================================
 
-LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
+LIST_OF_VALVES = Sim3Tanks.LIST_OF_VALVES;
 
 v = objSim3Tanks.getInternalValveSignals();
 

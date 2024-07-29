@@ -14,7 +14,7 @@ end
 
 %==========================================================================
 
-LIST_OF_FLOWS = Sim3TanksModel.LIST_OF_FLOWS;
+LIST_OF_FLOWS = Sim3Tanks.LIST_OF_FLOWS;
 
 q = objSim3Tanks.getInternalFlowVariables();
 

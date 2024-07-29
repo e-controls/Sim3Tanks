@@ -120,8 +120,8 @@ end
 
 %==========================================================================
 
-Nx = numel(Sim3TanksModel.LIST_OF_STATES);
-Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
+Nx = numel(Sim3Tanks.LIST_OF_STATES);
+Nq = numel(Sim3Tanks.LIST_OF_FLOWS);
 
 x = objSim3Tanks.getInternalStateVariables();
 

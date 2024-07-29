@@ -39,7 +39,7 @@ valve{8}  = 'Closed'; % Default state of the valve K1
 valve{9}  = 'Closed'; % Default state of the valve K2
 valve{10} = 'Open';   % Default state of the valve K3
 
-LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
+LIST_OF_VALVES = Sim3Tanks.LIST_OF_VALVES;
 
 if(numel(valve) ~= numel(LIST_OF_VALVES))
     error(getMessage('ERR006'));

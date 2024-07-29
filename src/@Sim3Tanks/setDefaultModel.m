@@ -14,12 +14,12 @@ end
 
 %==========================================================================
 
-LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
-LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
-LIST_OF_FAULTS = Sim3TanksModel.LIST_OF_FAULTS;
-LIST_OF_PARAM  = Sim3TanksModel.LIST_OF_PARAM;
-Nx = numel(Sim3TanksModel.LIST_OF_STATES);
-Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
+LIST_OF_FIELDS = Sim3Tanks.LIST_OF_FIELDS;
+LIST_OF_VALVES = Sim3Tanks.LIST_OF_VALVES;
+LIST_OF_FAULTS = Sim3Tanks.LIST_OF_FAULTS;
+LIST_OF_PARAM  = Sim3Tanks.LIST_OF_PARAM;
+Nx = numel(Sim3Tanks.LIST_OF_STATES);
+Nq = numel(Sim3Tanks.LIST_OF_FLOWS);
 
 %==========================================================================
 

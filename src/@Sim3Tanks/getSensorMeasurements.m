@@ -14,8 +14,8 @@ end
 
 %==========================================================================
 
-LIST_OF_STATES = Sim3TanksModel.LIST_OF_STATES;
-LIST_OF_FLOWS  = Sim3TanksModel.LIST_OF_FLOWS;
+LIST_OF_STATES = Sim3Tanks.LIST_OF_STATES;
+LIST_OF_FLOWS  = Sim3Tanks.LIST_OF_FLOWS;
 
 y = objSim3Tanks.getInternalSensorMeasurements();
 

@@ -35,7 +35,7 @@ param{6} = 981; % Gravity constant (cm/s^2)
 param{7} = 0;   % Minimum flow value of the pumps (cm^3/s)
 param{8} = 120; % Maximum flow value of the pumps (cm^3/s)
 
-LIST_OF_PARAM = Sim3TanksModel.LIST_OF_PARAM;
+LIST_OF_PARAM = Sim3Tanks.LIST_OF_PARAM;
 
 if(numel(param) ~= numel(LIST_OF_PARAM))
     error(getMessage('ERR006'));

@@ -14,7 +14,7 @@ end
 
 %==========================================================================
 
-LIST_OF_FAULTS = Sim3TanksModel.LIST_OF_FAULTS;
+LIST_OF_FAULTS = Sim3Tanks.LIST_OF_FAULTS;
 
 f = objSim3Tanks.getInternalFaultSignals();
 

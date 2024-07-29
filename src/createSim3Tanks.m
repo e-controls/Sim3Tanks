@@ -16,7 +16,7 @@ function [varargout] = createSim3Tanks(varargin)
 %   getSensorMeasurements: [method]
 %         getValveSignals: [method]
 %         getFaultSignals: [method]
-%  interpolSimulationTime: [method]
+%         interpolateTime: [method]
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -31,6 +31,6 @@ end
 % Should I create a constructor using KEY-VALUE pairs???
 % Ex.: createSim3Tanks('TankRadius',0.5,'Kp1',{open,enabled,openingRate},...)
 
-varargout{1} = Sim3TanksModel();
+varargout{1} = Sim3Tanks();
 
 end

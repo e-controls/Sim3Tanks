@@ -35,7 +35,7 @@ switch messageCode
     case 'ERR003'
         msg = 'Invalid input parameter.';
     case 'ERR004'
-        msg = 'The input argument must be a Sim3TanksModel object.';
+        msg = 'The input argument must be a Sim3Tanks object.';
     case 'ERR005'
         msg = 'The input argument must be a row vector.';
     case 'ERR006'

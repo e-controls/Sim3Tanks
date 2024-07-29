@@ -1,5 +1,5 @@
-classdef Sim3TanksModel < handle
-    % Sim3TanksModel is the model used to define the system configurations.
+classdef Sim3Tanks < handle
+    % Sim3Tanks is the model used to define the system configurations.
 
     % https://github.com/e-controls/Sim3Tanks
 
@@ -34,7 +34,7 @@ classdef Sim3TanksModel < handle
     %======================================================================
 
     methods % Class Constructor
-        function obj = Sim3TanksModel(varargin)
+        function obj = Sim3Tanks(varargin)
 
             % Check input arguments
             if(nargin()==0)

@@ -14,7 +14,7 @@ end
 
 %==========================================================================
 
-LIST_OF_STATES = Sim3TanksModel.LIST_OF_STATES;
+LIST_OF_STATES = Sim3Tanks.LIST_OF_STATES;
 
 x = objSim3Tanks.getInternalStateVariables();
 

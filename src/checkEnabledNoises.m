@@ -15,7 +15,7 @@ elseif(nargin()>1)
     error(getMessage('ERR002'));
 end
 
-if(isa(varargin{1},'Sim3TanksModel'))
+if(isa(varargin{1},'Sim3Tanks'))
     objSim3Tanks = varargin{1};
 else
     error(getMessage('ERR004'));
@@ -23,9 +23,9 @@ end
 
 %==========================================================================
 
-LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
-Nx = numel(Sim3TanksModel.LIST_OF_STATES);
-Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
+LIST_OF_FIELDS = Sim3Tanks.LIST_OF_FIELDS;
+Nx = numel(Sim3Tanks.LIST_OF_STATES);
+Nq = numel(Sim3Tanks.LIST_OF_FLOWS);
 
 %==========================================================================
 
