@@ -1,6 +1,6 @@
 function [y,x,q] = simulateModel(varargin)
-% simulateModel is a Sim3Tanks function. This function simulates the
-% dynamic behavior of the three-tank system defined by the user.
+% simulateModel is a Sim3Tanks method. This method simulates the dynamic
+% behavior of the three-tank system defined by the user.
 %
 % The input parameter must follow the pair ('NAME',VALUE), where NAME must
 % be Qp1, Qp2, Qp3, or Tspan, and VALUE must be numeric type.
@@ -10,11 +10,12 @@ function [y,x,q] = simulateModel(varargin)
 % The same is valid for the pairs ('Qp2',VALUE2) and ('Qp3',VALUE3). For
 % the pair ('Tspan',VALUE), the default value is 0.1.
 %
+% NOTE: It is highly recommended to use simulation time increment as Tspan.
+%
 % The pair ('allSteps',true) enables the return of all intermediate steps
 % of the simulation, by default its value is false, and only the last step
-% is returned.
-%
-% NOTE: It is highly recommended to use simulation time increment as Tspan.
+% is returned. In case of true, use the method interpolateTime() to get an
+% interpolated time vector of size consistent with the number of samples.
 %
 % Examples of how to call the function:
 % 1) simulateModel() : default values are used.

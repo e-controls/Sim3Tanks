@@ -97,7 +97,7 @@ for k = 2 : N % k=1 conrresponds to initial condition
     % field tts.Model.PhysicalParam.PumpMaxFlow is used as default. The
     % same is valid for the pairs ('Qp2',VALUE2) and ('Qp3',VALUE3). For
     % the pair ('Tspan',VALUE), the default value is 0.1.
-    [y,x,q] = tts.simulateModel('Qp1',Qp1(k),'Qp2',Qp2(k),'Qp3',Qp3(k),'Tspan',Ts,'allSteps',false);
+    [y,x,q] = tts.simulateModel('Qp1',Qp1(k),'Qp2',Qp2(k),'Qp3',Qp3(k),'Tspan',Ts,'allSteps',true);
 
 end
 
@@ -111,7 +111,7 @@ Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
 F = tts.getFaultSignals();
 
-time = tts.interpolSimulationTime([tstart tstop]);
+time = tts.interpolateTime(time);
 
 %% Plots
 

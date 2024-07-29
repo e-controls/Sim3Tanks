@@ -1,3 +1,7 @@
+% This script simulates Sim3Tanks in a closed-loop with a digital PID
+% controller. The controlled variable is the outflow Q3, and the control
+% signals are the valves Kp1 and Kp2.
+
 clc; clear; close all;
 
 % Add internal dependency paths
@@ -66,6 +70,7 @@ f19 = zeros(size(time));
 f20 = zeros(size(time));
 f23 = zeros(size(time));
 
+% Offset for sensor faults
 tts.Model.FaultSettings.f11.Offset = 0;
 tts.Model.FaultSettings.f12.Offset = 0;
 tts.Model.FaultSettings.f19.Offset = 0;
@@ -157,7 +162,7 @@ Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
 F = tts.getFaultSignals();
 
-time = tts.interpolSimulationTime([tstart tstop]);
+time = tts.interpolateTime(time);
 
 %% Plots
 
