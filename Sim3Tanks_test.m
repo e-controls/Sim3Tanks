@@ -97,11 +97,21 @@ for k = 2 : N % k=1 conrresponds to initial condition
     % field tts.Model.PhysicalParam.PumpMaxFlow is used as default. The
     % same is valid for the pairs ('Qp2',VALUE2) and ('Qp3',VALUE3). For
     % the pair ('Tspan',VALUE), the default value is 0.1.
-    [y,x,q] = tts.simulateModel('Qp1',Qp1(k),'Qp2',Qp2(k),'Qp3',Qp3(k),'Tspan',Ts);
+    [y,x,q] = tts.simulateModel('Qp1',Qp1(k),'Qp2',Qp2(k),'Qp3',Qp3(k),'Tspan',Ts,'allSteps',false);
 
 end
 
 fprintf([getMessage('tag'),'The simulation is done!\n']);
+
+% Preparing variables
+
+X = tts.getStateVariables();
+Q = tts.getFlowVariables();
+Y = tts.getSensorMeasurements();
+K = tts.getValveSignals();
+F = tts.getFaultSignals();
+
+time = tts.interpolSimulationTime([tstart tstop]);
 
 %% Plots
 
@@ -111,33 +121,28 @@ figure; hold on; grid on;
 title('State Variables');
 xlabel('Time');
 ylabel('Level');
-X = tts.getStateVariables();
 plot(time,X.Variables);
 
 figure; hold on; grid on;
 title('Flow Variables');
 xlabel('Time');
 ylabel('Flow Rate');
-Q = tts.getFlowVariables();
 plot(time,Q.Variables);
 
 figure; hold on; grid on;
 title('Sensor Measurements');
 xlabel('Time');
 ylabel('Data');
-Y = tts.getSensorMeasurements();
 plot(time,Y.Variables);
 
 figure; hold on; grid on;
 title('Valve Signals');
 xlabel('Time');
 ylabel('Opening Rate');
-K = tts.getValveSignals();
 plot(time,K.Variables);
 
 figure; hold on; grid on;
 title('Fault Signals');
 xlabel('Time');
 ylabel('Magnitude');
-F = tts.getFaultSignals();
 plot(time,F.Variables);

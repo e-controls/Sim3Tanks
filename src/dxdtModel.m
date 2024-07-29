@@ -16,14 +16,6 @@ else
     w = varargin{3};
 end
 
-if ~(isnumeric(A) && isnumeric(q) && isnumeric(w))
-    error(getMessage('ERR003'));
-elseif (~isscalar(A) ...
-        || numel(q) ~= numel(Sim3TanksModel.LIST_OF_FLOWS) ...
-        || numel(w) ~= numel(Sim3TanksModel.LIST_OF_STATES))
-    error(getMessage('ERR006'));
-end
-
 Q1in = q(1);
 Q2in = q(2);
 Q3in = q(3);

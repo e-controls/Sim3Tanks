@@ -7,9 +7,6 @@ function [y] = sensorMeasurements(varargin)
 %==========================================================================
 
 LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
-LIST_OF_FAULTS = Sim3TanksModel.LIST_OF_FAULTS;
-LIST_OF_STATES = Sim3TanksModel.LIST_OF_STATES;
-LIST_OF_FLOWS  = Sim3TanksModel.LIST_OF_FLOWS;
 
 %==========================================================================
 
@@ -18,22 +15,11 @@ if(nargin()<5)
 elseif(nargin()>5)
     error(getMessage('ERR002'));
 else
-    levels = varargin{1};
-    flows = varargin{2};
+    levels   = varargin{1};
+    flows    = varargin{2};
     faultMag = varargin{3};
-    offset = varargin{4};
-    mNoise = varargin{5};
-end
-
-if~(isnumeric(levels)&&isnumeric(flows)&&isnumeric(faultMag)&&isnumeric(offset)&&isnumeric(mNoise))
-    error(getMessage('ERR003'));
-elseif(~isrow(levels)||~isrow(flows))
-    error(getMessage('ERR005'));
-elseif (numel(levels) ~= numel(LIST_OF_STATES) ...
-        || numel(flows) ~= numel(LIST_OF_FLOWS) ...
-        || numel(faultMag) ~= numel(LIST_OF_FAULTS) ...
-        || numel(mNoise) ~= numel([LIST_OF_STATES;LIST_OF_FLOWS]))
-    error(getMessage('ERR006'));
+    offset   = varargin{4};
+    mNoise   = varargin{5};
 end
 
 N = numel(LIST_OF_VALVES);

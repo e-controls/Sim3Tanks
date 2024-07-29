@@ -157,6 +157,8 @@ Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
 F = tts.getFaultSignals();
 
+time = tts.interpolSimulationTime([tstart tstop]);
+
 %% Plots
 
 fprintf([getMessage('tag'),'Plotting Graphs...\n']);

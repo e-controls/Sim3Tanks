@@ -72,6 +72,8 @@ switch messageCode
         msg = 'Invalid number of input arguments (must be odd).';
     case 'ERR022'
         msg = 'The sensor fault offset value must be finite.';
+    case 'ERR023'
+        msg = 'The input argument must be a two-position vector.';
         %
         %
         %

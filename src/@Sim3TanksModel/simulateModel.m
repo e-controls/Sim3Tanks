@@ -1,6 +1,6 @@
 function [y,x,q] = simulateModel(varargin)
 % simulateModel is a Sim3Tanks function. This function simulates the
-% dynamic behavior of the three-tank system.
+% dynamic behavior of the three-tank system defined by the user.
 %
 % The input parameter must follow the pair ('NAME',VALUE), where NAME must
 % be Qp1, Qp2, Qp3, or Tspan, and VALUE must be numeric type.
@@ -9,6 +9,10 @@ function [y,x,q] = simulateModel(varargin)
 % field objSim3Tanks.Model.PhysicalParam.PumpMaxFlow is used as default.
 % The same is valid for the pairs ('Qp2',VALUE2) and ('Qp3',VALUE3). For
 % the pair ('Tspan',VALUE), the default value is 0.1.
+%
+% The pair ('allSteps',true) enables the return of all intermediate steps
+% of the simulation, by default its value is false, and only the last step
+% is returned.
 %
 % NOTE: It is highly recommended to use simulation time increment as Tspan.
 %
@@ -54,6 +58,7 @@ options.QP1 = Qmax;
 options.QP2 = Qmax;
 options.QP3 = Qmax;
 options.TSPAN = 0.1;
+options.ALLSTEPS = false;
 
 % Check input options
 for i = 2 : 2 : nargin()
@@ -70,6 +75,7 @@ Qp1 = options.QP1;
 Qp2 = options.QP2;
 Qp3 = options.QP3;
 Tspan = options.TSPAN;
+allSteps = options.ALLSTEPS;
 
 %==========================================================================
 
@@ -113,16 +119,13 @@ end
 
 %==========================================================================
 
-[pNoise,mNoise] = checkEnabledNoises(objSim3Tanks);
-
-%==========================================================================
+Nx = numel(Sim3TanksModel.LIST_OF_STATES);
+Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
 
 x = objSim3Tanks.getInternalStateVariables();
 
 if(isempty(x))
 
-    Nx = numel(Sim3TanksModel.LIST_OF_STATES);
-    Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
     x  = objSim3Tanks.Model.InitialCondition;
 
     objSim3Tanks.setInternalStateVariables(x);
@@ -137,84 +140,109 @@ end
 
 %==========================================================================
 
-h1 = x(1);
-h2 = x(2);
-h3 = x(3);
+i = 1;
 
-if(h1<=h0 && h2<=h0 && h3<=h0)
-    % fprintf('CASE 1 : h1<=h0, h2<=h0, h3<=h0\n');
-    Qa = K(4)*0;
-    Qb = K(5)*0;
+while(1)
 
-elseif(h1<=h0 && h2<=h0 && h3>h0)
-    % fprintf('CASE 2 : h1<=h0, h2<=h0, h3>h0\n');
-    Qa = K(4)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
-    Qb = K(5)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
+    h1 = x(i,1);
+    h2 = x(i,2);
+    h3 = x(i,3);
 
-elseif(h1<=h0 && h2>h0 && h3<=h0)
-    % fprintf('CASE 3 : h1<=h0, h2>h0, h3<=h0\n');
-    Qa = K(4)*0;
-    Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
+    if(h1<=h0 && h2<=h0 && h3<=h0)
+        % fprintf('CASE 1 : h1<=h0, h2<=h0, h3<=h0\n');
+        Qa = K(4)*0;
+        Qb = K(5)*0;
 
-elseif(h1<=h0 && h2>h0 && h3>h0)
-    % fprintf('CASE 4 : h1<=h0, h2>h0, h3>h0\n');
-    Qa = K(4)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
-    Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
+    elseif(h1<=h0 && h2<=h0 && h3>h0)
+        % fprintf('CASE 2 : h1<=h0, h2<=h0, h3>h0\n');
+        Qa = K(4)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
+        Qb = K(5)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
 
-elseif(h1>h0 && h2<=h0 && h3<=h0)
-    % fprintf('CASE 5 : h1>h0, h2<=h0, h3<=h0\n');
-    Qa = K(4)*Beta*sign(h1-h0)*sqrt(abs(h1-h0));
-    Qb = K(5)*0;
+    elseif(h1<=h0 && h2>h0 && h3<=h0)
+        % fprintf('CASE 3 : h1<=h0, h2>h0, h3<=h0\n');
+        Qa = K(4)*0;
+        Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
 
-elseif(h1>h0 && h2<=h0 && h3>h0)
-    % fprintf('CASE 6 : h1>h0, h2<=h0, h3>h0\n');
-    Qa = K(4)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
-    Qb = K(5)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
+    elseif(h1<=h0 && h2>h0 && h3>h0)
+        % fprintf('CASE 4 : h1<=h0, h2>h0, h3>h0\n');
+        Qa = K(4)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
+        Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
 
-elseif(h1>h0 && h2>h0 && h3<=h0)
-    % fprintf('CASE 7 : h1>h0, h2>h0, h3<=h0\n');
-    Qa = K(4)*Beta*sign(h1-h0)*sqrt(abs(h1-h0));
-    Qb = K(5)*Beta*sign(h2-h0)*sqrt(abs(h2-h0));
+    elseif(h1>h0 && h2<=h0 && h3<=h0)
+        % fprintf('CASE 5 : h1>h0, h2<=h0, h3<=h0\n');
+        Qa = K(4)*Beta*sign(h1-h0)*sqrt(abs(h1-h0));
+        Qb = K(5)*0;
 
-elseif(h1>h0 && h2>h0 && h3>h0)
-    % fprintf('CASE 8 : h1>h0, h2>h0, h3>h0\n');
-    Qa = K(4)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
-    Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
+    elseif(h1>h0 && h2<=h0 && h3>h0)
+        % fprintf('CASE 6 : h1>h0, h2<=h0, h3>h0\n');
+        Qa = K(4)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
+        Qb = K(5)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
 
-else
-    error(getMessage('ERR000'));
-end
+    elseif(h1>h0 && h2>h0 && h3<=h0)
+        % fprintf('CASE 7 : h1>h0, h2>h0, h3<=h0\n');
+        Qa = K(4)*Beta*sign(h1-h0)*sqrt(abs(h1-h0));
+        Qb = K(5)*Beta*sign(h2-h0)*sqrt(abs(h2-h0));
 
-Q1in = K(1)*satSignal(Qp1,[Qmin Qmax]);
-Q2in = K(2)*satSignal(Qp2,[Qmin Qmax]);
-Q3in = K(3)*satSignal(Qp3,[Qmin Qmax]);
-Q13  = K(6)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
-Q23  = K(7)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
-Q1   = K(8)*Beta*sqrt(abs(h1));
-Q2   = K(9)*Beta*sqrt(abs(h2));
-Q3   = K(10)*Beta*sqrt(abs(h3));
+    elseif(h1>h0 && h2>h0 && h3>h0)
+        % fprintf('CASE 8 : h1>h0, h2>h0, h3>h0\n');
+        Qa = K(4)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
+        Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
 
-% Flows ---> q = [Qp1,Qp2,Qp3,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
-q = [Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3];
+    else
+        error(getMessage('ERR000'));
+    end
 
-% Levels ---> h = [h1,h2,h3]
-options = odeset('MaxStep',Tspan,'RelTol',1e-6);
+    Q1in = K(1)*satSignal(Qp1,[Qmin Qmax]);
+    Q2in = K(2)*satSignal(Qp2,[Qmin Qmax]);
+    Q3in = K(3)*satSignal(Qp3,[Qmin Qmax]);
+    Q13  = K(6)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
+    Q23  = K(7)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
+    Q1   = K(8)*Beta*sqrt(abs(h1));
+    Q2   = K(9)*Beta*sqrt(abs(h2));
+    Q3   = K(10)*Beta*sqrt(abs(h3));
 
-[~,x] = ode45(@(t,x)dxdtModel(Sc,q,pNoise),[0 Tspan],x,options);
+    Qx = [Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3];
 
-if(isfinite(x))
-    x = satSignal(x(end,:),[0 Hmax]);
-else
-    error(getMessage('ERR007'));
-end
+    [pNoise,mNoise] = checkEnabledNoises(objSim3Tanks);
 
-% Measurements ---> y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
-y = sensorMeasurements(x,q,faultMag,Offset,mNoise);
+    if(i==1) % Levels --> x = [h1,h2,h3]
 
-objSim3Tanks.pushInternalStateVariables(x);
-objSim3Tanks.pushInternalFlowVariables(q);
-objSim3Tanks.pushInternalSensorMeasurements(y);
-objSim3Tanks.pushInternalValveSignals(K');
-objSim3Tanks.pushInternalFaultSignals(faultMag');
+        options = odeset('MaxStep',Tspan,'RelTol',1e-6);
+
+        [~,x] = ode45(@(t,x)dxdtModel(Sc,Qx,pNoise),[0 Tspan],x,options);
+
+        if(isfinite(x))
+            if(allSteps)
+                x = satSignal(x(2:end,:),[0 Hmax]);
+            else
+                x = satSignal(x(end,:),[0 Hmax]);
+            end
+        else
+            error(getMessage('ERR007'));
+        end
+
+        numberOfStates = size(x,1);
+        y = zeros(numberOfStates,Nx+Nq);
+        q = zeros(numberOfStates,Nq);
+
+    end
+
+    % Flows --> q = [Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
+    q(i,:) = Qx;
+
+    % Measurements --> y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
+    y(i,:) = sensorMeasurements(x(i,:),q(i,:),faultMag,Offset,mNoise);
+
+    objSim3Tanks.pushInternalStateVariables(x(i,:));
+    objSim3Tanks.pushInternalFlowVariables(q(i,:));
+    objSim3Tanks.pushInternalSensorMeasurements(y(i,:));
+    objSim3Tanks.pushInternalValveSignals(K');
+    objSim3Tanks.pushInternalFaultSignals(faultMag');
+
+    if(i>=numberOfStates)
+        break;
+    else
+        i = i + 1;
+    end
 
 end

@@ -16,6 +16,7 @@ function [varargout] = createSim3Tanks(varargin)
 %   getSensorMeasurements: [method]
 %         getValveSignals: [method]
 %         getFaultSignals: [method]
+%  interpolSimulationTime: [method]
 
 % https://github.com/e-controls/Sim3Tanks
 
