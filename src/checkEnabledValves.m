@@ -1,11 +1,14 @@
 function [varargout] = checkEnabledValves(varargin)
 % checkEnabledValves is a Sim3Tanks function. This function checks the
-% valves that have the EnableControl field set to true in a Sim3TanksClass
+% valves that have the EnableControl field set to true in a Sim3Tanks
 % object and returns an array with the IDs of the enabled valves. A second
 % array with the OpeningRate field values is also returned. If the
 % EnableControl field is set to false, then the returned value will be 0
 % or 1, depending on the operation mode configured in the model (Closed or
 % Open, respectively).
+%
+% Example:
+%   [valveID,openingRate] = checkEnabledValves(objSim3Tanks);
 
 % https://github.com/e-controls/Sim3Tanks
 

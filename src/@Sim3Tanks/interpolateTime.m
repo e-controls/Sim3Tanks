@@ -1,7 +1,10 @@
 function [varargout] = interpolateTime(varargin)
 % interpolateTime is a Sim3Tanks method. This method receives the original
-% simulation time vector and returns a new interpolated time vector of size
-% consistent with the number of simulations of a Sim3Tanks object.
+% simulation time vector and returns a new interpolated time vector of
+% size-consistent with the number of simulations of a Sim3Tanks object.
+%
+% Example:
+%   tts.interpolateTime(time_vector);
 
 % https://github.com/e-controls/Sim3Tanks
 

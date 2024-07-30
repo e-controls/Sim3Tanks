@@ -1,6 +1,10 @@
 function displayFields(varargin)
-% displayFields is a Sim3Tanks method. This method displays all fields and
-% subfields of a Sim3Tanks object.
+% displayFields is a Sim3Tanks method. This method does not have an input
+% argument. It displays all fields and subfields of a Sim3Tanks object on
+% the command line
+%
+% Example:
+%   tts.displayFields();
 
 % https://github.com/e-controls/Sim3Tanks
 

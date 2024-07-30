@@ -1,6 +1,9 @@
 function setDefaultModel(varargin)
-% setDefaultModel is a Sim3Tanks method. This method configures a Sim3Tanks
-% object to the default model.
+% setDefaultModel is a Sim3Tanks method. This method does not have an input
+% argument and configures a Sim3Tanks object to the default model.
+%
+% Example:
+%   tts.setDefaultModel();
 
 % https://github.com/e-controls/Sim3Tanks
 

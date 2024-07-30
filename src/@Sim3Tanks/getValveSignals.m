@@ -1,6 +1,9 @@
 function [varargout] = getValveSignals(varargin)
-% getValveSignals is a Sim3Tanks method. This method returns a data table
-% with the values of the valve signals.
+% getValveSignals is a Sim3Tanks method. This method does not have an input
+% argument and returns a data table with the values of the valve signals.
+%
+% Example:
+%   tts.getValveSignals();
 
 % https://github.com/e-controls/Sim3Tanks
 

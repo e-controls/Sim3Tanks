@@ -1,9 +1,12 @@
 function [varargout] = checkEnabledNoises(varargin)
 % checkEnabledNoises is a Sim3Tanks function. This function checks if the
 % process and measurement noises have their EnableSignal field set to true
-% in a Sim3TanksClass object and returns an array with the Magnitude field
+% in a Sim3Tanks object and returns an array with the Magnitude field
 % values. If the EnableSignal field is set to false, then the returned
 % value will be an array of 0s with appropriate dimensions.
+%
+% Example:
+%   [pNoise,mNoise] = checkEnabledNoises(objSim3Tanks);
 
 % https://github.com/e-controls/Sim3Tanks
 

@@ -1,6 +1,10 @@
 function [varargout] = getSensorMeasurements(varargin)
-% getSensorMeasurements is a Sim3Tanks method. This method returns a data
-% table with the values of the measured variables.
+% getSensorMeasurements is a Sim3Tanks method. This method does not have an
+% input argument and returns a data table with the values of the measured
+% variables.
+%
+% Example:
+%   tts.getSensorMeasurements();
 
 % https://github.com/e-controls/Sim3Tanks
 

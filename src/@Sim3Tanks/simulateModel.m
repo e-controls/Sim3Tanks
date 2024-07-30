@@ -14,16 +14,26 @@ function [y,x,q] = simulateModel(varargin)
 %
 % The pair ('allSteps',true) enables the return of all intermediate steps
 % of the simulation, by default its value is false, and only the last step
-% is returned. In case of true, use the method interpolateTime() to get an
-% interpolated time vector of size consistent with the number of samples.
+% is returned. In case of true value, use the interpolateTime() method to
+% get an interpolated time vector of size-consistent with the number of
+% samples.
+%
+% The output arguments are the following vectors:
+%   y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3] : measurements
+%   x = [h1,h2,h3] : states
+%   q = [Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3] : flows
 %
 % Examples of how to call the function:
-% 1) simulateModel() : default values are used.
-% 2) simulateModel('Qp1',100) : only the value of Qp1 is updated to 100.
-% 3) simulateModel('Qp2',110,'Tspan',0.2) : only the values of Qp2 and
-% Tspan are updated to 110 and 0.2, respectively.
-% 4) simulateModel('Qp1',100,'Qp2',110,'Qp3',120,'Tspan',0.1) : all
-% possible values are updated.
+%   >> [y,x,q] = simulateModel() : default values are used.
+%
+%   >> [y,x,q] = simulateModel('Qp1',100) : only the value of Qp1 is
+%   updated to 100.
+%
+%   >> [y,x,q] = simulateModel('Qp2',110,'Tspan',0.2) : only the values
+%   of Qp2 and Tspan are updated to 110 and 0.2, respectively.
+%
+%   >> [y,x,q] = simulateModel('allSteps',true) : the variables y, x,
+%   and q will have more than one line.
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -82,7 +92,7 @@ allSteps = options.ALLSTEPS;
 
 opMode = checkOperationMode(objSim3Tanks);
 [valveID,openingRate] = checkEnabledValves(objSim3Tanks);
-[faultID,faultMag,Offset] = checkEnabledFaults(objSim3Tanks);
+[faultID,faultMag,offset] = checkEnabledFaults(objSim3Tanks);
 
 K = zeros(size(opMode));
 
@@ -232,7 +242,7 @@ while(1)
     q(i,:) = Qx;
 
     % Measurements --> y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
-    y(i,:) = sensorMeasurements(x(i,:),q(i,:),faultMag,Offset,mNoise);
+    y(i,:) = sensorMeasurements(x(i,:),q(i,:),faultMag,offset,mNoise);
 
     objSim3Tanks.pushInternalStateVariables(x(i,:));
     objSim3Tanks.pushInternalFlowVariables(q(i,:));
