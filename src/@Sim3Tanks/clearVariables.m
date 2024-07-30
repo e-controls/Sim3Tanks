@@ -3,6 +3,9 @@ function clearVariables(varargin)
 % flow variables, valve and fault signals, and the data measured by the
 % sensors of a Sim3Tanks object.
 %
+% Example:
+%   tts.clearVariables(option);
+%
 % To clear a specific variable, enter one of the following options as an
 % input argument:
 %   'states'  : to clear only the estate variables.
@@ -10,9 +13,10 @@ function clearVariables(varargin)
 %   'sensors' : to clear only the measurement data.
 %   'valves'  : to clear only the valve signals.
 %   'faults'  : to clear only the fault singals
+%
+% If there is no input argument, all these variables will be cleared.
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

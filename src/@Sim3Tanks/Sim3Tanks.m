@@ -1,8 +1,7 @@
-classdef Sim3TanksModel < handle
-    % Sim3TanksModel is the model used to define the system configurations.
+classdef Sim3Tanks < handle
+    % Sim3Tanks is the class used to define the system configurations.
 
-    % Written by Arllem Farias, January/2024.
-    % Last update June/2024 by Arllem Farias.
+    % https://github.com/e-controls/Sim3Tanks
 
     %======================================================================
 
@@ -35,7 +34,7 @@ classdef Sim3TanksModel < handle
     %======================================================================
 
     methods % Class Constructor
-        function obj = Sim3TanksModel(varargin)
+        function obj = Sim3Tanks(varargin)
 
             % Check input arguments
             if(nargin()==0)
@@ -69,6 +68,11 @@ classdef Sim3TanksModel < handle
             for i = 1 : numel(this.LIST_OF_FAULTS)
                 this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).EnableSignal = false;
                 this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Magnitude = [];
+            end
+
+            % Additional FaultSettings for sensors
+            for i = 11 : numel(this.LIST_OF_FAULTS)
+                this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Offset = [];
             end
 
             % ProcessNoise

@@ -1,9 +1,11 @@
 function setDefaultModel(varargin)
-% setDefaultModel is a Sim3Tanks method. This method configures a Sim3Tanks
-% object to the default model.
+% setDefaultModel is a Sim3Tanks method. This method does not have an input
+% argument and configures a Sim3Tanks object to the default model.
+%
+% Example:
+%   tts.setDefaultModel();
 
-% Written by Arllem Farias, January/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 
@@ -15,12 +17,12 @@ end
 
 %==========================================================================
 
-LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
-LIST_OF_VALVES = Sim3TanksModel.LIST_OF_VALVES;
-LIST_OF_FAULTS = Sim3TanksModel.LIST_OF_FAULTS;
-LIST_OF_PARAM  = Sim3TanksModel.LIST_OF_PARAM;
-Nx = numel(Sim3TanksModel.LIST_OF_STATES);
-Nq = numel(Sim3TanksModel.LIST_OF_FLOWS);
+LIST_OF_FIELDS = Sim3Tanks.LIST_OF_FIELDS;
+LIST_OF_VALVES = Sim3Tanks.LIST_OF_VALVES;
+LIST_OF_FAULTS = Sim3Tanks.LIST_OF_FAULTS;
+LIST_OF_PARAM  = Sim3Tanks.LIST_OF_PARAM;
+Nx = numel(Sim3Tanks.LIST_OF_STATES);
+Nq = numel(Sim3Tanks.LIST_OF_FLOWS);
 
 %==========================================================================
 
@@ -45,6 +47,10 @@ objSim3Tanks.Model.(LIST_OF_FIELDS{2}).(LIST_OF_VALVES{2}).EnableControl = true;
 for i = 1 : numel(LIST_OF_FAULTS)
     objSim3Tanks.Model.(LIST_OF_FIELDS{3}).(LIST_OF_FAULTS{i}).EnableSignal = false;
     objSim3Tanks.Model.(LIST_OF_FIELDS{3}).(LIST_OF_FAULTS{i}).Magnitude = 0;
+end
+
+for i = 11 : numel(LIST_OF_FAULTS)
+    objSim3Tanks.Model.(LIST_OF_FIELDS{3}).(LIST_OF_FAULTS{i}).Offset = 0;
 end
 
 objSim3Tanks.Model.(LIST_OF_FIELDS{4}).EnableSignal = false;

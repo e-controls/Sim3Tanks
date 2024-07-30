@@ -3,10 +3,25 @@ function [varargout] = getDefaultLinearModel(varargin)
 % model of the default scenario.
 %
 % Example:
-%   [SYS,OP] = getDefaultLinearModel(objSim3Tanks,x1op,METHOD,TSPAN)
+%   [SYS,OP] = tts.getDefaultLinearModel(x1op,METHOD,TSPAN);
+%
+%   >> x1op > 0 (mandatory): define the operating point of T1.
+%
+%   >> METHOD (optional): define the discretization method. The following
+%   options are valid:
+%     - 'zoh';
+%     - 'foh';
+%     - 'impulse';
+%     - 'tustin';
+%     - 'matched';
+%     - 'euler';
+%
+%   >> TSPAN (optional): define the sampling time of the discretization
+%   method. If METHOD is passed as input, then TSPAN becomes mandatory.
+%
+% A continuous model is returned if METHOD and TSPAN are omitted.
 
-% Written by Arllem Farias, Jun/2024.
-% Last update Jun/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

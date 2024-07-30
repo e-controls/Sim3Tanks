@@ -1,9 +1,11 @@
 function clearModel(varargin)
-% clearModel is a Sim3Tanks method. This method restores all settings and
-% clears all variables of a Sim3Tanks object.
+% clearModel is a Sim3Tanks method. This method does not have an input
+% argument. It clears all variables and restores a Sim3Tanks object.
+%
+% Example:
+%   tts.clearModel();
 
-% Written by Arllem Farias, February/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 

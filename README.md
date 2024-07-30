@@ -81,23 +81,24 @@ Sim3Tanks allows the user to define different scenarios for case studies with as
 A Sim3Tanks object is created using the `createSim3Tanks()` function.
 
 ```sh
-objSim3Tanks = createSim3Tanks();
+tts = createSim3Tanks();
 ```
 
 This function does not have an input argument and returns an object with the following fields:
 
-- [**Model**](#41-the-model-attribute)                               : a Sim3TanksClass that works as an attribute.
-- [**simulateModel**](#42-the-simulatemodel-method)                  : a function handle that works as a method.
-- [**displayFields**](#43-the-displayfields-method)                  : a function handle that works as a method.
-- [**clearModel**](#44-the-clearmodel-method)                        : a function handle that works as a method.
-- [**clearVariables**](#45-the-clearvariables-method)                : a function handle that works as a method.
-- [**setDefaultModel**](#46-the-setdefaultmodel-method)              : a function handle that works as a method.
-- [**getDefaultLinearModel**](#47-the-getdefaultlinearmodel-method)  : a function handle that works as a method.
-- [**getStateVariables**](#48-the-getstatevariables-method)          : a function handle that works as a method.
-- [**getFlowVariables**](#49-the-getflowvariables-method)            : a function handle that works as a method.
-- [**getSensorMeasurements**](#410-the-getsensormeasurements-method) : a function handle that works as a method.
-- [**getValveSignals**](#411-the-getvalvesignals-method)             : a function handle that works as a method.
-- [**getFaultSignals**](#412-the-getfaultsignals-method)             : a function handle that works as a method.
+- [**Model**](#41-the-model-attribute)                               : [attribute]
+- [**simulateModel**](#42-the-simulatemodel-method)                  : [method]
+- [**displayFields**](#43-the-displayfields-method)                  : [method]
+- [**clearModel**](#44-the-clearmodel-method)                        : [method]
+- [**clearVariables**](#45-the-clearvariables-method)                : [method]
+- [**setDefaultModel**](#46-the-setdefaultmodel-method)              : [method]
+- [**getDefaultLinearModel**](#47-the-getdefaultlinearmodel-method)  : [method]
+- [**getStateVariables**](#48-the-getstatevariables-method)          : [method]
+- [**getFlowVariables**](#49-the-getflowvariables-method)            : [method]
+- [**getSensorMeasurements**](#410-the-getsensormeasurements-method) : [method]
+- [**getValveSignals**](#411-the-getvalvesignals-method)             : [method]
+- [**getFaultSignals**](#412-the-getfaultsignals-method)             : [method]
+- [**interpolateTime**](#413-the-interpolateTime-method)             : [method]
 
 ---
 ### 4.1. The `Model` attribute
@@ -106,120 +107,120 @@ This attribute is used to define the system configurations. It is divided into t
 - **PhysicalParam**: used to define the system's physical structure.
   - **TankRadius**: must be real and greater than 0.
     ```
-    objSim3Tanks.Model.PhysicalParam.TankRadius = 5;
+    tts.Model.PhysicalParam.TankRadius = 5;
     ```
   - **TankHeight**: must be real and greater than 0.
     ```
-    objSim3Tanks.Model.PhysicalParam.TankHeight = 50;
+    tts.Model.PhysicalParam.TankHeight = 50;
     ```
   - **PipeRadius**: must be real, greater than 0, and less than TankRadius.
     ```
-    objSim3Tanks.Model.PhysicalParam.PipeRadius = 0.6;
+    tts.Model.PhysicalParam.PipeRadius = 0.6;
     ```
   - **TransPipeHeight**: must be real, greater than 0, and less than TankHeight.
     ```
-    objSim3Tanks.Model.PhysicalParam.TransPipeHeight = 30;
+    tts.Model.PhysicalParam.TransPipeHeight = 30;
     ```
   - **CorrectionTerm**: must be real and greater than 0.
     ```
-    objSim3Tanks.Model.PhysicalParam.CorrectionTerm = 1;
+    tts.Model.PhysicalParam.CorrectionTerm = 1;
     ```
   - **GravityConstant**: must be real and greater than 0.
     ```
-    objSim3Tanks.Model.PhysicalParam.GravityConstant = 981;
+    tts.Model.PhysicalParam.GravityConstant = 981;
     ```
   - **PumpMinFlow**: must be real and greater than or equal to 0.
     ```
-    objSim3Tanks.Model.PhysicalParam.PumpMinFlow = 0;
+    tts.Model.PhysicalParam.PumpMinFlow = 0;
     ```
   - **PumpMaxFlow**: must be real and greater than PumpMinFlow.
     ```
-    objSim3Tanks.Model.PhysicalParam.PumpMaxFlow = 120;
+    tts.Model.PhysicalParam.PumpMaxFlow = 120;
     ```
 
 - **ValveSettings**: used to define the system valve settings. It is divided into ten subfields, one per valve (Kp1, Kp2, Kp3, Ka, Kb, K13, K23, K1, K2, K3), and each one has the following settings:
   - **OperationMode**: must be set to ‘Open’ or ‘Closed’.
     ```
-    objSim3Tanks.Model.ValveSettings.Kp1.OperationMode = 'Open';
+    tts.Model.ValveSettings.Kp1.OperationMode = 'Open';
     ```
   - **EnableControl**: must be set to a logical value (true or false).
     ```
-    objSim3Tanks.Model.ValveSettings.Kp1.EnableControl = true;
+    tts.Model.ValveSettings.Kp1.EnableControl = true;
     ```
   - **OpeningRate**: must be real and belong to the range [0,1].
     ```
-    objSim3Tanks.Model.ValveSettings.Kp1.OpeningRate = 0.9;
+    tts.Model.ValveSettings.Kp1.OpeningRate = 0.9;
     ```
 
 - **FaultSettings**: used to define the system fault settings. It is divided into twenty-three subfields, one per fault (f1, f2, …, f23), and each one has the following settings:
   - **EnableSignal**: must be set to a logical value (true or false).
     ```
-    objSim3Tanks.Model.FaultSettings.f1.EnableSignal = true;
+    tts.Model.FaultSettings.f1.EnableSignal = true;
     ```
   - **Magnitude**: must be real and belong to the range [0,1].
     ```
-    objSim3Tanks.Model.FaultSettings.f1.Magnitude = 0.3;
+    tts.Model.FaultSettings.f1.Magnitude = 0.3;
     ```
 
 - **ProcessNoise**: used to set the system process noise.
   - **EnableSignal**: must be set to a logical value (true or false).
     ```
-    objSim3Tanks.Model.ProcessNoise.EnableSignal = true;
+    tts.Model.ProcessNoise.EnableSignal = true;
     ```
   - **Magnitude**: must be a row or a column vector with three real and finite elements ([h1 h2 h3]).
     ```
-    objSim3Tanks.Model.ProcessNoise.Magnitude = [-0.05 0.06 -0.02];
+    tts.Model.ProcessNoise.Magnitude = [-0.05 0.06 -0.02];
     ```
     
 - **MeasurementNoise**: used to set the system process noise.
   - **EnableSignal**: must be set to a logical value (true or false).
     ```
-    objSim3Tanks.Model.MeasurementNoise.EnableSignal = true;
+    tts.Model.MeasurementNoise.EnableSignal = true;
     ```
   - **Magnitude**: must be a row or a column vector with thirteen real and finite elements ([h1, h2, h3, Q1in, Q2in, Q3in, Qa, Qb, Q13, Q23, Q1, Q2, Q3]).  
     ```
-    objSim3Tanks.Model.MeasurementNoise.Magnitude = [0.26 -0.12 -0.18 0.39 -0.66 -0.96 0.81 0.71 -0.42 0.68 0.44 0.61 -0.45];
+    tts.Model.MeasurementNoise.Magnitude = [0.26 -0.12 -0.18 0.39 -0.66 -0.96 0.81 0.71 -0.42 0.68 0.44 0.61 -0.45];
     ```
     
 - **InitialCondition**: used to define the system's initial condition and must be filled with a row vector of three elements.
     ```
-    objSim3Tanks.Model.InitialCondition = [40 25 20];
+    tts.Model.InitialCondition = [40 25 20];
     ```
 ---
 ### 4.2. The `simulateModel()` method
 This method simulates the dynamic behavior of the three-tank system.
 ```
-[y,x,q] = objSim3Tanks.simulateModel('Qp1',VALUE1,'Qp2',VALUE2,'Qp3',VALUE3,'Tspan',VALUE4);
+[y,x,q] = tts.simulateModel('Qp1',VALUE1,'Qp2',VALUE2,'Qp3',VALUE3,'Tspan',VALUE4);
 ```
 > [!IMPORTANT]
-> Sim3Tanks uses the ode45 solver to solve the system differential equations numerically, and it is highly recommended that the simulation time increment be used as the Tspan.
+> Sim3Tanks uses the ode45 solver to solve the system differential equations numerically, and it is highly recommended to use simulation time increment as Tspan.
 
 ---
 ### 4.3. The `displayFields()` method
 This method does not have an input argument. It displays all fields and subfields of an object on the command line.
 ```
-objSim3Tanks.displayFields();
+tts.displayFields();
 ```
 
 ---
 ### 4.4. The `clearModel()` method
 This method does not have an input argument. It clears all variables and restores an object's settings.
 ```
-objSim3Tanks.clearModel();
+tts.clearModel();
 ```
 
 ---
 ### 4.5. The `clearVariables()` method
 This method does not have an input argument. It clears all state variables, valve, fault, flow signals, and sensor measurement data.
 ```
-objSim3Tanks.clearVariables();
+tts.clearVariables();
 ```
 
 ---
 ### 4.6. The `setDefaultModel()` method
 This method does not have an input argument. It configures a Sim3Tanks object to the default model.
 ```
-objSim3Tanks.setDefaultModel();
+tts.setDefaultModel();
 ```
 <img src="/assets/images/default_scenario.jpg">
 
@@ -227,7 +228,7 @@ objSim3Tanks.setDefaultModel();
 ### 4.7. The `getDefaultLinearModel()` method
 This method returns a linear model of the default scenario.
 ```
-[SYS,OP] = objSim3Tanks.getDefaultLinearModel(x1op,METHOD,TSPAN);
+[SYS,OP] = tts.getDefaultLinearModel(x1op,METHOD,TSPAN);
 ```
 
 Input arguments: 
@@ -269,35 +270,42 @@ Input arguments:
 ### 4.8. The `getStateVariables()` method
 This method does not have an input argument. It returns a data table with the values of the state variables. 
 ```
-objSim3Tanks.getStateVariables();
+tts.getStateVariables();
 ```
 
 ---
 ### 4.9. The `getFlowVariables()` method
 This method does not have an input argument. It returns a data table with the values of the flow variables.
 ```
-objSim3Tanks.getFlowVariables();
+tts.getFlowVariables();
 ```
 
 ---
 ### 4.10. The `getSensorMeasurements()` method
 This method does not have an input argument. It returns a data table with the values of the measured variables.
 ```
-objSim3Tanks.getSensorMeasurements();
+tts.getSensorMeasurements();
 ```
 
 ---
 ### 4.11. The `getValveSignals()` method
 This method does not have an input argument. It returns a data table with the values of the valve signals.
 ```
-objSim3Tanks.getValveSignals();
+tts.getValveSignals();
 ```
 
 ---
 ### 4.12. The `getFaultSignals()` method
 This method does not have an input argument. It returns a data table with the values of the fault signals.
 ```
-objSim3Tanks.getFaultSignals();
+tts.getFaultSignals();
+```
+
+---
+### 4.13. The `interpolateTime()` method
+This method receives the original simulation time vector and returns a new interpolated time vector of size-consistent with the number of simulations of a Sim3Tanks object.
+```
+tts.interpolateTime(time);
 ```
 
 ## 5. Contributions

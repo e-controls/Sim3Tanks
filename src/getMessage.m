@@ -2,8 +2,7 @@ function [varargout] = getMessage(varargin)
 % getMessage is a Sim3Tanks function. This function returns the message
 % associated with a code.
 
-% Written by Arllem Farias, June/2024.
-% Last update June/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 
@@ -36,7 +35,7 @@ switch messageCode
     case 'ERR003'
         msg = 'Invalid input parameter.';
     case 'ERR004'
-        msg = 'The input argument must be a Sim3TanksModel object.';
+        msg = 'The input argument must be a Sim3Tanks object.';
     case 'ERR005'
         msg = 'The input argument must be a row vector.';
     case 'ERR006'
@@ -71,21 +70,27 @@ switch messageCode
         msg = 'Invalid number of input arguments (must be even).';
     case 'ERR021'
         msg = 'Invalid number of input arguments (must be odd).';
+    case 'ERR022'
+        msg = 'The sensor fault offset value must be finite.';
+    case 'ERR023'
+        msg = 'The input argument must be a row or a column vector of numeric type.';
         %
         %
         %
     case 'WARN001'
-        msg = 'An enabled fault has its Magnitude field set to empty. In this case, zero is assumed as the default value.';
+        msg = 'The Magnitude of an enabled fault is set to empty, so zero is assumed as the default value.';
     case 'WARN002'
-        msg = 'The magnitude of an enabled fault is out of bounds [0,1]. In this case, its value is saturated.';
+        msg = 'The Magnitude of an enabled fault is out of bounds [0,1], so its value is saturated.';
     case 'WARN003'
-        msg = 'An enabled valve has its OpeningRate field set to empty. In this case, OperationMode is assumed as the default value.';
+        msg = 'The OpeningRate of an enabled valve is set to empty, so OperationMode is assumed as the default value.';
     case 'WARN004'
-        msg = 'The OpeningRate of an enabled valve is out of bounds [0,1]. In this case, its value is saturated.';
+        msg = 'The OpeningRate of an enabled valve is out of bounds [0,1], so its value is saturated.';
     case 'WARN005'
-        msg = 'The processNoise is enabled, but its magnitude is set to empty. In this case, a row vector of zeros is assumed as the default value.';
+        msg = 'The ProcessNoise Magnitude is set to empty, so a row vector of zeros is assumed as the default value.';
     case 'WARN006'
-        msg = 'The measurmentNoise is enabled, but its magnitude is set to empty. In this case, a row vector of zeros is assumed as the default value.';
+        msg = 'The MeasurmentNoise Magnitude is set to empty, so a row vector of zeros is assumed as the default value.';
+    case 'WARN007'
+        msg = 'The Offset of a sensor fault is set to empty, so zero is assumed as the default value.';
     otherwise
         msg = ['Code ',messageCode,' not found!'];
         messageCode = [];

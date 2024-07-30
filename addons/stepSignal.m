@@ -20,6 +20,7 @@ function [varargout] = stepSignal(VALUES,TIMES,TIME_VECTOR)
 %   title('Setpoint Signal');
 
 % Written by Arllem Farias, 2024.
+% https://github.com/e-controls/Sim3Tanks
 
 if(numel(VALUES) ~= numel(TIMES))
     error('The VALUES and TIMES vectors must have the same size.');

@@ -7,8 +7,7 @@ function [varargout] = checkPhysicalParam(varargin)
 % Example:
 %   [Param,ID] = checkPhysicalParam(objSim3Tanks);
 
-% Written by Arllem Farias, January/2024.
-% Last update Jun/2024 by Arllem Farias.
+% https://github.com/e-controls/Sim3Tanks
 
 %==========================================================================
 
@@ -18,7 +17,7 @@ elseif(nargin()>1)
     error(getMessage('ERR002'));
 end
 
-if(isa(varargin{1},'Sim3TanksModel'))
+if(isa(varargin{1},'Sim3Tanks'))
     objSim3Tanks = varargin{1};
 else
     error(getMessage('ERR004'));
@@ -26,8 +25,8 @@ end
 
 %==========================================================================
 
-LIST_OF_FIELDS = Sim3TanksModel.LIST_OF_FIELDS;
-LIST_OF_PARAM = Sim3TanksModel.LIST_OF_PARAM;
+LIST_OF_FIELDS = Sim3Tanks.LIST_OF_FIELDS;
+LIST_OF_PARAM = Sim3Tanks.LIST_OF_PARAM;
 
 %==========================================================================
 
