@@ -7,23 +7,42 @@ classdef Sim3Tanks < handle
 
     properties (Access = public, Hidden = true, Constant = true)
 
-        % The sequential order of the cell elements must be maintained.
-        LIST_OF_FIELDS = {'PhysicalParam';'ValveSettings';'FaultSettings';...
+        % The sequential order of the cell elements must be maintained!
+        LIST_OF_FIELDS = ...
+            {'PhysicalParam';'ValveSettings';'FaultSettings';...
             'ProcessNoise';'MeasurementNoise';'InitialCondition'};
-        LIST_OF_PARAM = {'TankRadius';'TankHeight';'PipeRadius';
-            'TransPipeHeight';'CorrectionTerm';'GravityConstant';...
-            'PumpMinFlow';'PumpMaxFlow'};
-        LIST_OF_VALVES = {'Kp1';'Kp2';'Kp3';'Ka';'Kb';'K13';'K23';'K1';...
-            'K2';'K3'};
-        LIST_OF_FAULTS = {'f1';'f2';'f3';'f4';'f5';'f6';'f7';'f8';...
-            'f9';'f10';'f11';'f12';'f13';'f14';'f15';'f16';'f17';...
-            'f18';'f19';'f20';'f21';'f22';'f23'};
-        LIST_OF_STATES = {'h1';'h2';'h3'};
-        LIST_OF_FLOWS = {'Q1in';'Q2in';'Q3in';'Qa';'Qb';'Q13';'Q23';...
-            'Q1';'Q2';'Q3'};
+        LIST_OF_PARAM  = ...
+            {'TankRadius';'TankHeight';'PipeRadius';'TransPipeHeight';...
+            'CorrectionTerm';'GravityConstant';'PumpMinFlow';'PumpMaxFlow'};
+        LIST_OF_VALVES = ...
+            {'Kp1';'Kp2';'Kp3';'Ka';'Kb';'K13';'K23';'K1';'K2';'K3'};
+        LIST_OF_FAULTS = ...
+            {'f1';'f2';'f3';'f4';'f5';'f6';'f7';'f8';'f9';'f10';'f11';'f12';...
+            'f13';'f14';'f15';'f16';'f17';'f18';'f19';'f20';'f21';'f22';'f23'};
+        LIST_OF_STATES = ...
+            {'h1';'h2';'h3'};
+        LIST_OF_FLOWS  = ...
+            {'Q1in';'Q2in';'Q3in';'Qa';'Qb';'Q13';'Q23';'Q1';'Q2';'Q3'};
+
     end
 
     %======================================================================
+
+    properties (Access = private, Hidden = true)
+        StateVariables {mustBeFinite,mustBeNonnegative} = [];
+        FlowVariables  {mustBeFinite} = [];
+        SensorMeasurements {mustBeFinite} = [];
+        ValveSignals {mustBeGreaterThanOrEqual(ValveSignals,0),mustBeLessThanOrEqual(ValveSignals,1)} = [];
+        FaultSignals {mustBeGreaterThanOrEqual(FaultSignals,0),mustBeLessThanOrEqual(FaultSignals,1)} = [];
+    end
+
+    %======================================================================
+
+    properties (Access = public, Hidden = true)
+
+        About = [];
+
+    end
 
     properties (Access = public, Hidden = false)
 
@@ -34,21 +53,20 @@ classdef Sim3Tanks < handle
     %======================================================================
 
     methods % Class Constructor
-        function obj = Sim3Tanks(varargin)
 
+        function obj = Sim3Tanks(varargin)
             % Check input arguments
-            if(nargin()==0)
-                obj.prepareModel();
-            else
+            if(nargin()~=0)
                 error(getMessage('ERR002'));
             end
-
+            obj.prepareModel();
         end
+
     end
 
     %======================================================================
 
-    methods (Access = private, Hidden = true)
+    methods (Access = private, Hidden = true) % Prepare method
 
         function prepareModel(this)
 
@@ -88,16 +106,6 @@ classdef Sim3Tanks < handle
 
         end
 
-    end
-
-    %======================================================================
-
-    properties (Access = private, Hidden = true)
-        StateVariables {mustBeFinite,mustBeNonnegative} = [];
-        FlowVariables  {mustBeFinite} = [];
-        SensorMeasurements {mustBeFinite} = [];
-        ValveSignals {mustBeGreaterThanOrEqual(ValveSignals,0),mustBeLessThanOrEqual(ValveSignals,1)} = [];
-        FaultSignals {mustBeGreaterThanOrEqual(FaultSignals,0),mustBeLessThanOrEqual(FaultSignals,1)} = [];
     end
 
     %======================================================================
