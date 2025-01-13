@@ -162,8 +162,6 @@ Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
 F = tts.getFaultSignals();
 
-time = tts.interpolateTime(time);
-
 %% Plots
 
 fprintf([getMessage('tag'),'Plotting Graphs...\n']);
@@ -173,7 +171,7 @@ MarkIdx = 1:round(N/20):N;
 % Valve signals (Actuators)
 figure();
 subplot(2,1,1); hold on; grid on;
-plot(time,K.Kp1,'-*r','MarkerIndices',MarkIdx);
+plot(K.Time,K.Kp1,'-*r','MarkerIndices',MarkIdx);
 legend('$K_{P_1}(k)$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...
@@ -183,7 +181,7 @@ xlabel('time (s)','Interpreter','latex');
 ylabel('opening rate','Interpreter','latex');
 
 subplot(2,1,2); hold on; grid on;
-plot(time,K.Kp2,'-*r','MarkerIndices',MarkIdx);
+plot(K.Time,K.Kp2,'-*r','MarkerIndices',MarkIdx);
 legend('$K_{P_2}(k)$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...
@@ -195,8 +193,8 @@ ylabel('opening rate','Interpreter','latex');
 % Levels
 figure();
 subplot(3,1,1); hold on; grid on;
-p1 = plot(time,Y.h1,'.m');
-p2 = plot(time,X.h1,'-*r','MarkerIndices',MarkIdx);
+p1 = plot(Y.Time,Y.h1,'.m');
+p2 = plot(X.Time,X.h1,'-*r','MarkerIndices',MarkIdx);
 legend([p1 p2],'$\tilde{x}_{1}$','$x_{1}$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...
@@ -206,8 +204,8 @@ xlabel('time (s)','Interpreter','latex');
 ylabel('level (cm)','Interpreter','latex');
 
 subplot(3,1,2); hold on; grid on;
-p1 = plot(time,Y.h2,'.m');
-p2 = plot(time,X.h2,'-*r','MarkerIndices',MarkIdx);
+p1 = plot(Y.Time,Y.h2,'.m');
+p2 = plot(X.Time,X.h2,'-*r','MarkerIndices',MarkIdx);
 legend([p1 p2],'$\tilde{x}_{2}$','$x_{2}$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...
@@ -217,7 +215,7 @@ xlabel('time (s)','Interpreter','latex');
 ylabel('level (cm)','Interpreter','latex');
 
 subplot(3,1,3); hold on; grid on;
-p1 = plot(time,X.h3,'-*r','MarkerIndices',MarkIdx);
+p1 = plot(X.Time,X.h3,'-*r','MarkerIndices',MarkIdx);
 legend(p1,'$x_{3}$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...
@@ -229,8 +227,8 @@ ylabel('level (cm)','Interpreter','latex');
 % Flows
 figure();
 subplot(3,1,1); hold on; grid on;
-p1 = plot(time,Y.Q13,'.m');
-p2 = plot(time,Q.Q13,'-*r','MarkerIndices',MarkIdx);
+p1 = plot(Y.Time,Y.Q13,'.m');
+p2 = plot(Q.Time,Q.Q13,'-*r','MarkerIndices',MarkIdx);
 legend([p1 p2],'$\tilde{Q}_{13}$','$Q_{13}$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...
@@ -240,8 +238,8 @@ xlabel('time (s)','Interpreter','latex');
 ylabel('flow ($\mathrm{cm^3/s}$)','Interpreter','latex');
 
 subplot(3,1,2); hold on; grid on;
-p1 = plot(time,Y.Q23,'.m');
-p2 = plot(time,Q.Q23,'-*r','MarkerIndices',MarkIdx);
+p1 = plot(Y.Time,Y.Q23,'.m');
+p2 = plot(Q.Time,Q.Q23,'-*r','MarkerIndices',MarkIdx);
 legend([p1 p2],'$\tilde{Q}_{23}$','$Q_{23}$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...
@@ -251,9 +249,9 @@ xlabel('time (s)','Interpreter','latex');
 ylabel('flow ($\mathrm{cm^3/s}$)','Interpreter','latex');
 
 subplot(3,1,3); hold on; grid on;
-p0 = plot(time,sp(1,:),'--ok','MarkerIndices',MarkIdx);
-p1 = plot(time,Y.Q3,'.m');
-p2 = plot(time,Q.Q3,'-*r','MarkerIndices',MarkIdx);
+p0 = plot(Q.Time,sp(1,:),'--ok','MarkerIndices',MarkIdx);
+p1 = plot(Y.Time,Y.Q3,'.m');
+p2 = plot(Q.Time,Q.Q3,'-*r','MarkerIndices',MarkIdx);
 legend([p0 p1 p2],'$Q_\mathrm{3ref}$','$\tilde{Q}_{3}$','$Q_{3}$',...
     'Interpreter','latex',...
     'Orientation','horizontal',...

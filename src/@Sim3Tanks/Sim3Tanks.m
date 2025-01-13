@@ -29,6 +29,7 @@ classdef Sim3Tanks < handle
     %======================================================================
 
     properties (Access = private, Hidden = true)
+        SimulationTime {mustBeFinite,mustBeNonnegative} = [];
         StateVariables {mustBeFinite,mustBeNonnegative} = [];
         FlowVariables  {mustBeFinite} = [];
         SensorMeasurements {mustBeFinite} = [];
@@ -103,6 +104,9 @@ classdef Sim3Tanks < handle
 
             % InitialCondition
             this.Model.(this.LIST_OF_FIELDS{6}) = [];
+
+            % Initializing simulation time
+            this.SimulationTime = 0;
 
         end
 
@@ -302,6 +306,37 @@ classdef Sim3Tanks < handle
             elseif(nargin()>2)
                 error(getMessage('ERR002'));
             end
+        end
+
+    end
+
+    %======================================================================
+
+    methods (Access = private, Hidden = true) % Time methods
+
+        function resetInternalSimulationTime(varargin)
+            if(nargin()>1)
+                error(getMessage('ERR002'));
+            end
+            this = varargin{1};
+            this.SimulationTime = 0;
+        end
+
+        function t = getInternalSimulationTime(varargin)
+            this = varargin{1};
+            t = this.SimulationTime;
+            if(nargin()==2)
+                t = t(varargin{2});
+            elseif(nargin()>2)
+                error(getMessage('ERR002'));
+            end
+        end
+
+        function incrementInternalSimulationTime(this,t)
+            if(nargin()<2)
+                error(getMessage('ERR001'));
+            end
+            this.SimulationTime = [this.SimulationTime;t];
         end
 
     end

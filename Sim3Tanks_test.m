@@ -111,8 +111,6 @@ Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
 F = tts.getFaultSignals();
 
-time = tts.interpolateTime(time);
-
 %% Plots
 
 fprintf([getMessage('tag'),'Plotting Graphs...\n']);
@@ -121,28 +119,28 @@ figure; hold on; grid on;
 title('State Variables');
 xlabel('Time');
 ylabel('Level');
-plot(time,X.Variables);
+plot(X.Time,X.Variables);
 
 figure; hold on; grid on;
 title('Flow Variables');
 xlabel('Time');
 ylabel('Flow Rate');
-plot(time,Q.Variables);
+plot(Q.Time,Q.Variables);
 
 figure; hold on; grid on;
 title('Sensor Measurements');
 xlabel('Time');
 ylabel('Data');
-plot(time,Y.Variables);
+plot(Y.Time,Y.Variables);
 
 figure; hold on; grid on;
 title('Valve Signals');
 xlabel('Time');
 ylabel('Opening Rate');
-plot(time,K.Variables);
+plot(K.Time,K.Variables);
 
 figure; hold on; grid on;
 title('Fault Signals');
 xlabel('Time');
 ylabel('Magnitude');
-plot(time,F.Variables);
+plot(F.Time,F.Variables);

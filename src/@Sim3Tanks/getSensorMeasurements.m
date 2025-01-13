@@ -22,9 +22,10 @@ LIST_OF_STATES = Sim3Tanks.LIST_OF_STATES;
 LIST_OF_FLOWS  = Sim3Tanks.LIST_OF_FLOWS;
 
 y = objSim3Tanks.getInternalSensorMeasurements();
+t = objSim3Tanks.getInternalSimulationTime();
 
 if(~isempty(y))
-    y = array2table(y,'VariableNames',[LIST_OF_STATES;LIST_OF_FLOWS]);
+    y = array2timetable(y,'RowTimes',seconds(t),'VariableNames',[LIST_OF_STATES;LIST_OF_FLOWS]);
 end
 
 varargout{1} = y;

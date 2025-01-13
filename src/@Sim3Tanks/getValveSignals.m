@@ -20,9 +20,10 @@ end
 LIST_OF_VALVES = Sim3Tanks.LIST_OF_VALVES;
 
 v = objSim3Tanks.getInternalValveSignals();
+t = objSim3Tanks.getInternalSimulationTime();
 
 if(~isempty(v))
-    v = array2table(v,'VariableNames',LIST_OF_VALVES);
+    v = array2timetable(v,'RowTimes',seconds(t),'VariableNames',LIST_OF_VALVES);
 end
 
 varargout{1} = v;

@@ -21,9 +21,10 @@ end
 LIST_OF_STATES = Sim3Tanks.LIST_OF_STATES;
 
 x = objSim3Tanks.getInternalStateVariables();
+t = objSim3Tanks.getInternalSimulationTime();
 
 if(~isempty(x))
-    x = array2table(x,'VariableNames',LIST_OF_STATES);
+    x = array2timetable(x,'RowTimes',seconds(t),'VariableNames',LIST_OF_STATES);
 end
 
 varargout{1} = x;

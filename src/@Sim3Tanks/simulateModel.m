@@ -144,6 +144,7 @@ if(isempty(x))
     objSim3Tanks.setInternalSensorMeasurements(zeros(1,Nx+Nq));
     objSim3Tanks.setInternalValveSignals(opMode');
     objSim3Tanks.setInternalFaultSignals(faultMag');
+    objSim3Tanks.resetInternalSimulationTime();
 
 else
     x = x(end,:);
@@ -220,13 +221,15 @@ while(1)
 
         options = odeset('MaxStep',Tspan,'RelTol',1e-6);
 
-        [~,x] = ode45(@(t,x)dxdtModel(Sc,Qx,pNoise),[0 Tspan],x,options);
+        [t,x] = ode45(@(t,x)dxdtModel(Sc,Qx,pNoise),[0 Tspan],x,options);
 
         if(isfinite(x))
             if(allSteps)
                 x = satSignal(x(2:end,:),[0 Hmax]);
+                t = t(2:end,:);
             else
                 x = satSignal(x(end,:),[0 Hmax]);
+                t = t(end);
             end
         else
             error(getMessage('ERR007'));
@@ -235,6 +238,8 @@ while(1)
         numberOfStates = size(x,1);
         y = zeros(numberOfStates,Nx+Nq);
         q = zeros(numberOfStates,Nq);
+
+        t0 = objSim3Tanks.getInternalSimulationTime(end);
 
     end
 
@@ -249,6 +254,7 @@ while(1)
     objSim3Tanks.pushInternalSensorMeasurements(y(i,:));
     objSim3Tanks.pushInternalValveSignals(K');
     objSim3Tanks.pushInternalFaultSignals(faultMag');
+    objSim3Tanks.incrementInternalSimulationTime(t0+t(i));
 
     if(i>=numberOfStates)
         break;

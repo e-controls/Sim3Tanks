@@ -34,6 +34,7 @@ if(nargin()==1)
     objSim3Tanks.setInternalSensorMeasurements([]);
     objSim3Tanks.setInternalValveSignals([]);
     objSim3Tanks.setInternalFaultSignals([]);
+    objSim3Tanks.resetInternalSimulationTime();
 else
     switch lower(varargin{2})
         case 'states'

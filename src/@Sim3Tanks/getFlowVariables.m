@@ -21,9 +21,10 @@ end
 LIST_OF_FLOWS = Sim3Tanks.LIST_OF_FLOWS;
 
 q = objSim3Tanks.getInternalFlowVariables();
+t = objSim3Tanks.getInternalSimulationTime();
 
 if(~isempty(q))
-    q = array2table(q,'VariableNames',LIST_OF_FLOWS);
+    q = array2timetable(q,'RowTimes',seconds(t),'VariableNames',LIST_OF_FLOWS);
 end
 
 varargout{1} = q;

@@ -20,9 +20,10 @@ end
 LIST_OF_FAULTS = Sim3Tanks.LIST_OF_FAULTS;
 
 f = objSim3Tanks.getInternalFaultSignals();
+t = objSim3Tanks.getInternalSimulationTime();
 
 if(~isempty(f))
-    f = array2table(f,'VariableNames',LIST_OF_FAULTS);
+    f = array2timetable(f,'RowTimes',seconds(t),'VariableNames',LIST_OF_FAULTS);
 end
 
 varargout{1} = f;
