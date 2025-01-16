@@ -7,7 +7,7 @@
 # Sim3Tanks: A Benchmark Model Simulator for Process Control and Monitoring
 Sim3Tanks is suitable for studying and developing process control, fault detection and diagnosis, and fault-tolerant control strategies for nonlinear multivariable systems. This new release was developed in the MATLAB environment, version 9.11.0 (2021b), and can be used via command-line script <`file.m`>. Future releases will include versions for using the simulator via Simulink block diagram <`file.slx`> and graphical user interface <`file.fig`>.
 
-The original paper that publishes the simulator can be accessed at <http://dx.doi.org/10.1109/ACCESS.2018.2874752> and its repository at <https://github.com/e-controls/Sim3Tanks_old>
+The original paper that publishes the simulator can be accessed at <http://dx.doi.org/10.1109/ACCESS.2018.2874752> and its repository at <https://github.com/e-controls/Sim3Tanks_old>.
 
 ## 1. Table of Contents
 
@@ -98,7 +98,6 @@ This function does not have an input argument and returns an object with the fol
 - [**getSensorMeasurements**](#410-the-getsensormeasurements-method) : [method]
 - [**getValveSignals**](#411-the-getvalvesignals-method)             : [method]
 - [**getFaultSignals**](#412-the-getfaultsignals-method)             : [method]
-- [**interpolateTime**](#413-the-interpolateTime-method)             : [method]
 
 ---
 ### 4.1. The `Model` attribute
@@ -299,13 +298,6 @@ tts.getValveSignals();
 This method does not have an input argument. It returns a data table with the values of the fault signals.
 ```
 tts.getFaultSignals();
-```
-
----
-### 4.13. The `interpolateTime()` method
-This method receives the original simulation time vector and returns a new interpolated time vector of size-consistent with the number of simulations of a Sim3Tanks object.
-```
-tts.interpolateTime(time);
 ```
 
 ## 5. Contributions
