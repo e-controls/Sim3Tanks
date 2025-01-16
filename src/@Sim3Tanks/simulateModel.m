@@ -3,7 +3,7 @@ function [y,x,q] = simulateModel(varargin)
 % behavior of the three-tank system defined by the user.
 %
 % The input parameter must follow the pair ('NAME',VALUE), where NAME must
-% be Qp1, Qp2, Qp3, or Tspan, and VALUE must be numeric type.
+% be Qp1, Qp2, Qp3, or Tspan, and VALUE must be a numeric type.
 %
 % If the pair ('Qp1',VALUE1) is omitted, then the declared value in the
 % field objSim3Tanks.Model.PhysicalParam.PumpMaxFlow is used as default.
@@ -13,27 +13,33 @@ function [y,x,q] = simulateModel(varargin)
 % NOTE: It is highly recommended to use simulation time increment as Tspan.
 %
 % The pair ('allSteps',true) enables the return of all intermediate steps
-% of the simulation, by default its value is false, and only the last step
-% is returned. In case of true value, use the interpolateTime() method to
-% get an interpolated time vector of size-consistent with the number of
-% samples.
+% of each simulation call. By default, its value is false, and only the
+% final step is returned.
 %
 % The output arguments are the following vectors:
-%   y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3] : measurements
-%   x = [h1,h2,h3] : states
-%   q = [Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3] : flows
+%   y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3] : measurement vector
+%   x = [h1,h2,h3] : state vector
+%   q = [Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3] : flow vector
 %
-% Examples of how to call the function:
-%   >> [y,x,q] = simulateModel() : default values are used.
+% Examples of how to call the method:
 %
-%   >> [y,x,q] = simulateModel('Qp1',100) : only the value of Qp1 is
-%   updated to 100.
+%   tts = createSim3Tanks(); % create an object.
+%   tts.setDefaultModel(); % configure the object to the default model.
 %
-%   >> [y,x,q] = simulateModel('Qp2',110,'Tspan',0.2) : only the values
-%   of Qp2 and Tspan are updated to 110 and 0.2, respectively.
+%   [y,x,q] = tts.simulateModel(); % default values are used.
 %
-%   >> [y,x,q] = simulateModel('allSteps',true) : the variables y, x,
-%   and q will have more than one line.
+%   [y,x,q] = tts.simulateModel('Qp1',100); % only the value of Qp1 is
+% % updated to 100.
+%
+%   [y,x,q] = tts.simulateModel('Qp2',110,'Tspan',0.2); % only the values
+% % of Qp2 and Tspan are updated to 110 and 0.2, respectively.
+%
+%   [y,x,q] = tts.simulateModel('allSteps',true); % the variables y, x,
+% % and q will have more than one line.
+%
+% See also createSim3Tanks, setDefaultModel, getSensorMeasurements,
+%          getStateVariables, getFlowVariables, getFaultSignals,
+%          getValveSignals.
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -96,7 +102,7 @@ opMode = checkOperationMode(objSim3Tanks);
 
 K = zeros(size(opMode));
 
-% ID = {'Kp1';'Kp2';'Kp3';'Ka';'Kb';'K13';'K23';'K1';'K2';'K3'};
+% ID = Sim3Tanks.LIST_OF_VALVES;
 for i = 1 : numel(opMode)
     OP = opMode(i);
     EC = isempty(valveID{i});
@@ -219,8 +225,8 @@ while(1)
 
     if(i==1) % Levels --> x = [h1,h2,h3]
 
+        % Solver Configuration
         options = odeset('MaxStep',Tspan,'RelTol',1e-6);
-
         [t,x] = ode45(@(t,x)dxdtModel(Sc,Qx,pNoise),[0 Tspan],x,options);
 
         if(isfinite(x))

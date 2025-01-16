@@ -19,7 +19,7 @@ end
 LIST_OF_FIELDS = Sim3Tanks.LIST_OF_FIELDS;
 LIST_OF_PARAM  = Sim3Tanks.LIST_OF_PARAM;
 
-tagSim3Tanks = '#SIM3TANKS::';
+tagSim3Tanks = '#Sim3Tanks::';
 
 if ~ischar(messageCode)
     error([tagSim3Tanks,'ERR999:','The input argument must be a char type, not a %s.'],class(messageCode));
@@ -126,6 +126,9 @@ switch messageCode
 
     case 'WARN007'
         msg = 'The Offset of a sensor fault is set to empty, so zero is assumed as the default value.';
+
+    case 'WARN008'
+        msg = 'There is no value to plot (the variable is empty).';
 
     otherwise
         msg = ['Code ',messageCode,' not found!'];

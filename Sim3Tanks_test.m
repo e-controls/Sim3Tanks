@@ -115,23 +115,10 @@ F = tts.getFaultSignals();
 
 fprintf([getMessage('tag'),'Plotting Graphs...\n']);
 
-figure; hold on; grid on;
-title('State Variables');
-xlabel('Time');
-ylabel('Level');
-plot(X.Time,X.Variables);
-
-figure; hold on; grid on;
-title('Flow Variables');
-xlabel('Time');
-ylabel('Flow Rate');
-plot(Q.Time,Q.Variables);
-
-figure; hold on; grid on;
-title('Sensor Measurements');
-xlabel('Time');
-ylabel('Data');
-plot(Y.Time,Y.Variables);
+tts.plotLevels();
+tts.plotLevels('h3');
+tts.plotFlows();
+tts.plotFlows('Q3');
 
 figure; hold on; grid on;
 title('Valve Signals');
