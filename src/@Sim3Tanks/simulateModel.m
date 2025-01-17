@@ -143,11 +143,19 @@ x = objSim3Tanks.getInternalStateVariables();
 
 if(isempty(x))
 
-    x  = objSim3Tanks.Model.InitialCondition;
+    [~,mNoise] = checkEnabledNoises(objSim3Tanks);
+
+    x = objSim3Tanks.Model.InitialCondition;
+    q = [...
+        K(1)*satSignal(Qp1,[Qmin Qmax]),...
+        K(2)*satSignal(Qp2,[Qmin Qmax]),...
+        K(3)*satSignal(Qp3,[Qmin Qmax]),...
+        sysFlowRates(x,K,h0,Beta)];
+    y = sysMeasurements(x,q,faultMag,offset,mNoise);
 
     objSim3Tanks.setInternalStateVariables(x);
-    objSim3Tanks.setInternalFlowVariables(zeros(1,Nq));
-    objSim3Tanks.setInternalSensorMeasurements(zeros(1,Nx+Nq));
+    objSim3Tanks.setInternalFlowVariables(q);
+    objSim3Tanks.setInternalSensorMeasurements(y);
     objSim3Tanks.setInternalValveSignals(opMode');
     objSim3Tanks.setInternalFaultSignals(faultMag');
     objSim3Tanks.resetInternalSimulationTime();
@@ -162,64 +170,12 @@ i = 1;
 
 while(1)
 
-    h1 = x(i,1);
-    h2 = x(i,2);
-    h3 = x(i,3);
-
-    if(h1<=h0 && h2<=h0 && h3<=h0)
-        % fprintf('CASE 1 : h1<=h0, h2<=h0, h3<=h0\n');
-        Qa = K(4)*0;
-        Qb = K(5)*0;
-
-    elseif(h1<=h0 && h2<=h0 && h3>h0)
-        % fprintf('CASE 2 : h1<=h0, h2<=h0, h3>h0\n');
-        Qa = K(4)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
-        Qb = K(5)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
-
-    elseif(h1<=h0 && h2>h0 && h3<=h0)
-        % fprintf('CASE 3 : h1<=h0, h2>h0, h3<=h0\n');
-        Qa = K(4)*0;
-        Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
-
-    elseif(h1<=h0 && h2>h0 && h3>h0)
-        % fprintf('CASE 4 : h1<=h0, h2>h0, h3>h0\n');
-        Qa = K(4)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
-        Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
-
-    elseif(h1>h0 && h2<=h0 && h3<=h0)
-        % fprintf('CASE 5 : h1>h0, h2<=h0, h3<=h0\n');
-        Qa = K(4)*Beta*sign(h1-h0)*sqrt(abs(h1-h0));
-        Qb = K(5)*0;
-
-    elseif(h1>h0 && h2<=h0 && h3>h0)
-        % fprintf('CASE 6 : h1>h0, h2<=h0, h3>h0\n');
-        Qa = K(4)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
-        Qb = K(5)*Beta*sign(h0-h3)*sqrt(abs(h0-h3));
-
-    elseif(h1>h0 && h2>h0 && h3<=h0)
-        % fprintf('CASE 7 : h1>h0, h2>h0, h3<=h0\n');
-        Qa = K(4)*Beta*sign(h1-h0)*sqrt(abs(h1-h0));
-        Qb = K(5)*Beta*sign(h2-h0)*sqrt(abs(h2-h0));
-
-    elseif(h1>h0 && h2>h0 && h3>h0)
-        % fprintf('CASE 8 : h1>h0, h2>h0, h3>h0\n');
-        Qa = K(4)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
-        Qb = K(5)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
-
-    else
-        error(getMessage('ERR000'));
-    end
-
-    Q1in = K(1)*satSignal(Qp1,[Qmin Qmax]);
-    Q2in = K(2)*satSignal(Qp2,[Qmin Qmax]);
-    Q3in = K(3)*satSignal(Qp3,[Qmin Qmax]);
-    Q13  = K(6)*Beta*sign(h1-h3)*sqrt(abs(h1-h3));
-    Q23  = K(7)*Beta*sign(h2-h3)*sqrt(abs(h2-h3));
-    Q1   = K(8)*Beta*sqrt(abs(h1));
-    Q2   = K(9)*Beta*sqrt(abs(h2));
-    Q3   = K(10)*Beta*sqrt(abs(h3));
-
-    Qx = [Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3];
+    % Flow rate vector
+    Qx = [...
+        K(1)*satSignal(Qp1,[Qmin Qmax]),...
+        K(2)*satSignal(Qp2,[Qmin Qmax]),...
+        K(3)*satSignal(Qp3,[Qmin Qmax]),...
+        sysFlowRates(x(i,:),K,h0,Beta)];
 
     [pNoise,mNoise] = checkEnabledNoises(objSim3Tanks);
 
@@ -227,7 +183,7 @@ while(1)
 
         % Solver Configuration
         options = odeset('MaxStep',Tspan,'RelTol',1e-6);
-        [t,x] = ode45(@(t,x)dxdtModel(Sc,Qx,pNoise),[0 Tspan],x,options);
+        [t,x] = ode45(@(t,x)sysDynamicModel(Sc,Qx,pNoise),[0 Tspan],x,options);
 
         if(isfinite(x))
             if(allSteps)
@@ -253,7 +209,7 @@ while(1)
     q(i,:) = Qx;
 
     % Measurements --> y = [h1,h2,h3,Q1in,Q2in,Q3in,Qa,Qb,Q13,Q23,Q1,Q2,Q3]
-    y(i,:) = sensorMeasurements(x(i,:),q(i,:),faultMag,offset,mNoise);
+    y(i,:) = sysMeasurements(x(i,:),q(i,:),faultMag,offset,mNoise);
 
     objSim3Tanks.pushInternalStateVariables(x(i,:));
     objSim3Tanks.pushInternalFlowVariables(q(i,:));

@@ -1,6 +1,12 @@
-function [dxdt] = dxdtModel(varargin)
-% dxdtModel is a Sim3Tanks function. This function describes the state
-% equations of the three-tank system.
+function dxdt = sysDynamicModel(A,q,w)
+% sysDynamicModel is a Sim3Tanks function. This function describes the
+% dynamic model of the three-tank system.
+%
+% Example:
+%   dxdt = sysDynamicModel(A,q,w)
+%       A : cross-sectional area of the tanks
+%       q : flow rate vector
+%       w : process noise vector
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -10,11 +16,9 @@ if(nargin()<3)
     error(getMessage('ERR001'));
 elseif(nargin()>3)
     error(getMessage('ERR002'));
-else
-    A = varargin{1};
-    q = varargin{2};
-    w = varargin{3};
 end
+
+%==========================================================================
 
 Q1in = q(1);
 Q2in = q(2);
@@ -31,6 +35,6 @@ dx1dt = (1/A)*(Q1in - Qa - Q13 - Q1) + w(1);
 dx2dt = (1/A)*(Q2in - Qb - Q23 - Q2) + w(2);
 dx3dt = (1/A)*(Q3in + Q13 + Q23 + Qa + Qb - Q3) + w(3);
 
-dxdt = [dx1dt dx2dt dx3dt]';
+dxdt = [dx1dt ; dx2dt ; dx3dt];
 
 end

@@ -322,6 +322,15 @@ classdef Sim3Tanks < handle
             this.SimulationTime = 0;
         end
 
+        function incrementInternalSimulationTime(varargin)
+            if(nargin()<2)
+                error(getMessage('ERR001'));
+            end
+            this = varargin{1};
+            time = varargin{2};
+            this.SimulationTime = [this.SimulationTime;time];
+        end
+
         function t = getInternalSimulationTime(varargin)
             this = varargin{1};
             t = this.SimulationTime;
@@ -330,13 +339,6 @@ classdef Sim3Tanks < handle
             elseif(nargin()>2)
                 error(getMessage('ERR002'));
             end
-        end
-
-        function incrementInternalSimulationTime(this,t)
-            if(nargin()<2)
-                error(getMessage('ERR001'));
-            end
-            this.SimulationTime = [this.SimulationTime;t];
         end
 
     end

@@ -111,6 +111,8 @@ Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
 F = tts.getFaultSignals();
 
+tts.displayModel();
+
 %% Plots
 
 fprintf([getMessage('tag'),'Plotting Graphs...\n']);

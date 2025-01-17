@@ -1,10 +1,10 @@
-function displayFields(varargin)
-% displayFields is a Sim3Tanks method. This method does not have an input
-% argument. It displays all fields and subfields of a Sim3Tanks object on
-% the command line
+function displayModel(varargin)
+% displayModel is a Sim3Tanks method. This method does not have an input
+% argument. It displays the model settings of a Sim3Tanks object on the
+% command line.
 %
 % Example:
-%   tts.displayFields();
+%   tts.displayModel();
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -33,7 +33,7 @@ for i = 1 : numel(fields)
     if(isstruct(fieldValue))
         isThereSubfield = true;
         fprintf('\n%s<strong>%s</strong> (Struct)\n', PREFIX1, currentField);
-        displayFields(varargin{1},fieldValue);
+        displayModel(varargin{1},fieldValue);
 
     elseif(isThereSubfield)
         fprintf('\n%s<strong>%s</strong>: %s (%s)\n', PREFIX1, ...
