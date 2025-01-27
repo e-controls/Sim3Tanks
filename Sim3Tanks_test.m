@@ -118,18 +118,13 @@ tts.displayModel();
 fprintf([getMessage('tag'),'Plotting Graphs...\n']);
 
 tts.plotLevels();
-tts.plotLevels('h3');
+tts.plotLevels('h1');
+
 tts.plotFlows();
 tts.plotFlows('Q3');
 
-figure; hold on; grid on;
-title('Valve Signals');
-xlabel('Time');
-ylabel('Opening Rate');
-plot(K.Time,K.Variables);
+tts.plotValves();
+tts.plotValves('Kp1');
 
-figure; hold on; grid on;
-title('Fault Signals');
-xlabel('Time');
-ylabel('Magnitude');
-plot(F.Time,F.Variables);
+tts.plotFaults();
+tts.plotFaults('f1');

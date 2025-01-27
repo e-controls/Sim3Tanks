@@ -1,9 +1,9 @@
 function plotFlows(varargin)
-% plotFlows is a Sim3Tanks method. This method plots the behavior of a
-% flow over time.
+% plotFlows is a Sim3Tanks method. This method plots the behavior of the
+% flows over time.
 %
 % Example:
-%   tts.plotFlows(option);
+%   tts.plotFlows();
 %
 % To plot a specific flow, use one of the following options as an input
 % argument:
@@ -27,18 +27,19 @@ function plotFlows(varargin)
 
 if(nargin()>2)
     error(getMessage('ERR002'));
+else
+    objSim3Tanks = varargin{1};
 end
 
-objSim3Tanks = varargin{1};
-
-Q = objSim3Tanks.getFlowVariables();
+time = objSim3Tanks.getInternalSimulationTime();
+Q = objSim3Tanks.getInternalFlowVariables(time);
 
 if(isempty(Q))
     warning(getMessage('WARN008'));
     return;
 else % If I have a non-empty Q, then I also have a non-empty Y.
-    Y = objSim3Tanks.getSensorMeasurements();
-    time = Y.Time;
+    Y = objSim3Tanks.getInternalSensorMeasurements(time);
+    time = Y.Time; % casting to seconds
 end
 
 FLOW_IDs = Sim3Tanks.LIST_OF_FLOWS;
@@ -53,73 +54,17 @@ if(nargin()==1)
 
 elseif(nargin()==2)
 
-    switch lower(varargin{2})
-        case 'q1in'
-            ID = FLOW_IDs{1};
-        case 'q2in'
-            ID = FLOW_IDs{2};
-        case 'q3in'
-            ID = FLOW_IDs{3};
-        case 'qa'
-            ID = FLOW_IDs{4};
-        case 'qb'
-            ID = FLOW_IDs{5};
-        case 'q13'
-            ID = FLOW_IDs{6};
-        case 'q23'
-            ID = FLOW_IDs{7};
-        case 'q1'
-            ID = FLOW_IDs{8};
-        case 'q2'
-            ID = FLOW_IDs{9};
-        case 'q3'
-            ID = FLOW_IDs{10};
-        otherwise
-            error(getMessage('ERR003'));
+    option = find(strcmpi(varargin{2},FLOW_IDs));
+
+    if(~isempty(option))
+        ID = FLOW_IDs{option};
+    else
+        error(getMessage('ERR003'));
     end
 
     plotOneFlow(tagSim3Tanks,ID,Q,Y,time);
 
 end
-
-end
-
-%==========================================================================
-
-function plotOneFlow(tagSim3Tanks,FLOW_ID,Q,Y,time)
-
-FIG_ID = [tagSim3Tanks,'_fig_flow_',FLOW_ID];
-
-try
-    delete(findobj('Tag',FIG_ID));
-catch
-end
-
-realValue = Q.(FLOW_ID);
-measuredValue = Y.(FLOW_ID);
-
-N = numel(time);
-MarkIdx = 1:round(N/4):N;
-
-figure('Tag',FIG_ID,...
-    'Numbertitle','off',...
-    'Name',[tagSim3Tanks,': ',FLOW_ID]);
-
-% Real value
-subplot(2,1,1); hold on; box on;
-plot(time,realValue,'b-o','MarkerIndices',MarkIdx);
-legend(FLOW_ID,'Location','Northeast');
-xlabel('Time');
-ylabel('Real value');
-xlim([time(1) time(N)]);
-
-% Measured value
-subplot(2,1,2); hold on; box on;
-plot(time,measuredValue,'r-o','MarkerIndices',MarkIdx);
-legend(FLOW_ID,'Location','Northeast');
-xlabel('Time');
-ylabel('Measured value');
-xlim([time(1) time(N)]);
 
 end
 
@@ -175,5 +120,45 @@ plot(time,Y.(FLOW_IDs{10}));
 xlabel('Time');
 ylabel('Measured values');
 xlim([time(1) time(N)]);
+
+end
+
+%==========================================================================
+
+function plotOneFlow(tagSim3Tanks,FLOW_ID,Q,Y,time)
+
+FIG_ID = [tagSim3Tanks,'_fig_flow_',FLOW_ID];
+
+try
+    delete(findobj('Tag',FIG_ID));
+catch
+end
+
+realValue = Q.(FLOW_ID);
+measuredValue = Y.(FLOW_ID);
+
+N0 = numel(time);
+N1 = round(N0/4);
+MarkIdx = 1:N1:N0;
+
+figure('Tag',FIG_ID,...
+    'Numbertitle','off',...
+    'Name',[tagSim3Tanks,': ',FLOW_ID]);
+
+% Real value
+subplot(2,1,1); hold on; box on;
+plot(time,realValue,'b-o','MarkerIndices',MarkIdx);
+legend(FLOW_ID,'Location','Northeast');
+xlabel('Time');
+ylabel('Real value');
+xlim([time(1) time(N0)]);
+
+% Measured value
+subplot(2,1,2); hold on; box on;
+plot(time,measuredValue,'r-o','MarkerIndices',MarkIdx);
+legend(FLOW_ID,'Location','Northeast');
+xlabel('Time');
+ylabel('Measured value');
+xlim([time(1) time(N0)]);
 
 end

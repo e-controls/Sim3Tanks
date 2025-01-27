@@ -252,9 +252,9 @@ classdef Sim3Tanks < handle
             this = varargin{1};
             x = this.StateVariables;
             if(nargin()==2 && ~isempty(x))
-                Ts = varargin{2};
+                t = varargin{2};
                 varNames = this.LIST_OF_STATES;
-                x = array2timetable(x,'SampleRate',1/Ts,'VariableNames',varNames);
+                x = array2timetable(x,'RowTimes',seconds(t),'VariableNames',varNames);
             elseif(nargin()>2)
                 error(getMessage('ERR002'));
             end
@@ -264,9 +264,9 @@ classdef Sim3Tanks < handle
             this = varargin{1};
             q = this.FlowVariables;
             if(nargin()==2 && ~isempty(q))
-                Ts = varargin{2};
+                t = varargin{2};
                 varNames = this.LIST_OF_FLOWS;
-                q = array2timetable(q,'SampleRate',1/Ts,'VariableNames',varNames);
+                q = array2timetable(q,'RowTimes',seconds(t),'VariableNames',varNames);
             elseif(nargin()>2)
                 error(getMessage('ERR002'));
             end
@@ -276,9 +276,9 @@ classdef Sim3Tanks < handle
             this = varargin{1};
             y = this.SensorMeasurements;
             if(nargin()==2 && ~isempty(y))
-                Ts = varargin{2};
+                t = varargin{2};
                 varNames = [this.LIST_OF_STATES;this.LIST_OF_FLOWS];
-                y = array2timetable(y,'SampleRate',1/Ts,'VariableNames',varNames);
+                y = array2timetable(y,'RowTimes',seconds(t),'VariableNames',varNames);
             elseif(nargin()>2)
                 error(getMessage('ERR002'));
             end
@@ -288,9 +288,9 @@ classdef Sim3Tanks < handle
             this = varargin{1};
             v = this.ValveSignals;
             if(nargin()==2 && ~isempty(v))
-                Ts = varargin{2};
+                t = varargin{2};
                 varNames = this.LIST_OF_VALVES;
-                v = array2timetable(v,'SampleRate',1/Ts,'VariableNames',varNames);
+                v = array2timetable(v,'RowTimes',seconds(t),'VariableNames',varNames);
             elseif(nargin()>2)
                 error(getMessage('ERR002'));
             end
@@ -300,9 +300,9 @@ classdef Sim3Tanks < handle
             this = varargin{1};
             f = this.FaultSignals;
             if(nargin()==2 && ~isempty(f))
-                Ts = varargin{2};
+                t = varargin{2};
                 varNames = this.LIST_OF_FAULTS;
-                f = array2timetable(f,'SampleRate',1/Ts,'VariableNames',varNames);
+                f = array2timetable(f,'RowTimes',seconds(t),'VariableNames',varNames);
             elseif(nargin()>2)
                 error(getMessage('ERR002'));
             end
