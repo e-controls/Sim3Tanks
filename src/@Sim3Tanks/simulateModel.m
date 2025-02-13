@@ -157,7 +157,8 @@ if(isempty(x))
     objSim3Tanks.setInternalFlowVariables(q);
     objSim3Tanks.setInternalSensorMeasurements(y);
     objSim3Tanks.setInternalValveSignals(opMode');
-    objSim3Tanks.setInternalFaultSignals(faultMag');
+    objSim3Tanks.setInternalFaultMagnitudes(faultMag');
+    objSim3Tanks.setInternalFaultOffsets(offset(11:end)');
     objSim3Tanks.resetInternalSimulationTime();
 
 else
@@ -215,7 +216,8 @@ while(1)
     objSim3Tanks.pushInternalFlowVariables(q(i,:));
     objSim3Tanks.pushInternalSensorMeasurements(y(i,:));
     objSim3Tanks.pushInternalValveSignals(K');
-    objSim3Tanks.pushInternalFaultSignals(faultMag');
+    objSim3Tanks.pushInternalFaultMagnitudes(faultMag');
+    objSim3Tanks.pushInternalFaultOffsets(offset(11:end)');
     objSim3Tanks.incrementInternalSimulationTime(t0+t(i));
 
     if(i>=numberOfStates)

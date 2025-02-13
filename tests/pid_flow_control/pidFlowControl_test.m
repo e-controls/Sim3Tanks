@@ -160,7 +160,8 @@ X = tts.getStateVariables();
 Q = tts.getFlowVariables();
 Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
-F = tts.getFaultSignals();
+F = tts.getFaultMagnitudes();
+O = tts.getFaultOffsets();
 
 %% Plots
 

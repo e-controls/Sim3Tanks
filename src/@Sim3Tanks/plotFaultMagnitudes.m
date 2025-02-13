@@ -1,15 +1,15 @@
-function plotFaults(varargin)
-% plotFaults is a Sim3Tanks method. This method plots the behavior of the
-% faults over time.
+function plotFaultMagnitudes(varargin)
+% plotFaultMagnitudes is a Sim3Tanks method. This method plots the behavior
+% of the fault magnitudes over time.
 %
 % Example:
-%   tts.plotFaults();
+%   tts.plotFaultMagnitudes();
 %
-% To plot a specific fault behavior, use one of the following options as
+% To plot a specific fault magnitude, use one of the following options as
 % an input argument: 'f1', 'f2', 'f3', ..., 'f21', 'f22', or 'f23'.
 %
-% If there is no input argument, all faults will be plotted on the same
-% figure.
+% If there is no input argument, all fault magnitudes will be plotted on
+% the same figure.
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -22,7 +22,7 @@ else
 end
 
 time = objSim3Tanks.getInternalSimulationTime();
-F = objSim3Tanks.getInternalFaultSignals(time);
+F = objSim3Tanks.getInternalFaultMagnitudes(time);
 
 if(isempty(F))
     warning(getMessage('WARN008'));
@@ -61,7 +61,7 @@ end
 
 function plotAllFaults(tagSim3Tanks,FAULT_IDs,F,time)
 
-FIG_ID = [tagSim3Tanks,'_fig_fault_all'];
+FIG_ID = [tagSim3Tanks,'_figMag_fault_all'];
 
 try
     delete(findobj('Tag',FIG_ID));
@@ -74,7 +74,7 @@ MarkIdx = 01:N1:N0;
 
 figure('Tag',FIG_ID,...
     'Numbertitle','off',...
-    'Name',[tagSim3Tanks,': faults']);
+    'Name',[tagSim3Tanks,': fault magnitudes']);
 
 for i = 1 : numel(FAULT_IDs)
 
@@ -94,7 +94,7 @@ end
 
 function plotOneFault(tagSim3Tanks,FAULT_ID,F,time)
 
-FIG_ID = [tagSim3Tanks,'_fig_fault_',FAULT_ID];
+FIG_ID = [tagSim3Tanks,'_figMag_fault_',FAULT_ID];
 
 try
     delete(findobj('Tag',FIG_ID));
@@ -107,7 +107,7 @@ MarkIdx = 1:N1:N0;
 
 figure('Tag',FIG_ID,...
     'Numbertitle','off',...
-    'Name',[tagSim3Tanks,': ',FAULT_ID]); hold on; box on;
+    'Name',[tagSim3Tanks,': ',FAULT_ID,' magnitude']); hold on; box on;
 
 p = plot(time,F.(FAULT_ID),'r-o','MarkerIndices',MarkIdx);
 legend(p,FAULT_ID,'Location','Best');

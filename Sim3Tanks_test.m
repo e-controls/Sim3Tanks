@@ -109,7 +109,8 @@ X = tts.getStateVariables();
 Q = tts.getFlowVariables();
 Y = tts.getSensorMeasurements();
 K = tts.getValveSignals();
-F = tts.getFaultSignals();
+F = tts.getFaultMagnitudes();
+O = tts.getFaultOffsets();
 
 tts.displayModel();
 
@@ -118,13 +119,16 @@ tts.displayModel();
 fprintf([getMessage('tag'),'Plotting Graphs...\n']);
 
 tts.plotLevels();
-tts.plotLevels('h1');
+%tts.plotLevels('h1');
 
 tts.plotFlows();
-tts.plotFlows('Q3');
+%tts.plotFlows('Q3');
 
 tts.plotValves();
-tts.plotValves('Kp1');
+%tts.plotValves('Kp1');
 
-tts.plotFaults();
-tts.plotFaults('f1');
+tts.plotFaultMagnitudes();
+%tts.plotFaultMagnitudes('f1');
+
+tts.plotFaultOffsets();
+%tts.plotFaultOffsets('f11');

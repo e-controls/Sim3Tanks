@@ -1,9 +1,10 @@
-function [varargout] = getFaultSignals(varargin)
-% getFaultSignals is a Sim3Tanks method. This method does not have an input
-% argument and returns a data table with the values of the fault signals.
+function [varargout] = getFaultMagnitudes(varargin)
+% getFaultMagnitudes is a Sim3Tanks method. This method does not have an
+% input argument and returns a data table with the values of the fault
+% magnitudes.
 %
 % Example:
-%   tts.getFaultSignals();
+%   tts.getFaultMagnitudes();
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -19,7 +20,7 @@ end
 
 LIST_OF_FAULTS = Sim3Tanks.LIST_OF_FAULTS;
 
-f = objSim3Tanks.getInternalFaultSignals();
+f = objSim3Tanks.getInternalFaultMagnitudes();
 t = objSim3Tanks.getInternalSimulationTime();
 
 if(~isempty(f))

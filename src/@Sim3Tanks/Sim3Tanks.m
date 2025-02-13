@@ -34,7 +34,8 @@ classdef Sim3Tanks < handle
         FlowVariables  {mustBeFinite} = [];
         SensorMeasurements {mustBeFinite} = [];
         ValveSignals {mustBeGreaterThanOrEqual(ValveSignals,0),mustBeLessThanOrEqual(ValveSignals,1)} = [];
-        FaultSignals {mustBeGreaterThanOrEqual(FaultSignals,0),mustBeLessThanOrEqual(FaultSignals,1)} = [];
+        FaultMagnitudes {mustBeGreaterThanOrEqual(FaultMagnitudes,0),mustBeLessThanOrEqual(FaultMagnitudes,1)} = [];
+        FaultOffsets {mustBeFinite} = [];
     end
 
     %======================================================================
@@ -83,13 +84,13 @@ classdef Sim3Tanks < handle
                 this.Model.(this.LIST_OF_FIELDS{2}).(this.LIST_OF_VALVES{i}).OpeningRate = [];
             end
 
-            % FaultSettings
+            % FaultSettings (Magnitudes)
             for i = 1 : numel(this.LIST_OF_FAULTS)
                 this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).EnableSignal = false;
                 this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Magnitude = [];
             end
 
-            % Additional FaultSettings for sensors
+            % FaultSettings (Offsets)
             for i = 11 : numel(this.LIST_OF_FAULTS)
                 this.Model.(this.LIST_OF_FIELDS{3}).(this.LIST_OF_FAULTS{i}).Offset = [];
             end
@@ -164,16 +165,28 @@ classdef Sim3Tanks < handle
             this.ValveSignals = v;
         end
 
-        function setInternalFaultSignals(this,f)
+        function setInternalFaultMagnitudes(this,f)
             N = numel(this.LIST_OF_FAULTS);
             if(nargin()==1)
                 error(getMessage('ERR001'));
             elseif(~isrow(f) && ~isempty(f))
                 error(getMessage('ERR005'));
             elseif(numel(f)~=N && ~isempty(f))
-                error([getMessage('ERR006'),' The system has ',num2str(N),' fault signals.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' fault magnitudes.']);
             end
-            this.FaultSignals = f;
+            this.FaultMagnitudes = f;
+        end
+
+        function setInternalFaultOffsets(this,f)
+            N = numel(this.LIST_OF_FAULTS(11:end));
+            if(nargin()==1)
+                error(getMessage('ERR001'));
+            elseif(~isrow(f) && ~isempty(f))
+                error(getMessage('ERR005'));
+            elseif(numel(f)~=N && ~isempty(f))
+                error([getMessage('ERR006'),' The system has ',num2str(N),' fault offsets.']);
+            end
+            this.FaultOffsets = f;
         end
 
     end
@@ -230,16 +243,28 @@ classdef Sim3Tanks < handle
             this.ValveSignals = [this.ValveSignals;v];
         end
 
-        function pushInternalFaultSignals(this,f)
+        function pushInternalFaultMagnitudes(this,f)
             N = numel(this.LIST_OF_FAULTS);
             if(nargin()==1)
                 error(getMessage('ERR001'));
             elseif(~isrow(f) && ~isempty(f))
                 error(getMessage('ERR005'));
             elseif(numel(f)~=N && ~isempty(f))
-                error([getMessage('ERR006'),' The system has ',num2str(N),' fault signals.']);
+                error([getMessage('ERR006'),' The system has ',num2str(N),' fault magnitudes.']);
             end
-            this.FaultSignals = [this.FaultSignals;f];
+            this.FaultMagnitudes = [this.FaultMagnitudes;f];
+        end
+
+        function pushInternalFaultOffsets(this,f)
+            N = numel(this.LIST_OF_FAULTS(11:end));
+            if(nargin()==1)
+                error(getMessage('ERR001'));
+            elseif(~isrow(f) && ~isempty(f))
+                error(getMessage('ERR005'));
+            elseif(numel(f)~=N && ~isempty(f))
+                error([getMessage('ERR006'),' The system has ',num2str(N),' fault offsets.']);
+            end
+            this.FaultOffsets = [this.FaultOffsets;f];
         end
 
     end
@@ -296,12 +321,24 @@ classdef Sim3Tanks < handle
             end
         end
 
-        function f = getInternalFaultSignals(varargin)
+        function f = getInternalFaultMagnitudes(varargin)
             this = varargin{1};
-            f = this.FaultSignals;
+            f = this.FaultMagnitudes;
             if(nargin()==2 && ~isempty(f))
                 t = varargin{2};
                 varNames = this.LIST_OF_FAULTS;
+                f = array2timetable(f,'RowTimes',seconds(t),'VariableNames',varNames);
+            elseif(nargin()>2)
+                error(getMessage('ERR002'));
+            end
+        end
+
+        function f = getInternalFaultOffsets(varargin)
+            this = varargin{1};
+            f = this.FaultOffsets;
+            if(nargin()==2 && ~isempty(f))
+                t = varargin{2};
+                varNames = this.LIST_OF_FAULTS(11:end);
                 f = array2timetable(f,'RowTimes',seconds(t),'VariableNames',varNames);
             elseif(nargin()>2)
                 error(getMessage('ERR002'));

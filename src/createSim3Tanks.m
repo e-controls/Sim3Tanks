@@ -6,7 +6,7 @@ function [varargout] = createSim3Tanks(varargin)
 % and methods:
 %                   Model: [attribute]
 %           simulateModel: [method]
-%           displayFields: [method]
+%            displayModel: [method]
 %              clearModel: [method]
 %          clearVariables: [method]
 %         setDefaultModel: [method]
@@ -15,8 +15,13 @@ function [varargout] = createSim3Tanks(varargin)
 %        getFlowVariables: [method]
 %   getSensorMeasurements: [method]
 %         getValveSignals: [method]
-%         getFaultSignals: [method]
-%         interpolateTime: [method]
+%      getFaultMagnitudes: [method]
+%         getFaultOffsets: [method]
+%              plotLevels: [method]
+%               plotFlows: [method]
+%              plotValves: [method]
+%     plotFaultMagnitudes: [method]
+%        plotFaultOffsets: [method]
 %
 % By default, all numeric fields are empty, the operation mode of all
 % valves is set to 'Closed', and control is disabled. In addition, all
@@ -25,7 +30,7 @@ function [varargout] = createSim3Tanks(varargin)
 %
 % To set the default scenario, call: tts.setDefaultModel();
 %
-% To see the fields and their respective values, call: tts.displayFields();
+% To see the Model attribute and their values, call: tts.displayModel();
 
 % https://github.com/e-controls/Sim3Tanks
 
@@ -51,7 +56,7 @@ end
 tts = Sim3Tanks(); % Calling constructor method
 
 tts.About.Name = 'Sim3Tanks';
-tts.About.Version = '2.0.1.1';
+tts.About.Version = '2.0.2';
 tts.About.Description = 'A Benchmark Model Simulator for Process Control and Monitoring';
 tts.About.License = 'MIT';
 tts.About.Link = ['<a href="https://github.com/e-controls/Sim3Tanks" target="_blank">' ...

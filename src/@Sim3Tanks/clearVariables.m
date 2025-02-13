@@ -33,7 +33,8 @@ if(nargin()==1)
     objSim3Tanks.setInternalFlowVariables([]);
     objSim3Tanks.setInternalSensorMeasurements([]);
     objSim3Tanks.setInternalValveSignals([]);
-    objSim3Tanks.setInternalFaultSignals([]);
+    objSim3Tanks.setInternalFaultMagnitudes([]);
+    objSim3Tanks.setInternalFaultOffsets([]);
     objSim3Tanks.resetInternalSimulationTime();
 else
     switch lower(varargin{2})
@@ -46,7 +47,8 @@ else
         case 'valves'
             objSim3Tanks.setInternalValveSignals([]);
         case 'faults'
-            objSim3Tanks.setInternalFaultSignals([]);
+            objSim3Tanks.setInternalFaultMagnitudes([]);
+            objSim3Tanks.setInternalFaultOffsets([]);
         otherwise
             error(getMessage('ERR003'));
     end
