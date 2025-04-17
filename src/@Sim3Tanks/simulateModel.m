@@ -143,14 +143,20 @@ x = objSim3Tanks.getInternalStateVariables();
 
 if(isempty(x))
 
-    [~,mNoise] = checkEnabledNoises(objSim3Tanks);
-
     x = objSim3Tanks.Model.InitialCondition;
+
+    if(isempty(x)||~isrow(x)||numel(x)~=numel(Sim3Tanks.LIST_OF_STATES))
+        error(getMessage('ERR024'));
+    end
+
     q = [...
         K(1)*satSignal(Qp1,[Qmin Qmax]),...
         K(2)*satSignal(Qp2,[Qmin Qmax]),...
         K(3)*satSignal(Qp3,[Qmin Qmax]),...
         sysFlowRates(x,K,h0,Beta)];
+
+    [~,mNoise] = checkEnabledNoises(objSim3Tanks);
+
     y = sysMeasurements(x,q,faultMag,offset,mNoise);
 
     objSim3Tanks.setInternalStateVariables(x);

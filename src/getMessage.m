@@ -102,6 +102,9 @@ switch messageCode
     case 'ERR023'
         msg = 'The input argument must be a row or a column vector of numeric type.';
 
+    case 'ERR024'
+        msg = 'The initial condition must be a three-position row vector.';
+
         %
         %
         %
